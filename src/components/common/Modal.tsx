@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { X } from "lucide-react";
-import { useModalStore } from "@/stores/useModalStore";
 import { ModalProps } from "@/types/common";
+import { useModalStore } from "@/stores/useModalStore";
 
 const Modal = ({ modalKey, children, className = "" }: ModalProps) => {
   const { modals, closeModal } = useModalStore();
