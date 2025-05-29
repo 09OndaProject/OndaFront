@@ -1,8 +1,5 @@
-/* @import "tailwindcss";
+@import url('/noto-sans-korean/css/noto-sans-korean.css');
 
-body {
-  @apply bg-white text-black font-sans;
-} */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
