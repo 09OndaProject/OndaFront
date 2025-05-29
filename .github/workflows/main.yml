@@ -20,7 +20,7 @@ jobs:
         env:
           API_TOKEN_GITHUB: ${{ secrets.MY_TOKEN }}
         with:
-          source-directory: 'output'
+          source-directory: '.next'
           destination-github-username: sewook11
           destination-repository-name: Onda-develop
           user-email: ${{ secrets.EMAIL }}
