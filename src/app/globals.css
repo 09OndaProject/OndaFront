@@ -1,4 +1,11 @@
-@import "tailwindcss";
+/* @import "tailwindcss";
+
+body {
+  @apply bg-white text-black font-sans;
+} */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 body {
   @apply bg-white text-black font-sans;
