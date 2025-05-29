@@ -20,3 +20,13 @@ export interface ModalProps {
     children: React.ReactNode;
     className?: string;
 }
+
+export interface CommonInputProps {
+    label?: string;
+    name: string;
+    value: string;
+    onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void;
+    placeholder?: string;
+    required?: boolean;
+  }
+  
