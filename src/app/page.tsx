@@ -3,4 +3,4 @@ export default function Home() {
     <main className="p-4">
     </main>
   );
-}
+};
