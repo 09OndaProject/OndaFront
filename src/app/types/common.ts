@@ -14,3 +14,9 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
     error?: string;
     clasName: string;
 }
+
+export interface ModalProps {
+    modalKey: string;
+    children: React.ReactNode;
+    className?: string;
+}
