@@ -12,9 +12,9 @@ export default function HeroSection() {
   return (
     <div className="relative w-full h-[670px] bg-gradient-to-t from-[#FDE8E0] to-transparent">
       {/* 콘텐츠 */}
-      <div className="relative z-20 h-full flex items-center justify-center gap-40 px-4">
+      <div className="relative z-20 h-full flex items-center justify-center gap-20 px-4">
         <div className="relative flex flex-col items-center md:text-left md:items-center space-y-6 z-10">
-          <h1 className="text-3xl sm:text-3xl font-bold  text-center mb-10 leading-relaxed">
+          <h1 className="text-2xl sm:text-3xl font-bold  text-center mb-10 leading-relaxed">
             공간, 경험, 지식 <br />
             그리고 사람을 잇다
           </h1>

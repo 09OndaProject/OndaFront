@@ -8,20 +8,20 @@ import BannerImage from "@/assets/images/homeBanner.png";
 export default function MainBannerSection() {
   const router = useRouter();
   return (
-    <section className="flex flex-wrap gap-20 justify-center items-center max-w-[1440px] mx-10 md:mx-[160px] py-20">
+    <section className="flex flex-row md:flex-nowrap flex-wrap gap-20 justify-center items-center max-w-[1440px] mx-10 md:mx-[160px] py-20">
       <div className="flex flex-col gap-10 md:items-start md:text-left items-center text-center">
-        <h1 className="text-2xl font-semibold">온:다 소개</h1>
-        <p className="text-gray-700 text-md">
+        <h2 className="text-2xl font-semibold">온:다 소개</h2>
+        <p className="text-gray-700 text-xs">
           온:다는 배우고 나누고, <br />
           연결되는 삶을 위해 존재합니다.
         </p>
-        <h2 className="font-semibold text-primary-deep text-lg">
+        <h3 className="font-semibold text-primary-deep text-md">
           &#34;혼자가 아닌 함께, 연결되는 삶을 위해&#34;
-        </h2>
-        <div className="flex flex-col gap-8 text-sm font-medium">
+        </h3>
+        <div className="flex flex-col gap-8 text-xs font-medium">
           <p>
             65세 이상 시니어층의 40&#37;이상이 &#39;사회적 고립감&#39;을 느끼고
-            있으며 <br />
+            있으며 
             디지털 소외는 그 고립을 더 깊게 만듭니다.
           </p>
           <p>
@@ -30,9 +30,9 @@ export default function MainBannerSection() {
             라는 질문에서 시작되었습니다.
           </p>
           <p>
-            우리 동네에서 참여하고 싶은 모임을 찾고 <br />
-            디지털 수준에 맞는 콘텐츠를 경험하며 <br />그 경험을 나누는
-            &#39;리더&#39;가 되는 곳입니다.
+            우리 동네에서 참여하고 싶은 모임을 찾고
+            디지털 수준에 맞는 콘텐츠를 경험하며 
+            그 경험을 나누는 &#39;리더&#39;가 되는 곳입니다.
           </p>
         </div>
         <Button width="w-[200px]" onClick={() => router.push("/#")}>
@@ -43,7 +43,7 @@ export default function MainBannerSection() {
         <Image
           src={BannerImage}
           alt="배너 이미지"
-          width={660}
+          width={600}
           height={600}
           className="object-cover w-full h-full"
         />
