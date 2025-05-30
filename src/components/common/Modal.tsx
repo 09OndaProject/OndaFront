@@ -1,7 +1,7 @@
 import { useEffect } from "react";
-import { X } from "lucide-react";
 import { ModalProps } from "@/types/common";
 import { useModalStore } from "@/stores/useModalStore";
+import CloseButton from "./Buttons/CloseButton";
 
 const Modal = ({ modalKey, children, className = "" }: ModalProps) => {
   const { modals, closeModal } = useModalStore();
@@ -24,13 +24,11 @@ const Modal = ({ modalKey, children, className = "" }: ModalProps) => {
         className={`modal-wrapper relative bg-white dark:bg-dark-800 rounded-2xl shadow-xl max-h-screen md:max-w-full max-w-4xl p-[60px] ${className}`}
         onClick={(e) => e.stopPropagation()}
       >
-        <button
+        <CloseButton
           onClick={() => closeModal(modalKey)}
-          className="absolute top-6 right-6 p-1"
-          aria-label="닫기"
-        >
-          <X size={32}/>
-        </button>
+          size={32}
+          className="absolute top-6 right-6 p-1 text-gray-800"
+        />
         {/* children 부분만 세로 스크롤 */}
         <div className="overflow-y-auto max-h-[70vh] pr-2">{children}</div>
       </div>
