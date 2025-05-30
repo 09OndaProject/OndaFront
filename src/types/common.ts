@@ -1,5 +1,5 @@
 export interface ButtonProps{
-  className: string;
+  className?: string;
   color?: "primary" | "gray" | "accent" | "red";
   variant?: "fill" | "outline"; 
   width?: string;
