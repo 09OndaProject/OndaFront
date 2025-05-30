@@ -1,23 +1,33 @@
-name: push full code to personal repo for vercel deploy
+name: git push into another repo to deploy to vercel
 
 on:
   push:
     branches: [develop]
 
 jobs:
-  sync:
+  build:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v2
 
-      - name: Pushes to personal repository
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build Next.js project
+        run: npm run build
+
+      - name: Pushes to another repository
+        id: push_directory
         uses: cpina/github-action-push-to-another-repository@main
         env:
           API_TOKEN_GITHUB: ${{ secrets.MY_TOKEN }}
         with:
-          source-directory: '.'              # ✅ 전체 프로젝트 코드 푸시
+          source-directory: '.'
           destination-github-username: sewook11
           destination-repository-name: Onda_develop
           user-email: ${{ secrets.EMAIL }}
           commit-message: ${{ github.event.commits[0].message }}
           target-branch: develop
+      - name: Test get variable exported by push-to-another-repository
+        run: echo $DESTINATION_CLONED_DIRECTORY
