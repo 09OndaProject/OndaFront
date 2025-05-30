@@ -2,24 +2,31 @@
   "pages": {
     "/_not-found/page": [
       "static/chunks/webpack-f029a09104d09cbc.js",
-      "static/chunks/4bd1b696-67ee12fb04071d3b.js",
-      "static/chunks/684-819c3ec28c575323.js",
+      "static/chunks/4bd1b696-e0a260c3532cc49b.js",
+      "static/chunks/684-d60ef66e77f3c1e7.js",
       "static/chunks/main-app-92cf10d973e29730.js",
-      "static/chunks/app/_not-found/page-f08302ee705a96b1.js"
+      "static/chunks/app/_not-found/page-ed8a12bc6296dc86.js"
     ],
     "/layout": [
       "static/chunks/webpack-f029a09104d09cbc.js",
-      "static/chunks/4bd1b696-67ee12fb04071d3b.js",
-      "static/chunks/684-819c3ec28c575323.js",
+      "static/chunks/4bd1b696-e0a260c3532cc49b.js",
+      "static/chunks/684-d60ef66e77f3c1e7.js",
       "static/chunks/main-app-92cf10d973e29730.js",
-      "static/css/50e896c09c05cbba.css",
-      "static/chunks/408-df17ca5e6b5a974c.js",
+      "static/css/220b88fc4a763340.css",
+      "static/chunks/408-39beda4cd7185700.js",
       "static/chunks/app/layout-42efba2f741df84e.js"
+    ],
+    "/meet/page": [
+      "static/chunks/webpack-f029a09104d09cbc.js",
+      "static/chunks/4bd1b696-e0a260c3532cc49b.js",
+      "static/chunks/684-d60ef66e77f3c1e7.js",
+      "static/chunks/main-app-92cf10d973e29730.js",
+      "static/chunks/app/meet/page-64d57a66050dc46d.js"
     ],
     "/page": [
       "static/chunks/webpack-f029a09104d09cbc.js",
-      "static/chunks/4bd1b696-67ee12fb04071d3b.js",
-      "static/chunks/684-819c3ec28c575323.js",
+      "static/chunks/4bd1b696-e0a260c3532cc49b.js",
+      "static/chunks/684-d60ef66e77f3c1e7.js",
       "static/chunks/main-app-92cf10d973e29730.js",
       "static/chunks/app/page-687dfdffc8d1b6e5.js"
     ]
