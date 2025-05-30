@@ -30,30 +30,6 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "Next-Action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/",
-      "dataRoute": "/index.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
     "/meet": {
       "experimentalBypassFor": [
         {
@@ -77,13 +53,37 @@
         "x-next-revalidated-tags",
         "x-next-revalidate-tag-token"
       ]
+    },
+    "/": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "Next-Action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/",
+      "dataRoute": "/index.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
     }
   },
   "dynamicRoutes": {},
   "notFoundRoutes": [],
   "preview": {
-    "previewModeId": "d152ea4855b6bebb75a96608ab370c42",
-    "previewModeSigningKey": "2cef3097b01cb470107793953d24a166fad489a5bb526790cd44dc9463c560b3",
-    "previewModeEncryptionKey": "3452174ca19d3f56070e5c7f525d3854bc59bd4386a2ce005f2c84288e2df6c8"
+    "previewModeId": "7c1a64326025a4d20f8693d4fa6c8878",
+    "previewModeSigningKey": "c51ae7752944d4bda22c5f26c4832a1f9e2002e5bace29ecec6a6feabbf48166",
+    "previewModeEncryptionKey": "7a95207483ebd8adb5d51d07a1725eaa60672e195725d8cada50458b1bd3d67d"
   }
 }
