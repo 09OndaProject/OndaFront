@@ -1,7 +1,16 @@
-const Button = () => {
-  return (
-    <div>Button</div>
-  )
+import React from "react";
+
+interface CommonButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  children: React.ReactNode;
+  className?: string;
 }
 
-export default Button
+const CommonButton = ({ children, className = "", ...props }: CommonButtonProps) => {
+  return (
+    <button className={className} {...props}>
+      {children}
+    </button>
+  );
+};
+
+export default CommonButton;
