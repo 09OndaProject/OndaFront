@@ -1,9 +1,13 @@
+"use client"
+
 import React from "react";
 import heroImage from "@/assets/images/hero.png";
 import Image from "next/image";
 import Button from "../common/Button";
+import { useRouter } from "next/navigation";
 
 export default function HeroSection() {
+  const router = useRouter();
   return (
     <>
       <div className="flex items-center flex-col h-[670px]">
@@ -18,8 +22,12 @@ export default function HeroSection() {
                 </h1>
               </div>
               <div className="flex gap-4">
-                <Button>시작하기</Button>
-                <Button color="gray" variant="outline" >
+                <Button onClick={() => router.push("/#")}>시작하기</Button>
+                <Button
+                  color="gray"
+                  variant="outline"
+                  onClick={() => router.push("/#")}
+                >
                   리더 신청
                 </Button>
               </div>
