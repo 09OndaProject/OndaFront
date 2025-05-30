@@ -8,7 +8,7 @@ import BannerImage from "@/assets/images/homeBanner.png";
 export default function MainBannerSection() {
   const router = useRouter();
   return (
-    <section className="flex flex-wrap gap-20 justify-center items-center max-w-[1440px] md:mx-[160px] py-20">
+    <section className="flex flex-wrap gap-20 justify-center items-center max-w-[1440px] mx-10 md:mx-[160px] py-20">
       <div className="flex flex-col gap-10 md:items-start md:text-left items-center text-center">
         <h1 className="text-2xl font-semibold">온:다 소개</h1>
         <p className="text-gray-700 text-md">
