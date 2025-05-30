@@ -87,10 +87,10 @@ npm run dev
 
 | 태그         | 깃모지          | 설명                    | 
 | ---------- | -------------- |----------------------- |
-| `feat`     | :sparkles: ✨  | 새로운 기능 추가           |
-| `fix`      | :bug: 🐛       | 버그 수정                |
-| `style`    | :lipstick: 💄  | 코드 스타일 변경 (로직 변경 없음)  |
-| `refactor` | :recycle: ♻️ , :art: 🎨  | 리팩토링 (기능 변경 없이 구조 개선) |
-| `chore`    | :wrench: 🔧    | 설정 파일 등 기타 변경      |
-| `docs`     | :memo: 📝      | 문서 수정                |
-| `test`     |:white_check_mark: ✅ | 테스트 코드 추가/수정 |
+| `feat`     | :sparkles:   | 새로운 기능 추가           |
+| `fix`      | :bug:        | 버그 수정                |
+| `style`    | :lipstick:   | 코드 스타일 변경 (로직 변경 없음)  |
+| `refactor` | :recycle:, :art:  | 리팩토링 (기능 변경 없이 구조 개선) |
+| `chore`    | :wrench:    | 설정 파일 등 기타 변경      |
+| `docs`     | :memo:      | 문서 수정                |
+| `test`     |:white_check_mark: | 테스트 코드 추가/수정 |
