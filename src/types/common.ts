@@ -1,13 +1,12 @@
-import { MouseEventHandler } from "react";
-
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLInputElement> {
-  title: string;
-  rightIcon?: string;
-  handleClick?: MouseEventHandler<HTMLButtonElement>;
-  btnType?: "button" | "submit";
-  isDisabled?: boolean;
-  className: string;
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  className?: string;
+  color?: "primary" | "gray" | "red" | "accent";
+  variant?: "fill" | "outline";
+  width?: string;
+  height?: string;
+  children: React.ReactNode;
+  onClick?: () => void;
+  type?: "button" | "submit";
 }
 
 export interface InputProps
