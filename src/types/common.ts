@@ -1,12 +1,12 @@
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  className?: string;
-  color?: "primary" | "gray" | "red" | "accent";
-  variant?: "fill" | "outline";
+export interface ButtonProps{
+  className: string;
+  color?: "primary" | "gray" | "accent" | "red";
+  variant?: "fill" | "outline"; 
   width?: string;
   height?: string;
-  children: React.ReactNode;
   onClick?: () => void;
   type?: "button" | "submit";
+  children: React.ReactNode;
 }
 
 export interface InputProps
@@ -36,7 +36,7 @@ export interface CommonInputProps {
 }
 
 export interface IconButtonProps {
-    onClick: () => void;
-    size: number;
-    className?: string;
+  onClick: () => void;
+  size: number;
+  className?: string;
 }
