@@ -34,10 +34,11 @@ export interface CommonInputProps {
   ) => void;
   placeholder?: string;
   required?: boolean;
+  type?: "text" | "email" | "password" | "number";
 }
 
 export interface IconButtonProps {
-    onClick: () => void;
-    size: number;
-    className?: string;
+  onClick: () => void;
+  size: number;
+  className?: string;
 }

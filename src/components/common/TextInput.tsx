@@ -1,11 +1,23 @@
 import React from "react";
 import { CommonInputProps } from "@/types/common";
 
-const TextInput = ({ label, name, value, onChange, placeholder, required }: CommonInputProps) => (
+const TextInput = ({
+  type,
+  label,
+  name,
+  value,
+  onChange,
+  placeholder,
+  required,
+}: CommonInputProps) => (
   <div className="flex flex-col gap-1 font-sans text-main">
-    {label && <label htmlFor={name} className="text-sm font-medium text-gray-700">{label}</label>}
+    {label && (
+      <label htmlFor={name} className="text-sm font-medium text-gray-700">
+        {label}
+      </label>
+    )}
     <input
-      type="text"
+      type={type}
       id={name}
       name={name}
       value={value}
