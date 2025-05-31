@@ -24,7 +24,7 @@ export default function Header() {
       {/* 우측 */}
       <div className="flex gap-6 text-black font-medium text-base">
         <Link href={"#"}>로그인</Link>
-        <Link href={"#"}>마이페이지</Link>
+        <Link href={"/signup"}>회원가입</Link>
       </div>
     </div>
   );
