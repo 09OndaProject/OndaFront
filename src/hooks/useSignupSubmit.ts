@@ -1,6 +1,7 @@
 "use client";
 import { useSignupStore } from "@/stores/useSignUpStore";
 import { useRouter } from "next/navigation";
+import { useAuthStore } from "@/stores/useAuth";
 
 export function useSignupSubmit() {
   const router = useRouter();
@@ -17,6 +18,9 @@ export function useSignupSubmit() {
     agreement,
     resetForm,
   } = useSignupStore();
+
+  const { addUser } = useAuthStore();
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -66,6 +70,9 @@ export function useSignupSubmit() {
       checkbox?.focus();
       return;
     }
+
+    addUser({ email, password });
+
     resetForm();
     router.push("/");
   };

@@ -1,16 +1,13 @@
 import React from "react";
 
 interface TextInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  label: string;
+  label?: string;
 }
 
 export default function TextInput({ label, ...props }: TextInputProps) {
   return (
     <div className="flex flex-col gap-2 font-sans text-main">
-      <label
-        htmlFor={props.name}
-        className="text-sm font-medium text-gray-700"
-      >
+      <label htmlFor={props.name} className="text-sm font-medium text-gray-700">
         {label}
       </label>
       <input
