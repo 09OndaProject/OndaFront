@@ -24,8 +24,8 @@ jobs:
           API_TOKEN_GITHUB: ${{ secrets.MY_TOKEN }}
         with:
           source-directory: '.'
-          destination-github-username: sewook11
-          destination-repository-name: Onda_develop
+          destination-github-username: hyewonny2327
+          destination-repository-name: OndaFront_
           user-email: ${{ secrets.EMAIL }}
           commit-message: ${{ github.event.commits[0].message }}
           target-branch: develop
