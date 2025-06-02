@@ -1,10 +1,11 @@
 "use client";
 import { useSignupStore } from "@/stores/useSignUpStore";
-import TextInput from "@/components/common/TextInput";
 import AreaSelector from "@/components/common/AreaSelector";
 import InterestSelector from "@/components/InterestSelector";
 import DigitalLevelSelector from "@/components/DigitalLevelSelector";
 import { useSignupSubmit } from "@/hooks/useSignupSubmit";
+import LabeledInput from "@/components/common/LabeledInput";
+import BirthDateInput from "@/components/common/BirthDateInput";
 
 export default function SignupPage() {
   const { handleSubmit, setValue } = useSignupSubmit();
@@ -32,128 +33,62 @@ export default function SignupPage() {
           onSubmit={handleSubmit}
           className="space-y-6 w-full max-w-md"
         >
-          <div>
-            <label className="text-xs font-bold text-gray-700">이름</label>
-            <div className="mt-3">
-              <TextInput
-                placeholder="이름"
-                name="name"
-                value={name}
-                onChange={(e) => setValue("name", e.target.value)}
-                required
-                type="text"
-              />
-            </div>
-          </div>
-          <div>
-            <label className="text-xs font-bold text-gray-700">닉네임</label>
-            <div className="mt-3">
-              <TextInput
-                placeholder="닉네임"
-                name="nickname"
-                value={nickname}
-                onChange={(e) => setValue("nickname", e.target.value)}
-                required
-                type="text"
-              />
-            </div>
-          </div>
-          <div>
-            <label
-              htmlFor="birthYear"
-              className="text-xs font-bold text-gray-700"
-            >
-              생년월일
-            </label>
-            <div className="mt-3 flex gap-2 items-center">
-              <TextInput
-                name="birthYear"
-                value={birthYear}
-                onChange={(e) => setValue("birthYear", e.target.value)}
-                placeholder="YYYY"
-                type="number"
-                required
-              />
-              <span className=" text-gray-400">/</span>
-              <TextInput
-                name="birthMonth"
-                value={birthMonth}
-                onChange={(e) => setValue("birthMonth", e.target.value)}
-                placeholder="MM"
-                type="number"
-                required
-              />
-              <span className="text-gray-400">/</span>
-              <TextInput
-                name="birthDay"
-                value={birthDay}
-                onChange={(e) => setValue("birthDay", e.target.value)}
-                placeholder="DD"
-                type="number"
-                required
-              />
-            </div>
-          </div>
-
-          <div>
-            <label className="text-xs font-bold text-gray-700">이메일</label>
-            <div className="mt-3">
-              <TextInput
-                placeholder="이메일"
-                name="email"
-                value={email}
-                onChange={(e) => setValue("email", e.target.value)}
-                required
-                type="email"
-              />
-            </div>
-          </div>
-          <div>
-            <label className="text-xs font-bold text-gray-700">비밀번호</label>
-            <div className="mt-3">
-              <TextInput
-                placeholder="비밀번호"
-                name="password"
-                value={password}
-                onChange={(e) => setValue("password", e.target.value)}
-                required
-                type="password"
-              />
-            </div>
-          </div>
-          <div>
-            <label
-              htmlFor="birthYear"
-              className="text-xs font-bold text-gray-700"
-            >
-              비밀번호 확인
-            </label>
-            <div className="mt-3">
-              <TextInput
-                placeholder="비밀번호 확인"
-                name="password_confirm"
-                value={password_confirm}
-                onChange={(e) => setValue("password_confirm", e.target.value)}
-                required
-                type="password"
-              />
-            </div>
-          </div>
-
-          {/* <div className="-mx-16 border-t border-gray-500 my-12" /> */}
-          <div>
-            <label className="text-xs font-bold text-gray-700">전화번호</label>
-            <div className="mt-3">
-              <TextInput
-                placeholder="전화번호"
-                name="phone"
-                value={phone}
-                onChange={(e) => setValue("phone", e.target.value)}
-                required
-                type="text"
-              />
-            </div>
-          </div>
+          <LabeledInput
+            label="이름"
+            name="name"
+            value={name}
+            onChange={(e) => setValue("name", e.target.value)}
+            placeholder="이름"
+            required
+          />
+          <LabeledInput
+            label="닉네임"
+            name="nickname"
+            value={nickname}
+            onChange={(e) => setValue("nickname", e.target.value)}
+            placeholder="닉네임"
+            required
+          />
+          <BirthDateInput
+            birthYear={birthYear}
+            birthMonth={birthMonth}
+            birthDay={birthDay}
+            setValue={setValue}
+          />
+          <LabeledInput
+            label="이메일"
+            name="email"
+            value={email}
+            onChange={(e) => setValue("email", e.target.value)}
+            placeholder="이메일"
+            required
+          />
+          <LabeledInput
+            label="비밀번호"
+            name="password"
+            value={password}
+            onChange={(e) => setValue("password", e.target.value)}
+            placeholder="비밀번호"
+            type="password"
+            required
+          />
+          <LabeledInput
+            label="비밀번호 확인"
+            name="password_confirm"
+            value={password_confirm}
+            onChange={(e) => setValue("password_confirm", e.target.value)}
+            placeholder="비밀번호 확인"
+            type="password"
+            required
+          />
+          <LabeledInput
+            label="전화번호"
+            name="phone"
+            value={phone}
+            onChange={(e) => setValue("phone", e.target.value)}
+            placeholder="전화번호"
+            required
+          />
           <div>
             <label className="text-xs font-bold text-gray-700">지역</label>
             <div className="mt-3">
