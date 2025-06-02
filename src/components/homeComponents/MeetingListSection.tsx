@@ -14,10 +14,10 @@ export default function MeetingListSection() {
         <h2 className="text-2xl font-bold mb-10 mx-4 md:mx-[160px]">
           최근 개설된 모임
         </h2>
-        <div className="flex flex-wrap md:flex-nowrap justify-center gap-6 overflow-auto p-8 mb-3">
+        <div className="flex flex-wrap md:flex-nowrap justify-center gap-6 overflow-auto">
           <Swiper
             modules={[Autoplay]}
-            slidesPerView={1.2}
+            slidesPerView={3.5}
             spaceBetween={32}
             autoplay={{
               delay: 3000,
