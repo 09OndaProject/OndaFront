@@ -9,15 +9,15 @@ import { MeetingCard } from "../../components/common/MeetingCard";
 
 export default function MeetingListSection() {
   return (
-    <section className="py-16 w-full">
+    <section className="py-16 w-full flex flex-col items-center">
       <div>
         <h2 className="text-2xl font-bold mb-10 mx-4 md:mx-[160px]">
           최근 개설된 모임
         </h2>
-        <div className="flex flex-wrap md:flex-nowrap justify-center gap-6 overflow-auto">
+        <div className="flex flex-wrap md:flex-nowrap justify-center gap-6 overflow-auto max-w-[1440px]">
           <Swiper
             modules={[Autoplay]}
-            slidesPerView={3.5}
+            slidesPerView={1.2}
             spaceBetween={32}
             autoplay={{
               delay: 3000,
