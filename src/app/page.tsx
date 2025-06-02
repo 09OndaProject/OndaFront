@@ -1,5 +1,5 @@
 import BannerSection from "@/components/homeComponents/BannerSection";
-import GatheringListSection from "@/components/homeComponents/gatheringListSection";
+import GatheringListSection from "@/components/homeComponents/GatheringListSection";
 import HeroSection from "@/components/homeComponents/HeroSection";
 import MainBannerSection from "@/components/homeComponents/MainBannerSection";
 
