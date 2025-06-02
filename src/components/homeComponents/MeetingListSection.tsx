@@ -1,6 +1,11 @@
+"use client";
 import React from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/autoplay";
 import { dummyMeetings } from "@/datas/meetings";
-import { MeetingCard } from "./MeetingCard";
+import { MeetingCard } from "../common/MeetingCard";
 
 export default function MeetingListSection() {
   return (
@@ -9,12 +14,32 @@ export default function MeetingListSection() {
         <h2 className="text-2xl font-bold mb-10 mx-4 md:mx-[160px]">
           최근 개설된 모임
         </h2>
-        <div>
-          <div className="flex flex-wrap md:flex-nowrap justify-center gap-6 overflow-auto p-8 md:px-[160px]">
+        <div className="flex flex-wrap md:flex-nowrap justify-center gap-6 overflow-auto p-8 mb-3">
+          <Swiper
+            modules={[Autoplay]}
+            slidesPerView={1.2}
+            spaceBetween={32}
+            autoplay={{
+              delay: 3000,
+              disableOnInteraction: false,
+            }}
+            breakpoints={{
+              768: {
+                slidesPerView: 2.5,
+                spaceBetween: 24,
+              },
+              1024: {
+                slidesPerView: 3.5,
+                spaceBetween: 32,
+              },
+            }}
+          >
             {dummyMeetings.map((item) => (
-              <MeetingCard key={item.meet_id} item={item} />
+              <SwiperSlide key={item.meet_id}>
+                <MeetingCard item={item} />
+              </SwiperSlide>
             ))}
-          </div>
+          </Swiper>
         </div>
       </div>
     </section>

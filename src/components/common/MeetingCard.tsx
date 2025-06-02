@@ -1,9 +1,9 @@
 import React from "react";
 import { Calendar, MapPin } from "lucide-react";
 import Image from "next/image";
-import DefaultGatheringImage from "../common/DefaultMeetingImage";
+import DefaultGatheringImage from "./DefaultMeetingImage";
 import { INTEREST_CATEGORY_MAP } from "@/constants/interestCategory";
-import MeeringStatusButtons from "./MeetingStatusButton";
+import MeeringStatusButtons from "../homeComponents/MeetingStatusButton";
 import { MeetingCardProps } from "@/types/meetings";
 
 export const MeetingCard = ({ item }: MeetingCardProps) => {
