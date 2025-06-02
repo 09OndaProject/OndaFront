@@ -17,20 +17,25 @@ interface AuthState {
   login: (email: string, password: string) => boolean;
   logout: () => void;
 }
-
+const savedUsers =
+  typeof window !== "undefined"
+    ? JSON.parse(localStorage.getItem("users") || "[]")
+    : [];
 export const useAuthStore = create<AuthState>((set, get) => ({
   email: "",
   password: "",
-  users: [],
+  users: savedUsers,
   currentUser: null,
 
   setEmail: (email) => set({ email }),
   setPassword: (password) => set({ password }),
 
   addUser: (user) =>
-    set((state) => ({
-      users: [...state.users, user],
-    })),
+    set((state) => {
+      const updatedUsers = [...state.users, user];
+      localStorage.setItem("users", JSON.stringify(updatedUsers));
+      return { users: updatedUsers };
+    }),
 
   reset: () => set({ email: "", password: "" }),
 
