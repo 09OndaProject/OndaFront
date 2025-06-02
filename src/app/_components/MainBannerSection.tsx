@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import Button from "../common/Button";
+import Button from "../../components/common/Button";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import BannerImage from "@/assets/images/homeBanner.png";

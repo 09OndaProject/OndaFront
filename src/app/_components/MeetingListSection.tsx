@@ -5,7 +5,7 @@ import { Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/autoplay";
 import { dummyMeetings } from "@/datas/meetings";
-import { MeetingCard } from "../common/MeetingCard";
+import { MeetingCard } from "../../components/common/MeetingCard";
 
 export default function MeetingListSection() {
   return (

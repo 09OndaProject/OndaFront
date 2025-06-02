@@ -4,7 +4,7 @@ import Image from "next/image";
 import DefaultGatheringImage from "../common/DefaultMeetingImage";
 import { INTEREST_CATEGORY_MAP } from "@/constants/interestCategory";
 import { MeetingCardProps } from "@/types/meetings";
-import MeeringStatusButtons from "../homeComponents/MeetingStatusButton";
+import MeeringStatusButtons from "../../app/_components/MeetingStatusButton";
 
 export const MeetingCard = ({ item }: MeetingCardProps) => {
   const {
