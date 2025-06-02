@@ -1,21 +1,42 @@
-name: git push into another repo to deploy to vercel
+name: CI/CD
 
 on:
   push:
-    branches: [develop]
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - develop
 
 jobs:
   build:
+    name: Build & Test
     runs-on: ubuntu-latest
-
+    container: pandoc/latex
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
-      - name: Install dependencies
-        run: npm install
+      - name: creates output
+        run: sh ./build.sh
 
-      - name: Build Next.js project
-        run: npm run build
+      - name: Upload output artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: output
+          path: output/
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    container: pandoc/latex
+    steps:
+      - name: Download output artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: output
+          path: output/
 
       - name: Pushes to another repository
         id: push_directory
@@ -23,11 +44,12 @@ jobs:
         env:
           API_TOKEN_GITHUB: ${{ secrets.MY_TOKEN }}
         with:
-          source-directory: '.next'
-          destination-github-username: sewook11
-          destination-repository-name: Onda-develop
+          source-directory: 'output'
+          destination-github-username: hyewonny2327
+          destination-repository-name: OndaFront_
           user-email: ${{ secrets.EMAIL }}
-          commit-message: ${{ github.event.commits[0].message }}
+          commit-message: 'Deploy from GitHub Actions'
           target-branch: develop
+
       - name: Test get variable exported by push-to-another-repository
         run: echo $DESTINATION_CLONED_DIRECTORY
