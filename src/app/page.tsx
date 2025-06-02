@@ -1,7 +1,7 @@
 import BannerSection from "@/components/homeComponents/BannerSection";
-import GatheringListSection from "@/components/homeComponents/GatheringListSection";
 import HeroSection from "@/components/homeComponents/HeroSection";
 import MainBannerSection from "@/components/homeComponents/MainBannerSection";
+import MeetingListSection from "@/components/homeComponents/MeetingListSection";
 
 export default function Home() {
   return (
@@ -9,7 +9,7 @@ export default function Home() {
       <HeroSection />
       <MainBannerSection />
       <BannerSection />
-      <GatheringListSection />
+      <MeetingListSection />
     </main>
   );
 }
