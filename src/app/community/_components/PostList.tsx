@@ -14,7 +14,7 @@ export default function PostList() {
     interest_id: p.interest_id,
     image_url: p.image_url ?? undefined,
     created_at: new Date(p.created_at),
-    updated_at: p.updated_at ? new Date(p.updated_at) : undefined,  // 수정된 적 있으면 날짜 데이터 생성
+    updated_at: p.updated_at ? new Date(p.updated_at) : undefined,
   }));
 
   return (

@@ -2,10 +2,11 @@ import { POST_CATEGORY_MAP } from "@/constants/category";
 import { INTEREST_CATEGORY_MAP } from "@/constants/interestCategory";
 import { Post } from "@/types/post";
 import { formatDate } from "@/utils/utils";
-import { MapPin, MoreVertical } from "lucide-react";
+import { MapPin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import PostActionMenu from "./PostActionMenu";
 interface PostProps {
   post: Post;
 }
@@ -13,7 +14,7 @@ interface PostProps {
 export default function PostCard({ post }: PostProps) {
   return (
     <Link href={`/community/${post.post_id}`} className="block">
-      <div className="p-8 border border-gray-400 rounded-md flex flex-col gap-4">
+      <div className="p-8 border border-gray-400 rounded-md flex flex-col gap-4 relative">
         <div className="flex justify-between text-gray-600 text-sm">
           <div className="flex gap-4">
             <span className="font-medium">
@@ -32,21 +33,14 @@ export default function PostCard({ post }: PostProps) {
               </span>
             )}
           </div>
-          <button
-            onClick={(e) => {
-                e.preventDefault();
-            }}
-          >
-            <MoreVertical />
-          </button>
+          <PostActionMenu postId={post.post_id} />
         </div>
         <h2 className="text-lg font-semibold">{post.title}</h2>
         {post.image_url && (
           <div className="relative h-[600px] w-full rounded-md overflow-hidden">
             <Image
               src={post.image_url}
-              alt="
-                 게시물 이미지"
+              alt="게시물 이미지"
               fill
               className="object-cover"
             />
