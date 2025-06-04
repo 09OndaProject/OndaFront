@@ -18,7 +18,7 @@ interface FinishedMeetDetailModalProps {
 
 const FinishedMeetDetailModal = ({ data, onClose }: FinishedMeetDetailModalProps) => {
   return (
-    <Modal modalKey="finishedMeetDetail" >
+    <Modal modalKey="finishedMeetDetail" className="w-1/2 max-w-md rounded-2xl bg-white p-6 shadow-md font-sans max-h-[90vh] overflow-y-auto">
       {/* 날짜 + 모집상태 */}
       <div className="flex items-center text-sm text-gray-600 mb-1">
         <span>{data.date}</span>
@@ -47,10 +47,10 @@ const FinishedMeetDetailModal = ({ data, onClose }: FinishedMeetDetailModalProps
           <img
             src={data.image}
             alt="대표 이미지"
-            className="w-full h-auto rounded-xl border border-gray-300 object-cover"
+            className="w-full min-h-[500px] h-full rounded-xl border border-gray-300 object-cover"
           />
         ) : (
-          <DefaultMeetingImage />
+          <DefaultMeetingImage width="w-full" height="min-h-[500px]" />
         )}
       </div>
 

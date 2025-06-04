@@ -11,16 +11,7 @@ import FinishedMeetDetailModal from "../meet/detail/_components/FinishedMeetDeta
 export default function Mypage() {
   const { modals, closeModal } = useModalStore();
 
-  // dummyData는 현재는 하드코딩, 나중엔 props나 API로 대체 가능
-  const dummyData = {
-    title: "걷기 & 대화 모임",
-    date: "2025-06-04",
-    location: "서울특별시 어쩌구 저쩌구",
-    descrlption: "가볍게 함께 걸으며\n건강도 챙기고 이웃과 마음을 나눠요",
-    image: null,
-    leaderName: "리더 이름",
-    leaderImage: null,
-  };
+  
   const { currentUser } = useAuthStore();
   console.log(currentUser?.name);
   const router = useRouter();
@@ -49,10 +40,6 @@ export default function Mypage() {
         </button>
       </div>
       <PastScheduleList />
-      <FinishedMeetDetailModal
-        data={dummyData}
-        onClose={() => closeModal("finishedMeetDetail")}
-      />
     </main>
   );
 }
