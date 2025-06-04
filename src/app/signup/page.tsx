@@ -23,7 +23,7 @@ export default function SignupPage() {
     agreement,
     toggleAgreement,
     isKakaoUser,
-    setKakaoUserSignedUp,
+    // setKakaoUserSignedUp,
   } = useSignupStore();
 
   return (
