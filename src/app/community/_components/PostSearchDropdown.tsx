@@ -3,13 +3,11 @@ import React, { useState } from "react";
 import AreaDropdown from "./AreaDropdown";
 import SelectBox from "@/components/common/SelectBox";
 import { digitalLevelOptions, interestOptions } from "@/constants/category";
+import { useAppSearchParams } from "@/stores/useAppSearchParams";
 
 export default function PostSearchDropdown() {
   const [showDetail, setShwoDetail] = useState(false);
-
-  const [selectedInterest, setSelectedInterest] = useState(0);
-  // const [selectedArea, setSelectedArea] = useState(0);
-  const [selectedDigitalLevel, setSelectedDigitalLevel] = useState(0);
+  const { searchParams, updateParams } = useAppSearchParams();
 
   const handleToggle = () => setShwoDetail((prev) => !prev);
 
@@ -22,17 +20,17 @@ export default function PostSearchDropdown() {
       {showDetail && (
         <div className="flex flex-wrap gap-4 flex-grow">
           <SelectBox
-            value={selectedInterest}
+            value={searchParams.interest}
             options={interestOptions}
             placeholder="관심사"
-            onChange={(e) => setSelectedInterest(Number(e.target.value))}
+            onChange={(e) => updateParams("interest", Number(e.target.value))}
           />
           <AreaDropdown />
           <SelectBox
-            value={selectedDigitalLevel}
+            value={searchParams.digitalLevel}
             options={digitalLevelOptions}
             placeholder="디지털 난이도"
-            onChange={(e) => setSelectedDigitalLevel(Number(e.target.value))}
+            onChange={(e) => updateParams("digitalLevel", Number(e.target.value))}
           />
         </div>
       )}
