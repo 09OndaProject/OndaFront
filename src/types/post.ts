@@ -3,6 +3,7 @@ export type Post = {
     title: string;
     content: string;
     category_id: number | null;
+    digitalLevel_id: number | null;
     nickname : string;
     area_id: number | null;
     interest_id : number | null;

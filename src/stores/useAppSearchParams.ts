@@ -1,12 +1,21 @@
 import { create } from "zustand";
 
 export type SearchParams = {
-  category: number;
-  interest: number;
-  digitalLevel: number;
+  category_id: number;
+  interest_id: number;
+  digitalLevel_id: number;
   keyword: string;
   sido: string;
   districts: string;
+};
+
+const defaultParams: SearchParams = {
+  category_id: 0,
+  interest_id: 0,
+  keyword: "",
+  digitalLevel_id: 0,
+  sido: "",
+  districts: "",
 };
 
 type State = {
@@ -15,23 +24,20 @@ type State = {
     key: K,
     value: SearchParams[K]
   ) => void;
+  resetParams: () => void;
 };
 
 export const useAppSearchParams = create<State>((set) => ({
-  searchParams: {
-    category: 0,
-    interest: 0,
-    keyword: "",
-    digitalLevel: 0,
-    sido: "",
-    districts: "",
-  },
-  updateParams: (key, value) => {
+  searchParams: defaultParams,
+  updateParams: (key, value) =>
     set((state) => ({
       searchParams: {
         ...state.searchParams,
         [key]: value,
       },
-    }));
-  },
+    })),
+  resetParams: () =>
+    set(() => ({
+      searchParams: defaultParams,
+    })),
 }));
