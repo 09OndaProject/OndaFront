@@ -26,6 +26,7 @@ export default function PostDetailPage() {
         post_id={post.post_id}
         nickname={post.nickname}
         created_at={post.created_at}
+        updated_at={post.updated_at}
         category_id={post.category_id}
         interest_id={post.interest_id}
         area_id={post.area_id ?? null}

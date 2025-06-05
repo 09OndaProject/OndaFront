@@ -19,6 +19,7 @@ export type PostHeaderProps = {
   post_id: number;
   nickname: string;
   created_at: Date;
+  updated_at?: Date;
   category_id: number | null;
   interest_id: number | null;
   area_id: number | null;
