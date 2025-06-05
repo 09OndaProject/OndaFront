@@ -1,4 +1,3 @@
-import AreaSelector from "@/components/common/AreaSelector";
 import Button from "@/components/common/Button";
 import SelectBox from "@/components/common/SelectBox";
 import TextInput from "@/components/common/TextInput";
@@ -7,22 +6,16 @@ import {
   digitalLevelOptions,
   interestOptions,
 } from "@/constants/category";
-import { ChevronDown, ChevronUp, Search } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import { Search } from "lucide-react";
+import React, { useState } from "react";
+import AreaDropdown from "./AreaDropdown";
 
 export default function PostSearch() {
   const [selectedCategory, setSelectedCategory] = useState(0);
   const [selectedInterest, setSelectedInterest] = useState(0);
-  const [selectedArea, setSelectedArea] = useState(0);
+  // const [selectedArea, setSelectedArea] = useState(0);
   const [selectedDigitalLevel, setSelectedDigitalLevel] = useState(0);
 
-  const [showAreaSelector, setShowAreaSelector] = useState(false);
-
-  const handleToggleAreaSelector = () => {
-    setShowAreaSelector((prev) => !prev);
-  };
-
-  useEffect(() => {})
 
   return (
     <div className="w-full flex gap-4 border-b-2 py-10">
@@ -49,24 +42,7 @@ export default function PostSearch() {
             onChange={(e) => setSelectedInterest(Number(e.target.value))}
           />
           <div className="relative">
-            <button
-              type="button"
-              onClick={handleToggleAreaSelector}
-              className="flex items-center border border-gray-300 rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 transition"
-            >
-              지역 선택
-              {showAreaSelector ? (
-                <ChevronUp className="ml-2 w-4 h-4" />
-              ) : (
-                <ChevronDown className="ml-2 w-4 h-4" />
-              )}
-            </button>
-
-            {showAreaSelector && (
-              <div className="absolute right-0 z-20 mt-2 w-[400px]">
-                <AreaSelector />
-              </div>
-            )}
+            <AreaDropdown />
           </div>
           <SelectBox
             value={selectedDigitalLevel}
