@@ -14,10 +14,28 @@ export type User = {
     isAdmin: boolean;
 };
 
+export type SUser = {
+    id: number;
+    email: string;
+    nickname: string;
+    name: string;
+    file: string | null;
+    date_of_birth: string;
+    area: { id: number; name: string };
+    interest: { id: number; name: string };
+    digital_level: { id: number; level: number; description: string };      
+}
+
 export type LeaderApplication = {
     userId: string;
     bio: string;
     status: ApplicationStatus;
+    certificate: Certification[];
+}
+
+export type Certification = {
+    type: string;
+    file: string;
 }
 
 export enum ApplicationStatus {
