@@ -1,0 +1,27 @@
+//유저 정보 타입
+export type User = {
+    id: string;
+    email: string;
+    nickname: string;
+    name: string;
+    birth: Date; //생년월일
+    imageUrl: string; //프로필이미지
+    ageGroup: string; //연령대
+    area: string; //지역
+    digitalLevel: string; //디지털레벨
+    interest: string[]; //관심사
+    isLeader: boolean;
+    isAdmin: boolean;
+};
+
+export type LeaderApplication = {
+    userId: string;
+    bio: string;
+    status: ApplicationStatus;
+}
+
+export enum ApplicationStatus {
+    pending = '보류',
+    approved = '승인',
+    rejected = '거부',
+  }
