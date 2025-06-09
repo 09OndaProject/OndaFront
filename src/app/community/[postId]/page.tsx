@@ -5,6 +5,8 @@ import PostHeader from "./_components/PostHeader";
 import { useParams } from "next/navigation";
 import { useFetchPost } from "@/hooks/useFetchPost";
 import PostContent from "./_components/PostContent";
+import CommentList from "./_components/CommentList";
+import CommentInput from "./_components/CommentInput";
 
 export default function PostDetailPage() {
   const params = useParams();
@@ -36,8 +38,15 @@ export default function PostDetailPage() {
         title={post.title}
       />
       <PostContent 
+        post_id={post.post_id}
         image={post.image_url}
         content={post.content}
+      />
+      <CommentInput 
+        onSubmit={() => console.log("댓글 등록")}
+      />
+      <CommentList 
+        post_id={post.post_id}
       />
     </div>
   );

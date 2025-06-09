@@ -1,18 +1,18 @@
-"use client";
 import { Edit, MoreVertical, Trash } from "lucide-react";
 import React, { useState } from "react";
 
-interface PostActionMenuProps {
-  postId: number;
+interface ActionMenuProps {
+  targetId: number;
+  targetType: "post" | "comment";
   onEdit?: (id: number) => void;
   onDelete?: (id: number) => void;
 }
 
-export default function PostActionMenu({
-  postId,
+export default function ActionMenu({
+  targetId,
   onEdit,
   onDelete,
-}: PostActionMenuProps) {
+}: ActionMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleToggle = (e: React.MouseEvent) => {
@@ -24,24 +24,28 @@ export default function PostActionMenu({
   const handleEdit = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    onDelete?.(postId);
+    onEdit?.(targetId);
     setIsOpen(false);
   };
 
   const handleDelete = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    onEdit?.(postId);
+    onDelete?.(targetId);
     setIsOpen(false);
   };
+
   return (
-    <div>
+    <div className="relative text-gray-600">
       <button onClick={handleToggle}>
         <MoreVertical />
       </button>
       {isOpen && (
-        <div className="bg-white p-4 flex flex-col gap-4 rounded-md text-sm absolute z-10 border border-gray-400 shadow-md right-5">
-          <button onClick={handleEdit} className="flex gap-2">
+        <div className="bg-white p-4 flex flex-col gap-4 rounded-md text-sm w-[120px] absolute z-10 border border-gray-400 shadow-md right-5">
+          <button
+            onClick={handleEdit}
+            className="flex gap-2 border-b-2 border-gray-200 pb-4"
+          >
             <Edit />
             수정
           </button>
