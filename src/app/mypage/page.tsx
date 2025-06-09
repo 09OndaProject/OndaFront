@@ -1,11 +1,11 @@
 "use client";
-
-import Profile from "./_components/Profile";
 import AppliedScheduleList from "./_components/AppliedScheduleList";
 import PastScheduleList from "./_components/PastScheduleList";
 import { useAuthStore } from "@/stores/useAuth";
 import { useRouter } from "next/navigation";
 import { useSignupStore } from "@/stores/useSignUpStore";
+import UserProfile from "./_components/UserProfile";
+
 
 export default function Mypage() {
   const { currentUser } = useAuthStore();
@@ -20,7 +20,7 @@ export default function Mypage() {
   };
   return (
     <main className="px-10 py-12 max-w-5xl mx-auto">
-      <Profile />
+      <UserProfile />
       {displayNickname && (
         <div className="w-full flex justify-center mb-6">
           <p className="font-bold text-lg text-center">

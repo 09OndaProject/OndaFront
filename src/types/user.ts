@@ -2,10 +2,11 @@
 export type User = {
     id: string;
     email: string;
+    phone: string;
     nickname: string;
     name: string;
     birth: Date; //생년월일
-    imageUrl: string; //프로필이미지
+    imageUrl?: string; //프로필이미지
     ageGroup: string; //연령대
     area: string; //지역
     digitalLevel: string; //디지털레벨
