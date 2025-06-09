@@ -37,6 +37,11 @@ export type PostMetaDataProps = {
   is_author: boolean;
 };
 
+export type PostContentProps = {
+  image?: string;
+  content: string;
+};
+
 export type Comment = {
   post_id: number;
   comment_id: number;

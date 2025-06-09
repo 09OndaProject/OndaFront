@@ -4,6 +4,7 @@ import React from "react";
 import PostHeader from "./_components/PostHeader";
 import { useParams } from "next/navigation";
 import { useFetchPost } from "@/hooks/useFetchPost";
+import PostContent from "./_components/PostContent";
 
 export default function PostDetailPage() {
   const params = useParams();
@@ -33,6 +34,10 @@ export default function PostDetailPage() {
         digitalLevel_id={post.digitalLevel_id ?? null}
         is_author={post.is_author}
         title={post.title}
+      />
+      <PostContent 
+        image={post.image_url}
+        content={post.content}
       />
     </div>
   );
