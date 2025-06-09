@@ -5,6 +5,9 @@ import { useAuthStore } from "@/stores/useAuth";
 import { useRouter } from "next/navigation";
 import { useSignupStore } from "@/stores/useSignUpStore";
 import UserProfile from "./_components/UserProfile";
+import ReviewList from "./_components/ReviewList";
+import { sampleReviews } from "@/datas/sampleReivew";
+import MoreLinkButton from "@/components/common/Buttons/MoreLinkButton";
 
 
 export default function Mypage() {
@@ -19,8 +22,12 @@ export default function Mypage() {
     router.push("/meet/search");
   };
   return (
-    <main className="px-10 py-12 max-w-5xl mx-auto">
+    <main className="px-10 py-12 max-w-5xl mx-auto space-y-10">
       <UserProfile />
+      <div>
+        <ReviewList reviews={sampleReviews.slice(0, 3)} />
+        <MoreLinkButton href="/mypage/reviews">전체 보기</MoreLinkButton>
+      </div>
       {displayNickname && (
         <div className="w-full flex justify-center mb-6">
           <p className="font-bold text-lg text-center">
