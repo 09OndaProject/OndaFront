@@ -1,7 +1,7 @@
 'use client';
 
 import MoreLinkButton from '@/components/common/Buttons/MoreLinkButton';
-import { Star } from 'lucide-react';
+import StarRating from '@/components/StarRating';
 
 export type ReviewCardProps = {
   userName: string;
@@ -22,8 +22,6 @@ const ReviewCard = ({
   count,
   content,
 }: ReviewCardProps) => {
-  const filledStars = Math.floor(rating);
-  const emptyStars = 5 - filledStars;
 
   return (
     <div className="rounded-xl border bg-white p-5 shadow-sm space-y-3 text-sm w-full">
@@ -31,14 +29,7 @@ const ReviewCard = ({
       <div className="flex justify-between items-start">
         <div className="flex items-center gap-2 font-semibold">
           <span className='text-sm mr-2'>{userName}님</span>
-          <div className="flex items-center text-primary-deep gap-1">
-            {Array(filledStars)
-              .fill(0)
-              .map((_, i) => <Star key={i} size={20} fill="currentColor" />)}
-            {Array(emptyStars)
-              .fill(0)
-              .map((_, i) => <Star key={i} size={20} className="text-primary-deep" />)}
-          </div>
+          <StarRating rating={rating} size={20}/>
         </div>
         <MoreLinkButton onClick={() => console.log('상세보기')}>
             상세 보기
