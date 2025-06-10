@@ -38,7 +38,6 @@ export default function PostDetailPage() {
         title={post.title}
       />
       <PostContent 
-        post_id={post.post_id}
         image={post.image_url}
         content={post.content}
       />
