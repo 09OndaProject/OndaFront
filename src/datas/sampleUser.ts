@@ -1,4 +1,4 @@
-import { ApplicationStatus, LeaderApplication, User } from "@/types/user";
+import { LeaderApplication, User } from "@/types/user";
 
 export const sampleUser: User = {
     id: 'u123',
@@ -18,7 +18,7 @@ export const sampleUser: User = {
 export const sampleLeaderApplication: LeaderApplication = {
     userId: 'u123',
     bio: '지역 사회에 기여하고 싶어 리더에 지원했습니다.',
-    status: ApplicationStatus.pending,
+    status: 'pending',
     certificate: [
         {
             type: '경력증명서',

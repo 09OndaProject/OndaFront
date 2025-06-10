@@ -39,8 +39,4 @@ export type Certification = {
     file: string;
 }
 
-export enum ApplicationStatus {
-    pending = '보류',
-    approved = '승인',
-    rejected = '거부',
-  }
+export type ApplicationStatus = 'pending' | 'approved' | 'rejected';
