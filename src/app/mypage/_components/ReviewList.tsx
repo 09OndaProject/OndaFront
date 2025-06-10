@@ -1,4 +1,4 @@
-import Pagination from '@/components/common/Pagination';
+import Pagination from '@/components/Pagination';
 import ReviewCard, { ReviewCardProps } from './ReviewCard';
 
 type ReviewListProps = {
@@ -20,7 +20,7 @@ const ReviewList = ({
     const totalPages = Math.ceil(reviews.length / perPage);
     const paginated = showPagination
       ? reviews.slice((currentPage - 1) * perPage, currentPage * perPage)
-      : reviews;
+      : reviews.slice(0, 3);
   
     return (
       <div className="space-y-6 mb-5">

@@ -7,7 +7,7 @@ type MoreLinkButtonProps =
 
 const MoreLinkButton = ({ href, onClick, children }: MoreLinkButtonProps) => {
   const baseStyle =
-    'inline-flex items-center text-base font-medium text-gray-600 hover:underline';
+    'inline-flex items-center text-base font-medium text-gray-600 hover:text-black';
 
   if (href) {
     return (
@@ -21,7 +21,7 @@ const MoreLinkButton = ({ href, onClick, children }: MoreLinkButtonProps) => {
   return (
     <button onClick={onClick} className={baseStyle}>
       {children}
-      <ChevronRight size={18} strokeWidth={2} className="ml-1 text-gray-600" />
+      <ChevronRight size={18} strokeWidth={2} className="ml-1 text-gray-600 hover:text-black" />
     </button>
   );
 };

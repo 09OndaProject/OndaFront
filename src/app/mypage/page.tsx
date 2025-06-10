@@ -8,6 +8,8 @@ import UserProfile from "./_components/UserProfile";
 import ReviewList from "./_components/ReviewList";
 import { sampleReviews } from "@/datas/sampleReivew";
 import MoreLinkButton from "@/components/common/Buttons/MoreLinkButton";
+import LeaderMeetingList from "./_components/LeaderMeetingCardList";
+import { sampleLeaderMeetings } from "@/datas/sampleMeeting";
 
 
 export default function Mypage() {
@@ -25,7 +27,11 @@ export default function Mypage() {
     <main className="px-10 py-12 max-w-5xl mx-auto space-y-10">
       <UserProfile />
       <div>
-        <ReviewList reviews={sampleReviews.slice(0, 3)} />
+        <LeaderMeetingList meetings={sampleLeaderMeetings} />
+        <MoreLinkButton href="/mypage/reviews">전체 보기</MoreLinkButton>
+      </div>
+      <div>
+        <ReviewList reviews={sampleReviews} />
         <MoreLinkButton href="/mypage/reviews">전체 보기</MoreLinkButton>
       </div>
       {displayNickname && (
