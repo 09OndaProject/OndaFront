@@ -1,10 +1,8 @@
 import { Edit, MoreVertical, Trash } from "lucide-react";
-import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 interface ActionMenuProps {
   targetId: number;
-  targetType: "post" | "comment";
   onEdit?: (id: number) => void;
   onDelete?: (id: number) => void;
 }
@@ -16,26 +14,16 @@ export default function ActionMenu({
 }: ActionMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const router = useRouter();
-
   const handleToggle = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     setIsOpen((prev) => !prev);
   };
 
-  const handleEdit = (e: React.MouseEvent) => {
+  const handleClick = (callback?: (id: number) => void) => (e:React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    onEdit?.(targetId);
-    setIsOpen(false);
-    router.push(`/community/${targetId}/edit`);
-  };
-
-  const handleDelete = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    onDelete?.(targetId);
+    callback?.(targetId);
     setIsOpen(false);
   };
 
@@ -47,13 +35,13 @@ export default function ActionMenu({
       {isOpen && (
         <div className="bg-white p-4 flex flex-col gap-4 rounded-md text-sm w-[120px] absolute z-10 border border-gray-400 shadow-md right-5">
           <button
-            onClick={handleEdit}
+            onClick={handleClick(onEdit)}
             className="flex gap-2 border-b-2 border-gray-200 pb-4"
           >
             <Edit />
             수정
           </button>
-          <button onClick={handleDelete} className="flex gap-2 text-accent-red">
+          <button onClick={handleClick(onDelete)} className="flex gap-2 text-accent-red">
             <Trash />
             삭제
           </button>

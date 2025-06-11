@@ -3,6 +3,9 @@ import { INTEREST_CATEGORY_MAP } from "@/constants/interestCategory";
 import { MapPin, TabletSmartphone } from "lucide-react";
 import { PostMetaDataProps } from "@/types/post";
 import ActionMenu from "./ActionMenu";
+import { useRouter } from "next/navigation";
+import { useModalStore } from "@/stores/useModalStore";
+import DeleteModal from "./DeleteModal";
 
 export default function PostMetaData({
   post_id,
@@ -13,6 +16,13 @@ export default function PostMetaData({
   is_author,
 }: PostMetaDataProps) {
 
+  const router = useRouter();
+
+  const handleEdit = (post_id : number) => {
+    router.push(`/community/${post_id}/edit`)
+  }
+  const {openModal} = useModalStore();
+ 
   return (
     <div className="flex justify-between relative text-gray-600 text-sm">
       <div className="flex gap-4">
@@ -41,9 +51,13 @@ export default function PostMetaData({
       {is_author && (
         <ActionMenu
           targetId={post_id}
-          targetType="post"
+          onEdit={handleEdit}
+          onDelete={() => openModal("DeleteModal")}
         />
       )}
+      <DeleteModal 
+      // TODO 삭제 메소드 추가
+      />
     </div>
   );
 }

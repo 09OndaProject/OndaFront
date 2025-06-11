@@ -3,6 +3,8 @@ import { formatDate } from "@/utils/utils";
 import React, { useState } from "react";
 import ActionMenu from "../../_components/ActionMenu";
 import CommentInput from "./CommentInput";
+import { useModalStore } from "@/stores/useModalStore";
+import DeleteModal from "../../_components/DeleteModal";
 
 export default function CommentItem({
   comment_id,
@@ -25,6 +27,7 @@ export default function CommentItem({
   const handleEditComment = () => {
     setIsEditing(true);
   };
+  const { openModal } = useModalStore();
 
   const handleSubmit = (newContent: string) => {
     // TODO: 수정 로직 연결
@@ -40,10 +43,10 @@ export default function CommentItem({
     <div className="w-full border-b pt-4 relative">
       {isEditing ? (
         <CommentInput
-            mode="edit"
-            initialValue={content}
-            onSubmit={handleSubmit}
-            onCancel={handleCalcle}
+          mode="edit"
+          initialValue={content}
+          onSubmit={handleSubmit}
+          onCancel={handleCalcle}
         />
       ) : (
         <>
@@ -63,10 +66,13 @@ export default function CommentItem({
             {is_author && (
               <ActionMenu
                 targetId={comment_id}
-                targetType="comment"
                 onEdit={handleEditComment}
+                onDelete={() => openModal("DeleteModal")}
               />
             )}
+            <DeleteModal
+            // TODO 삭제 메소드 추가
+            />
           </div>
           <p className="mt-2 text-gray-800 mb-4 text-md">{content}</p>
         </>
