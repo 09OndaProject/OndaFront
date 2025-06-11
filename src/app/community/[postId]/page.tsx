@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import PostHeader from "./_components/PostHeader";
 import { useParams } from "next/navigation";
 import { useFetchPost } from "@/hooks/useFetchPost";
@@ -9,6 +8,7 @@ import CommentList from "./_components/CommentList";
 import CommentInput from "./_components/CommentInput";
 
 export default function PostDetailPage() {
+
   const params = useParams();
   const postId = Number(params?.postId);
 
@@ -37,16 +37,9 @@ export default function PostDetailPage() {
         is_author={post.is_author}
         title={post.title}
       />
-      <PostContent 
-        image={post.image_url}
-        content={post.content}
-      />
-      <CommentInput 
-        onSubmit={() => console.log("댓글 등록")}
-      />
-      <CommentList 
-        post_id={post.post_id}
-      />
+      <PostContent image={post.image_url} content={post.content} />
+      <CommentInput onSubmit={() => console.log("댓글 등록")} />
+      <CommentList post_id={post.post_id} />
     </div>
   );
 }

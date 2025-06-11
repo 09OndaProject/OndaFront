@@ -1,4 +1,5 @@
 import { Edit, MoreVertical, Trash } from "lucide-react";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 interface ActionMenuProps {
@@ -15,6 +16,8 @@ export default function ActionMenu({
 }: ActionMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
 
+  const router = useRouter();
+
   const handleToggle = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -26,6 +29,7 @@ export default function ActionMenu({
     e.stopPropagation();
     onEdit?.(targetId);
     setIsOpen(false);
+    router.push(`/community/${targetId}/edit`);
   };
 
   const handleDelete = (e: React.MouseEvent) => {

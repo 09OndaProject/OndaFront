@@ -12,10 +12,6 @@ export default function PostMetaData({
   digitalLevel_id,
   is_author,
 }: PostMetaDataProps) {
-  const handleEditPost = (id: number) => {
-    // TODO: 수정 로직 연결
-    console.log(`게시글 ${id} 수정`);
-  };
 
   return (
     <div className="flex justify-between relative text-gray-600 text-sm">
@@ -46,7 +42,6 @@ export default function PostMetaData({
         <ActionMenu
           targetId={post_id}
           targetType="post"
-          onEdit={handleEditPost}
         />
       )}
     </div>
