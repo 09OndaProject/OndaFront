@@ -4,9 +4,9 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="bottom-0 left-0 w-full bg-white py-4 md:h-[160px] border-t border-gray-500 z-50">
-      <div className="mx-auto flex flex-wrap h-full items-center justify-between px-12 font-[10px] text-gray-500">
-        <div className="flex flex-wrap items-center gap-10">
+    <footer className="bottom-0 left-0 w-full bg-white h-[160px] border-t border-gray-500 z-50">
+      <div className="mx-auto flex h-full items-center justify-between px-12 font-[10px] text-gray-500">
+        <div className="flex items-center gap-10">
           <Link href={"/"}>
             <Image
               src="/assets/logo/logo.svg"
@@ -15,7 +15,7 @@ export default function Footer() {
               height={38}
             />
           </Link>
-          <div className="flex flex-wrap flex-col gap-[2px] leading-snug">
+          <div className="flex flex-col gap-[2px] leading-snug">
             <p>
               상호 : (주)라운에이지 | 대표자명 : 박아영 | 사업자등록번호 :
               000-00-0000
@@ -26,7 +26,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="flex items-center gap-6 flex-wrap">
+        <div className="flex items-center gap-6">
           <div className="flex gap-4">
             <span className="hover:underline cursor-pointer">이용약관</span>
             <span className="hover:underline cursor-pointer">회사소개</span>
