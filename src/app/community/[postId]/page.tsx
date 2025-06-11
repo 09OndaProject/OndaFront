@@ -6,13 +6,26 @@ import { useFetchPost } from "@/hooks/useFetchPost";
 import PostContent from "./_components/PostContent";
 import CommentList from "./_components/CommentList";
 import CommentInput from "./_components/CommentInput";
+import { dummyComments } from "@/datas/dummyComments";
+import { Comment } from "@/types/post";
+import { useEffect, useState } from "react";
+import Pagination from "@/components/Pagination";
 
 export default function PostDetailPage() {
-
   const params = useParams();
   const postId = Number(params?.postId);
-
   const { post } = useFetchPost(postId);
+
+  // 댓글 데이터 및 페이지네이션
+  const comments: Comment[] = dummyComments.filter((c) => c.post_id === postId);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+
+  useEffect(() => {
+    const commentsPerPage = 5;
+    const pageCount = Math.ceil(comments.length / commentsPerPage);
+    setTotalPages(pageCount);
+  }, [comments]);
 
   if (!post) {
     return (
@@ -39,7 +52,12 @@ export default function PostDetailPage() {
       />
       <PostContent image={post.image_url} content={post.content} />
       <CommentInput onSubmit={() => console.log("댓글 등록")} />
-      <CommentList post_id={post.post_id} />
+      <CommentList comments={comments} />
+      <Pagination
+        currentPage={page}
+        totalPages={totalPages}
+        onPageChange={(c) => setPage(c)}
+      />
     </div>
   );
 }

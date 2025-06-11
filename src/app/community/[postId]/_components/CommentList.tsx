@@ -1,12 +1,12 @@
-import { dummyComments } from "@/datas/dummyComments";
 import React from "react";
 import CommentItem from "./CommentItem";
 import { Comment } from "@/types/post";
 
-export default function CommentList({ post_id }: { post_id: number }) {
-  const comments: Comment[] = dummyComments.filter(
-    (c) => c.post_id === post_id
-  );
+interface CommentListProps {
+  comments: Comment[];
+}
+
+export default function CommentList({ comments }: CommentListProps) {
   return (
     <div className="w-full">
       {comments.map((c) => (

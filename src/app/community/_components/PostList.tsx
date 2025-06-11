@@ -1,11 +1,12 @@
 import React from "react";
 import PostCard from "./PostCard";
-import { useAppSearchParams } from "@/stores/useAppSearchParams";
-import { useFilteredPosts } from "@/hooks/useFilteredPosts";
+import { Post } from "@/types/post";
 
-export default function PostList() {
-  const { searchParams } = useAppSearchParams();
-  const { posts } = useFilteredPosts(searchParams);
+interface PostListProps {
+  posts: Post[];
+}
+
+export default function PostList({posts} : PostListProps) {
 
   return (
     <div className="flex flex-col gap-4 w-full">
