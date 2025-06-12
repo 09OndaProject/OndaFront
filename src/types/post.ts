@@ -56,7 +56,6 @@ export type PostHeaderProps = {
   category_id: number | null;
   interest_id: number | null;
   area_id: number | null;
-  digitalLevel_id: number | null;
   is_author: boolean;
   title: string;
 };
@@ -67,7 +66,6 @@ export type PostMetaDataProps = {
   category_id: number | null;
   interest_id: number | null;
   area_id: number | null;
-  digitalLevel_id: number | null;
   is_author: boolean;
 };
 

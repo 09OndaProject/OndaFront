@@ -1,6 +1,6 @@
 import { POST_CATEGORY_MAP } from "@/constants/category";
 import { INTEREST_CATEGORY_MAP } from "@/constants/interestCategory";
-import { MapPin, TabletSmartphone } from "lucide-react";
+import { MapPin } from "lucide-react";
 import { PostMetaDataProps } from "@/types/post";
 import ActionMenu from "./ActionMenu";
 import { useRouter } from "next/navigation";
@@ -12,7 +12,6 @@ export default function PostMetaData({
   category_id,
   interest_id,
   area_id,
-  digitalLevel_id,
   is_author,
 }: PostMetaDataProps) {
 
@@ -39,12 +38,6 @@ export default function PostMetaData({
           <span className="flex gap-2 items-center">
             <MapPin />
             <span>{area_id}</span>
-          </span>
-        )}
-        {digitalLevel_id && (
-          <span className="flex gap-2 items-center">
-            <TabletSmartphone />
-            <span>{digitalLevel_id}</span>
           </span>
         )}
       </div>

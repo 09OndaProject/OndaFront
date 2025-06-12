@@ -46,7 +46,6 @@ export default function PostDetailPage() {
         category_id={post.category_id}
         interest_id={post.interest_id}
         area_id={post.area_id ?? null}
-        digitalLevel_id={post.digitalLevel_id ?? null}
         is_author={post.is_author}
         title={post.title}
       />

@@ -11,7 +11,6 @@ export default function PostHeader(props: PostHeaderProps) {
     category_id,
     interest_id,
     area_id,
-    digitalLevel_id,
     is_author,
     title,
   } = props;
@@ -23,7 +22,6 @@ export default function PostHeader(props: PostHeaderProps) {
         category_id={category_id}
         interest_id={interest_id}
         area_id={area_id}
-        digitalLevel_id={digitalLevel_id}
         is_author={is_author}
       />
       <h1 className="font-semibold py-4 text-xl">{title}</h1>
