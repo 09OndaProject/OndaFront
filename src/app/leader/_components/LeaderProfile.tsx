@@ -3,16 +3,22 @@ import { sampleUser } from "@/datas/sampleUser";
 import { ApplicationStatus } from "@/types/user";
 import { UserRound } from "lucide-react";
 import Image from "next/image";
+import StatusDropdown from "./StatusDropDown";
+import { useState } from "react";
 
 type LeaderProfileProps = {
-    status: ApplicationStatus
+    status: ApplicationStatus;
 }
+
 
 
 const LeaderProfile = ( {status} : LeaderProfileProps) => {
 
+
     const user = sampleUser;
     const { label, className, icon } = getStatusLabel(status, 'leader');
+    const [currentStatus, setCurrentStatus] = useState<ApplicationStatus>(status);
+
     
     return (
         <div className="flex items-center space-x-4 p-4 justify-between">
@@ -32,10 +38,16 @@ const LeaderProfile = ( {status} : LeaderProfileProps) => {
                     )}
                 </div>
                 <div className="space-y-2">
-                    <div className={`flex items-center text-sm font-medium ${className}`}>
+                {user.isAdmin ? (
+                    <StatusDropdown value={currentStatus} onChange={(v) => {
+                        setCurrentStatus(v);
+                    }} />
+                    ) : (
+                    <div className={`flex items-center gap-2 text-sm font-medium ${className}`}>
                         {icon}
                         {label}
                     </div>
+                )}
                     <h3 className="text-lg font-semibold">{user.nickname}님</h3>
                 </div>
             </div>
