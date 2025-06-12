@@ -4,7 +4,6 @@ import React, { useState } from "react";
 // import MeetForm from "./_components/MeetForm";
 import MeetImageUploader from "./_components/MeetImageUploader";
 import MeetFormFields from "./_components/MeetFormFields";
-import Button from "@/components/common/Button";
 
 export default function MeetCreatePage() {
   const [title, setTitle] = useState("");
@@ -17,6 +16,8 @@ export default function MeetCreatePage() {
   const [maxPeople, setMaxPeople] = useState("");
   const [digitalLevel, setDigitalLevel] = useState("");
   const [deadline, setDeadline] = useState("");
+  const [endTime, setEndTime] = useState("");
+  const [meetCount, setMeetCount] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -62,13 +63,11 @@ export default function MeetCreatePage() {
         setDigitalLevel={setDigitalLevel}
         deadline={deadline}
         setDeadline={setDeadline}
+        endTime={endTime}
+        setEndTime={setEndTime}
+        meetCount={meetCount}
+        setMeetCount={setMeetCount}
       />
-
-      <div className="text-center pt-4">
-        <Button type="submit" width="w-full" height="h-[44px]">
-          모임 생성하기
-        </Button>
-      </div>
     </form>
   );
 }
