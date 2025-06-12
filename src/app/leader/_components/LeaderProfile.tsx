@@ -1,3 +1,5 @@
+'use client'
+
 import { getStatusLabel } from "@/constants/leaderStatusLabel";
 import { sampleUser } from "@/datas/sampleUser";
 import { ApplicationStatus } from "@/types/user";

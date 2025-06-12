@@ -23,13 +23,13 @@ export default function StatusDropdown({ value, onChange }: Props) {
     <div className="relative w-48">
       <button
         onClick={toggle}
-        className="w-full border px-3 py-2 flex items-center justify-between bg-white rounded"
+        className="w-full border px-3 py-2 flex items-center justify-between bg-orange-100 rounded border-primary-deep font-medium text-xs"
       >
         <div className={clsx('flex items-center gap-2', getStatusLabel(value, 'leader').className)}>
           {getStatusLabel(value, 'leader').icon}
           {getStatusLabel(value, 'leader').label}
         </div>
-        <ChevronDown size={16} className="text-gray-500" />
+        <ChevronDown size={20} className="text-primary-deep" />
       </button>
 
       {isOpen && (
@@ -48,7 +48,7 @@ export default function StatusDropdown({ value, onChange }: Props) {
                   className
                 )}
               >
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 text-xs">
                   {icon}
                   {label}
                 </div>
