@@ -2,9 +2,8 @@ export const BASE_URL = "onda.n-e.kr/api";
 
 /**
  * @example
- * axios.get(END_POINT.WALLET);
- * axios.get(END_POINT.NOTICE_DETAIL(noticeId));
- * axios.patch(END_POINT.NOTICE_UPDATE(noticeId), body);
+ * axios.get(END_POINT.MEETINGS);
+ * axios.get(END_POINT.MEETINGS_DETAIL(meet_id));
  */
 
 export const END_POINT = {
