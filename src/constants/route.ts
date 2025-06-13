@@ -13,7 +13,7 @@ export const END_POINT = {
   // files: 업로드 관련 api
   FILES_DELETE: "/api/files/delete/",
   FILES_LIST: "/api/files/list/",
-  FILES_upload: "/api/files/upload/",
+  FILES_UPLOAD: "/api/files/upload/",
 
   // leaders: 리더 관련 api
   LEADERS_APPLY: "/api/leaders/apply",
