@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
-import { useFetchPost } from "@/hooks/useFetchPost";
+import { useFetchPost } from "@/hooks/usePost";
 import { PostFormData } from "@/types/post";
 import PostForm from "../../write/_components/PostForm";
 

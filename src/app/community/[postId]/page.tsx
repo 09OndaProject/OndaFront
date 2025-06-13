@@ -2,7 +2,7 @@
 
 import PostHeader from "./_components/PostHeader";
 import { useParams } from "next/navigation";
-import { useFetchPost } from "@/hooks/useFetchPost";
+import { useFetchPost } from "@/hooks/usePost";
 import PostContent from "./_components/PostContent";
 import CommentList from "./_components/CommentList";
 import CommentInput from "./_components/CommentInput";
