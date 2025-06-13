@@ -45,32 +45,14 @@ export type PostContent = {
 export const postSchema = z.object({
   title: z.string().min(1, "제목을 입력해주세요"),
   content: z.string().min(1, "내용을 입력해주세요"),
-  category: z.number().optional(),
+  category: z.number().min(1, "카테고리를 선택해주세요"),
   interest: z.number().optional(),
-  area: z.string().optional(),
-  file: z
-    .union([z.instanceof(File), z.string()])
-    .optional()
-    .refine(
-      (val) => {
-        if (!val) return true;
-        if (typeof val === "string") return true; // string은 유효
-        return val.size <= 20 * 1024 * 1024; // File 용량 체크
-      },
-      {
-        message: "20MB 이하의 파일만 업로드할 수 있습니다.",
-      }
-    ),
+  area: z.number().optional(),
 });
 
-export type PostFormData = z.infer<typeof postSchema>;
-
-export interface PostFormProps {
-  initialValue?: Post;
-  onSubmit: (newPost: PostFormData) => void;
-  mode?: "create" | "edit";
-  onCancel?: () => void;
-}
+export type PostFormData = z.infer<typeof postSchema> & {
+  file?: File | string;
+};
 
 // 댓글 타입
 export type Comment = {
