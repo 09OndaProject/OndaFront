@@ -18,6 +18,7 @@ export default function PostMetaData({ ids, is_mine }: PostMetadataProps) {
   const handleEdit = (id: number) => {
     router.push(`/community/${id}/edit`);
   };
+
   const { openModal } = useModalStore();
 
   return (
@@ -46,9 +47,7 @@ export default function PostMetaData({ ids, is_mine }: PostMetadataProps) {
           onDelete={() => openModal("DeleteModal")}
         />
       )}
-      <DeleteModal
-      // TODO 삭제 메소드 추가
-      />
+      <DeleteModal />
     </div>
   );
 }

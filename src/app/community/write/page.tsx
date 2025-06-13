@@ -8,7 +8,7 @@ import { PostFormData } from "@/types/post";
 import { uploadFiles } from "@/apis/file";
 
 export default function Page() {
-  const { mutate: createPost, isPending, isSuccess, isError } = useCreatePost();
+  const { mutate: createPost, isSuccess, isError } = useCreatePost();
 
   const handleSubmit = async (formData: PostFormData) => {
     let fileId: number | undefined = undefined;
@@ -35,7 +35,6 @@ export default function Page() {
         <h1 className="text-xl font-bold text-left w-full">글 쓰기</h1>
       </div>
       <PostForm mode="create" onSubmit={handleSubmit} />
-      {isPending && <p>작성 중입니다...</p>}
       {isSuccess && <p>게시글 작성 완료!</p>}
       {isError && <p>작성 실패. 다시 시도해주세요.</p>}
     </div>

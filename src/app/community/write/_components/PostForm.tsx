@@ -49,7 +49,6 @@ export default function PostForm({
     onSubmit(newPost);
   };
 
-
   // 기존 게시글이 없는 경우 데이터폼 초기화
   useEffect(() => {
     if (initialValue) {
@@ -62,8 +61,6 @@ export default function PostForm({
       });
     }
   }, [initialValue, reset]);
-
-
 
   return (
     <form
