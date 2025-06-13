@@ -4,9 +4,11 @@ import { useMemo } from "react";
 import { useFetchPostList } from "./usePost";
 
 export function useFilteredPosts(searchParams: SearchParams) {
-  const { data: posts = [], isLoading } = useFetchPostList();
+  const { data, isLoading } = useFetchPostList();
 
   const filtered = useMemo<Post[]>(() => {
+    const posts = Array.isArray(data) ? data : [];
+
     return posts.filter((post) => {
       const filteredCategory =
         !searchParams.category || post.category === searchParams.category;
@@ -22,7 +24,7 @@ export function useFilteredPosts(searchParams: SearchParams) {
         filteredCategory && filteredInterest && filteredArea && filteredKeyword
       );
     });
-  }, [posts, searchParams]);
+  }, [data, searchParams]);
 
   return { posts: filtered, isLoading };
 }
