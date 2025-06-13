@@ -8,31 +8,25 @@ export function useFilteredPosts(searchParams: SearchParams) {
     return dummyPosts
       .filter((post) => {
         const filteredCategory =
-          !searchParams.category_id ||
-          post.category_id === searchParams.category_id;
+          !searchParams.category || post.category === searchParams.category;
         const filteredInterest =
-          !searchParams.interest_id ||
-          post.interest_id === searchParams.interest_id;
-        const filteredDigitalLevel =
-          !searchParams.digitalLevel_id ||
-          post.digitalLevel_id === searchParams.digitalLevel_id;
-        //   const filteredSido = !searchParams.sido || post.sido === searchParams.sido;
-        //   const filteredDistricts = !searchParams.districts || post.districts === searchParams.districts;
+          !searchParams.interest || post.interest === searchParams.interest;
+        const filteredArea =
+          !searchParams.area || post.area === searchParams.area;
+
         const filteredKeyword =
           !searchParams.keyword || post.title.includes(searchParams.keyword);
 
         return (
           filteredCategory &&
           filteredInterest &&
-          filteredDigitalLevel &&
-          // filteredSido &&
-          // filteredDistricts &&
+          filteredArea &&
           filteredKeyword
         );
       })
       .map((post) => ({
         ...post,
-        image_url: post.image_url ?? undefined,
+        file: post.file ?? undefined,
         created_at: new Date(post.created_at),
         updated_at: post.updated_at ? new Date(post.updated_at) : undefined,
       }));

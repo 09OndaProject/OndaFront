@@ -6,7 +6,6 @@ import Button from "@/components/common/Button";
 import SelectBox from "@/components/common/SelectBox";
 import {
   categoryOptions,
-  digitalLevelOptions,
   interestOptions,
 } from "@/constants/category";
 import AreaDropdown from "../../_components/AreaDropdown";
@@ -42,10 +41,6 @@ export default function PostForm({
       : {
           title: "",
           content: "",
-          category_id: 0,
-          interest_id: 0,
-          digitalLevel_id: 0,
-          //   area_id: "",
         },
   });
 
@@ -56,7 +51,7 @@ export default function PostForm({
     onSubmit(newPost);
   };
 
-  const imageFile = useWatch({ name: "images", control });
+  const imageFile = useWatch({ name: "file", control });
 
   // 기존 게시글이 없는 경우 데이터폼 초기화
   useEffect(() => {
@@ -64,14 +59,13 @@ export default function PostForm({
       reset({
         title: initialValue.title,
         content: initialValue.content,
-        category_id: initialValue.category_id ?? 0,
-        interest_id: initialValue.interest_id ?? 0,
-        digitalLevel_id: initialValue.digitalLevel_id ?? 0,
+        category: initialValue.category ?? undefined,
+        interest: initialValue.interest ?? undefined,
         // area_id: initialValue.area_id?.toString() ?? "",
       });
 
-      if (typeof initialValue.image_url === "string") {
-        setPreviewUrls([initialValue.image_url]);
+      if (typeof initialValue.file === "string") {
+        setPreviewUrls([initialValue.file]);
       }
     }
   }, [initialValue, reset]);
@@ -99,39 +93,28 @@ export default function PostForm({
     >
       <div className="flex flex-wrap gap-4 w-full">
         <SelectBox
-          value={watch("category_id")}
+          value={watch("category")}
           options={categoryOptions}
           placeholder="카테고리"
-          onChange={(e) => setValue("category_id", Number(e.target.value))}
+          onChange={(e) => setValue("category", Number(e.target.value))}
         />
-        {errors.category_id && (
+        {errors.category && (
           <span className="text-red-500 text-sm mt-1">
-            {errors.category_id.message}
+            {errors.category.message}
           </span>
         )}
         <SelectBox
-          value={watch("interest_id")}
+          value={watch("interest")}
           options={interestOptions}
           placeholder="관심사"
-          onChange={(e) => setValue("interest_id", Number(e.target.value))}
+          onChange={(e) => setValue("interest", Number(e.target.value))}
         />
-        {errors.interest_id && (
+        {errors.interest && (
           <span className="text-red-500 text-sm mt-1">
-            {errors.interest_id.message}
+            {errors.interest.message}
           </span>
         )}
         <AreaDropdown />
-        <SelectBox
-          value={watch("digitalLevel_id")}
-          options={digitalLevelOptions}
-          placeholder="디지털 난이도"
-          onChange={(e) => setValue("digitalLevel_id", Number(e.target.value))}
-        />
-        {errors.digitalLevel_id && (
-          <span className="text-red-500 text-sm mt-1">
-            {errors.digitalLevel_id.message}
-          </span>
-        )}
       </div>
 
       <input
@@ -163,17 +146,17 @@ export default function PostForm({
           id="images"
           type="file"
           accept="image/*"
-          {...register("images")}
+          {...register("file")}
           className="hidden"
           onChange={(e) => {
             const file = e.target.files?.[0] ?? null;
             if (!file) return;
-            setValue("images", file);
+            setValue("file", file);
             setPreviewUrls([URL.createObjectURL(file)]);
           }}
         />
-        {errors.images && (
-          <span className="text-red-500 text-sm">{errors.images.message}</span>
+        {errors.file && (
+          <span className="text-red-500 text-sm">{errors.file.message}</span>
         )}
         {previewUrls.length > 0 && imageFile && (
           <div className="flex flex-col gap-2 border-2 border-dashed p-4 rounded-lg hover:border-primary-deep transition">
@@ -201,7 +184,7 @@ export default function PostForm({
               <button
                 type="button"
                 onClick={() => {
-                  setValue("images", undefined);
+                  setValue("file", undefined);
                   setPreviewUrls([]);
                 }}
                 className="text-accent-red text-sm p-2 rounded-lg hover:bg-red-100 active:bg-red-200"

@@ -39,17 +39,21 @@ export default function PostDetailPage() {
     <div className="flex flex-col items-center w-full my-20 max-w-[1440px] px-4 md:px-[160px] mx-auto">
       <h1 className="text-xl font-bold text-left w-full">게시판</h1>
       <PostHeader
-        post_id={post.post_id}
-        nickname={post.nickname}
-        created_at={post.created_at}
-        updated_at={post.updated_at}
-        category_id={post.category_id}
-        interest_id={post.interest_id}
-        area_id={post.area_id ?? null}
-        is_author={post.is_author}
+        ids={{
+          id: post.id,
+          category: post.category,
+          interest: post.interest,
+          area: post.area
+        }}
+        author={{
+          nickname: post.nickname,
+          created_at: post.created_at,
+          updated_at: post.updated_at,
+          is_mine: post.is_mine,
+        }}
         title={post.title}
       />
-      <PostContent image={post.image_url} content={post.content} />
+      <PostContent content={post.content} />
       <CommentInput onSubmit={() => console.log("댓글 등록")} />
       <CommentList comments={comments} />
       <Pagination
