@@ -1,73 +1,126 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
+import api from "@/apis/app";
+import { END_POINT } from "@/constants/route";
+import { jwtDecode } from "jwt-decode";
 
+interface DecodedToken {
+  email: string;
+  nickname: string;
+  name: string;
+  role: "user" | "admin" | "leader"; // 명세서 기준
+}
 interface User {
   email: string;
-  password: string;
+  password?: string;
   name: string;
   nickname: string;
-  phone: string;
-  selectedSido: string;
-  selectedDistrict: string | null;
-  selectedInterests: string[];
-  isAdmin?: boolean;
+  phone?: string;
+  selectedSido?: string;
+  selectedDistrict?: string | null;
+  interest_id?: number | null;
+  area_id?: number | null;
+  role: "user" | "admin" | "leader";
+  isAdmin: boolean;
 }
 
-export interface AuthState {
+interface AuthState {
+  user: User | null;
+  login: boolean;
+  accessToken: string | null;
+  csrfToken: string | null;
+  isAdmin: boolean;
   email: string;
   password: string;
-  users: User[];
-  currentUser: User | null;
   setEmail: (email: string) => void;
   setPassword: (password: string) => void;
-  addUser: (user: User) => void;
-  setCurrentUser: (user: User) => void;
   reset: () => void;
-  login: (email: string, password: string) => boolean;
-  logout: () => void;
 }
-const savedUsers =
-  typeof window !== "undefined"
-    ? JSON.parse(localStorage.getItem("users") || "[]")
-    : [];
-export const useAuthStore = create<AuthState>((set, get) => ({
-  email: "",
-  password: "",
-  users: savedUsers,
-  currentUser: null,
 
-  setEmail: (email) => set({ email }),
-  setPassword: (password) => set({ password }),
+interface AuthActions {
+  setUser: (user: User) => void;
+  setLogin: (email: string, password: string) => Promise<boolean>;
+  setLogout: () => void;
+}
 
-  addUser: (newUser: User) =>
-    set((state) => {
-      const updatedUsers = [...state.users, newUser];
-      localStorage.setItem("users", JSON.stringify(updatedUsers));
-      return { users: updatedUsers, currentUser: newUser };
+type AuthStore = AuthState & AuthActions;
+
+export const useAuthStore = create<AuthStore>()(
+  persist(
+    (set) => ({
+      user: null,
+      login: false,
+      accessToken: null,
+      csrfToken: null,
+      isAdmin: false,
+      email: "",
+      password: "",
+
+      setEmail: (email) => set({ email }),
+      setPassword: (password) => set({ password }),
+
+      setUser: (user) => {
+        set({
+          user,
+          isAdmin: !!user?.isAdmin,
+        });
+      },
+      setLogin: async (email: string, password: string) => {
+        try {
+          const res = await api.post(END_POINT.USERS_LOGIN, {
+            email,
+            password,
+          });
+
+          const { access_token, csrf_token } = res.data;
+
+          const decoded: DecodedToken = jwtDecode(access_token);
+
+          const isAdmin =
+            decoded.role === "admin" ||
+            decoded.role === "leader" ||
+            decoded.role === "user";
+          console.log("decoded", decoded);
+
+          set({
+            login: true,
+            accessToken: access_token,
+            csrfToken: csrf_token,
+            isAdmin,
+            user: {
+              email: decoded.email,
+              name: decoded.name,
+              nickname: decoded.nickname,
+              role: decoded.role,
+              isAdmin,
+            },
+          });
+          localStorage.setItem("accessToken", access_token);
+          return true;
+        } catch (err) {
+          console.error("로그인 실패:", err);
+          return false;
+        }
+      },
+
+      setLogout: () => {
+        set({
+          user: null,
+          login: false,
+          accessToken: null,
+          csrfToken: null,
+          isAdmin: false,
+        });
+        localStorage.removeItem("accessToken");
+
+        import("@/stores/useSignUpStore").then(({ useSignupStore }) => {
+          useSignupStore.getState().resetForm();
+        });
+      },
+      reset: () => set({ email: "", password: "" }),
     }),
-
-  setCurrentUser: (user) => set({ currentUser: user }),
-
-  reset: () => set({ email: "", password: "" }),
-
-  login: (email, password) => {
-    const matchedUser = get().users.find(
-      (user) => user.email === email && user.password === password
-    );
-
-    if (matchedUser) {
-      set({ currentUser: matchedUser });
-      localStorage.setItem("currentUser", JSON.stringify(matchedUser));
-      return true;
+    {
+      name: "auth-storage",
     }
-    return false;
-  },
-  logout: () => {
-    set({ currentUser: null });
-    localStorage.removeItem("currentUser");
-
-    // signupStore 초기화
-    import("@/stores/useSignUpStore").then(({ useSignupStore }) => {
-      useSignupStore.getState().resetForm();
-    });
-  },
-}));
+  )
+);

@@ -9,7 +9,8 @@ export interface SignupState {
   name: string;
   phone: string;
   area_id: number | null;
-  interest_id: number | null;
+  interest_ids: number[];
+  setInterestIds: (ids: number[]) => void;
   digitalLevel_id: number | null;
   birthYear: string;
   birthMonth: string;
@@ -24,8 +25,7 @@ export interface SignupState {
   selectedDistrict: string | null;
 
   // 관심사
-  selectedInterests: string[];
-  toggleInterest: (interest: string) => void;
+  toggleInterest: (id: number) => void;
 
   // 약관 동의
   agreement: boolean;
@@ -55,7 +55,17 @@ export const useSignupStore = create(
       name: "",
       phone: "",
       area_id: null,
-      interest_id: null,
+      interest_ids: [],
+      toggleInterest: (id) =>
+        set((state) => {
+          const exists = state.interest_ids.includes(id);
+          return {
+            interest_ids: exists
+              ? state.interest_ids.filter((i) => i !== id)
+              : [...state.interest_ids, id],
+          };
+        }),
+      setInterestIds: (ids) => set({ interest_ids: ids }),
       digitalLevel_id: null,
       birthYear: "",
       birthMonth: "",
@@ -67,16 +77,7 @@ export const useSignupStore = create(
 
       selectedSido: "서울",
       selectedDistrict: null,
-      selectedInterests: [],
       agreement: false,
-
-      // 관심사 토글함수
-      toggleInterest: (interest: string) =>
-        set((state) => ({
-          selectedInterests: state.selectedInterests.includes(interest)
-            ? state.selectedInterests.filter((i) => i !== interest)
-            : [...state.selectedInterests, interest],
-        })),
 
       setValue: (key, value) => set((state) => ({ ...state, [key]: value })),
 
@@ -107,14 +108,13 @@ export const useSignupStore = create(
           name: "",
           phone: "",
           area_id: null,
-          interest_id: null,
+          interest_ids: [],
           digitalLevel_id: null,
           birthYear: "",
           birthMonth: "",
           birthDay: "",
           selectedSido: "서울",
           selectedDistrict: null,
-          selectedInterests: [],
           agreement: false,
           isKakaoUser: false,
           isKakaoUserSignedUp: state.isKakaoUserSignedUp,
