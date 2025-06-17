@@ -20,7 +20,7 @@ interface User {
   phone?: string;
   selectedSido?: string;
   selectedDistrict?: string | null;
-  interest_id?: number | null;
+  interest_ids?: number | null;
   area_id?: number | null;
   role: "user" | "admin" | "leader";
   isAdmin: boolean;
@@ -112,10 +112,6 @@ const authStoreCreator: StateCreator<AuthStore> = (set) => ({
       isAdmin: false,
     });
     localStorage.removeItem("accessToken");
-
-    import("@/stores/useSignUpStore").then(({ useSignupStore }) => {
-      useSignupStore.getState().resetForm();
-    });
   },
 
   reset: () => set({ email: "", password: "" }),
