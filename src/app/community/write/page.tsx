@@ -4,7 +4,6 @@ import React from "react";
 import PostForm from "./_components/PostForm";
 import { useCreatePost } from "@/hooks/usePost";
 import { PostCreatePayload } from "@/apis/post";
-import { PostFormData } from "@/types/post";
 import { uploadFiles } from "@/apis/file";
 
 export default function Page() {

@@ -46,8 +46,8 @@ export default function PostSearchDropdown({
             className="w-[250px]"
           />
           <AreaDropdown 
-            areaOptions={areaOptions}
-            selected={searchParams.area}
+            options={areaOptions}
+            value={searchParams.area}
             onChange={(value) => updateParams("area", value)}
             placeholder="지역"
             className="flex-grow"

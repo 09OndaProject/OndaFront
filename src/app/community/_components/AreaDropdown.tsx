@@ -11,16 +11,16 @@ export interface SelectedArea {
 }
 
 interface AreaDropdownProps {
-  areaOptions: Area[];
-  selected?: SelectedArea;
+  options: Area[];
+  value?: SelectedArea;
   onChange: (value: SelectedArea) => void;
   placeholder?: string;
   className?: string;
 }
 
 export default function AreaDropdown({
-  areaOptions,
-  selected,
+  options,
+  value,
   onChange,
   placeholder = "지역을 선택해주세요.",
   className,
@@ -33,13 +33,13 @@ export default function AreaDropdown({
   useClickOutside(dropdownRef, () => setOpen(false));
 
   useEffect(() => {
-    if (selected) {
-      setSelectedParentId(selected.parentId);
-      setSelectedChildId(selected.childId);
+    if (value) {
+      setSelectedParentId(value.parentId);
+      setSelectedChildId(value.childId);
     }
-  }, [selected]);
+  }, [value]);
 
-  const selectedParent = areaOptions.find((p) => p.id === selectedParentId);
+  const selectedParent = options.find((p) => p.id === selectedParentId);
   const selectedChild = selectedParent?.children?.find(
     (c) => c.id === selectedChildId
   );
@@ -60,7 +60,7 @@ export default function AreaDropdown({
           onClick={() => setOpen((prev) => !prev)}
         >
           <span className={selectedChild ? "text-black" : "text-gray-600"}>
-            {selected ? displayText : placeholder}
+            {value ? displayText : placeholder}
           </span>
           {open ? <ChevronUp /> : <ChevronDown />}
         </button>
@@ -73,7 +73,7 @@ export default function AreaDropdown({
                   시/도
                 </div>
                 <div>
-                  {areaOptions.map((area) => (
+                  {options.map((area) => (
                     <button
                       key={area.id}
                       type="button"
