@@ -1,7 +1,7 @@
 import { useSignupStore } from "@/stores/useSignUpStore";
 
 interface AreaSelectorProps {
-  onSelect: (sido: string, district: string) => void;
+  onSelect: (sido: string, district: string, areaId?: number) => void;
   areaOptions: {
     area_name: string;
     children: {

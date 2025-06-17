@@ -30,7 +30,7 @@ export default function PostSearch() {
           onChange={(val) => updateParams("category", val)}
           options={categoryOptions}
           placeholder="카테고리"
-          className="w-[120px]"
+          className="min-w-[150px] w-auto"
         />
         <div className="flex-grow">
           <TextInput
@@ -43,7 +43,9 @@ export default function PostSearch() {
           ></TextInput>
         </div>
       </div>
-      <PostSearchDropdown />
+      <PostSearchDropdown 
+        options={options}
+      />
     </div>
   );
 }

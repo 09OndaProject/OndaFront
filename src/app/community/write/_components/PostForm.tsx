@@ -8,7 +8,6 @@ import {
   categoryOptions,
   interestOptions,
 } from "@/constants/category";
-import AreaDropdown from "../../_components/AreaDropdown";
 import { Post, PostFormData, postSchema } from "@/types/post";
 import { useEffect } from "react";
 import ImageUploader from "./ImageUploader";
@@ -85,7 +84,6 @@ export default function PostForm({
           placeholder="관심사"
           onChange={(e) => setValue("interest", Number(e.target.value))}
         />
-        <AreaDropdown />
       </div>
 
       <input
