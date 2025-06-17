@@ -21,8 +21,8 @@ export default function LoginPage() {
   const { email, password, setEmail, setPassword, reset, setLogin } =
     useAuthStore();
   const handleKakaoLogin = () => {
-    // await api.get("/api/users/kakao/login", { withCredentials: true });
-    window.location.href = "https://api.ondamoim.com/api/users/kakao/login";
+    const callbackUrl = "http://localhost:3000/users/kakao/callback";
+    window.location.href = `https://api.ondamoim.com/api/users/kakao/login?callback_url=${callbackUrl}`;
   };
 
   // 일반 로그인
