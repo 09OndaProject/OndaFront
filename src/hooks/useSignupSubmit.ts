@@ -94,18 +94,18 @@ export function useSignupSubmit() {
       if (res.status === 201) {
         alert("회원가입 완료");
         resetForm();
+        useAuthStore.getState().setLogout();
+
+        if (isKakaoUser) {
+          const { setKakaoUserSignedUp } = useSignupStore.getState();
+          setKakaoUserSignedUp(true);
+        }
       }
+      router.push("/login");
+      return;
     } catch (err) {
       console.error("회원가입 실패", err);
     }
-
-    resetForm();
-    useAuthStore.getState().setLogout();
-    if (isKakaoUser) {
-      const { setKakaoUserSignedUp } = useSignupStore.getState();
-      setKakaoUserSignedUp(true);
-    }
-    router.push("/login");
   };
   return { handleSubmit, setValue };
 }
