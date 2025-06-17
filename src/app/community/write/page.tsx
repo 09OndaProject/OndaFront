@@ -32,9 +32,9 @@ export default function Page() {
       title: formData.title,
       content: formData.content,
       category: formData.category ?? 0,
-      interest: formData.interest ?? 0,
-      area: formData.area?.childId ?? 0,
-      file: fileId ?? 0,
+      interest: formData.interest ?? undefined,
+      area: formData.area?.childId ?? undefined,
+      file: fileId ?? undefined,
     };
 
     createPost.mutate(payload, {

@@ -42,7 +42,7 @@ export default function PostForm({
     clearErrors,
     control,
     watch,
-    formState: { errors },
+    formState: { errors, isSubmitted },
     reset,
   } = useForm<PostFormData>({
     mode: "onChange",
@@ -165,17 +165,19 @@ export default function PostForm({
           {mode === "edit" ? "수정 완료" : "등록"}
         </Button>
       </div>
-      <div className="text-red-500 text-sm mt-2 text-center space-y-1">
-        {errors.title ? (
-          <div>{errors.title.message || "제목을 입력해주세요"}</div>
-        ) : errors.content ? (
-          <div>{errors.content.message || "내용을 입력해주세요"}</div>
-        ) : errors.category ? (
-          <div>{errors.category.message || "카테고리를 선택해주세요"}</div>
-        ) : errors.area ? (
-          <div>지역을 선택해주세요</div>
-        ) : null}
-      </div>
+      {isSubmitted && (
+        <div className="text-red-500 text-sm mt-2 text-center space-y-1">
+          {errors.title ? (
+            <div>{errors.title.message || "제목을 입력해주세요"}</div>
+          ) : errors.content ? (
+            <div>{errors.content.message || "내용을 입력해주세요"}</div>
+          ) : errors.category ? (
+            <div>{errors.category.message || "카테고리를 선택해주세요"}</div>
+          ) : errors.area ? (
+            <div>지역을 선택해주세요</div>
+          ) : null}
+        </div>
+      )}
     </form>
   );
 }
