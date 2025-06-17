@@ -1,5 +1,4 @@
 "use client";
-import { z } from "zod";
 import { FileData } from "./file";
 
 export type Post = {

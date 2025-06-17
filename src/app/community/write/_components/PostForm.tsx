@@ -45,6 +45,7 @@ export default function PostForm({
     formState: { errors },
     reset,
   } = useForm<PostFormData>({
+    mode: "onChange",
     defaultValues: {
       title: "",
       content: "",
@@ -63,9 +64,9 @@ export default function PostForm({
       const childId = initialValue.area;
 
       // childId를 통해 parentId를 찾음
-      const parent = areaOptions.find((p) => {
-        p.children?.some((child) => child.id === childId);
-      });
+      const parent = areaOptions.find((p) =>
+        p.children?.some((child) => child.id === childId)
+      );
 
       // 찾은 parentId와 childId로 areaValue 변수
       const areaValue =
@@ -87,6 +88,7 @@ export default function PostForm({
   }, [initialValue, reset, areaOptions]);
 
   const onVaild = (data: PostFormData) => {
+    console.log("폼 제출됨", data);
     if (!data.category) {
       setError("category", {
         type: "manual",
@@ -109,39 +111,35 @@ export default function PostForm({
           onChange={(value) => setValue("category", value)}
           options={categoryOptions}
           placeholder="카테고리"
+          className="w-[150px]"
         />
-        {errors.category && (
-          <span className="text-red-500 text-sm mt-1">
-            {errors.category.message}
-          </span>
-        )}
         <DropdownInput
           value={watch("interest")}
           options={interestOptions}
           placeholder="관심사"
           onChange={(value) => setValue("interest", value)}
+          className="w-[250px]"
         />
         <AreaDropdown
           options={areaOptions}
           value={watch("area")}
           onChange={(value) => setValue("area", value)}
+          className="flex-grow"
         />
       </div>
 
       <input
-        {...register("title")}
-        placeholder={errors.title?.message || "제목을 입력하세요"}
-        className={`w-full border-b p-4 text-lg rounded-md placeholder-gray-500 text-main focus:outline-none focus:ring-2 focus:ring-primary-deep ${
-          errors.title && "placeholder-red-500"
-        }`}
+        {...register("title", { required: "제목을 입력해주세요." })}
+        name="title"
+        placeholder="제목을 입력해주세요."
+        className="w-full border-b p-4 text-lg rounded-md placeholder-gray-500 text-main focus:outline-none focus:ring-2 focus:ring-primary-deep"
       />
 
       <textarea
-        {...register("content")}
-        placeholder={errors.content?.message || "내용을 입력해주세요"}
-        className={`w-full min-h-[300px] rounded-md text-md p-4 resize-none focus:outline-none focus:ring-2 focus:ring-primary-deep ${
-          errors.content && "placeholder-red-500"
-        }`}
+        {...register("content", { required: "내용을 입력해주세요." })}
+        name="content"
+        placeholder="내용을 입력해주세요."
+        className="w-full min-h-[300px] rounded-md text-md p-4 resize-none focus:outline-none focus:ring-2 focus:ring-primary-deep"
       />
 
       <ImageUploader
@@ -166,6 +164,17 @@ export default function PostForm({
         <Button type="submit" width="w-[200px]">
           {mode === "edit" ? "수정 완료" : "등록"}
         </Button>
+      </div>
+      <div className="text-red-500 text-sm mt-2 text-center space-y-1">
+        {errors.title ? (
+          <div>{errors.title.message || "제목을 입력해주세요"}</div>
+        ) : errors.content ? (
+          <div>{errors.content.message || "내용을 입력해주세요"}</div>
+        ) : errors.category ? (
+          <div>{errors.category.message || "카테고리를 선택해주세요"}</div>
+        ) : errors.area ? (
+          <div>지역을 선택해주세요</div>
+        ) : null}
       </div>
     </form>
   );
