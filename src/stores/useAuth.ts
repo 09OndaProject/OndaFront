@@ -1,9 +1,9 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware"; // ✅ 반드시 이렇게 import
+import { persist } from "zustand/middleware";
 import api from "@/apis/app";
 import { END_POINT } from "@/constants/route";
 import { jwtDecode } from "jwt-decode";
-import type { StateCreator } from "zustand"; // ✅ 타입 전용 import
+import type { StateCreator } from "zustand";
 
 interface DecodedToken {
   email: string;
@@ -36,6 +36,8 @@ interface AuthState {
   password: string;
   setEmail: (email: string) => void;
   setPassword: (password: string) => void;
+  isKakaoUserSignedUp: boolean;
+  setKakaoUserSignedUp: (value: boolean) => void;
   reset: () => void;
 }
 
@@ -57,6 +59,9 @@ const authStoreCreator: StateCreator<AuthStore> = (set) => ({
   isAdmin: false,
   email: "",
   password: "",
+  isKakaoUserSignedUp: false,
+  setKakaoUserSignedUp: (value: boolean) =>
+    set(() => ({ isKakaoUserSignedUp: value })),
 
   setEmail: (email: string) => set({ email }),
   setPassword: (password: string) => set({ password }),
