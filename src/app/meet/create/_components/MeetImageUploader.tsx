@@ -3,7 +3,7 @@
 import React, { useRef, useState } from "react";
 import Image from "next/image";
 
-export default function MeetImageUploader() {
+export default function MeetImageUploader({ setImageUrl }: { setImageUrl: (url: string) => void }) {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -12,6 +12,7 @@ export default function MeetImageUploader() {
     if (file) {
       const preview = URL.createObjectURL(file);
       setPreviewUrl(preview);
+      setImageUrl(preview);
     }
   };
 

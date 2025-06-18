@@ -3,43 +3,66 @@
 import React, { useState } from "react";
 import MeetFormFields from "./MeetFormFields";
 import MeetImageUploader from "./MeetImageUploader";
-import Button from "@/components/common/Button";
+//import Button from "@/components/common/Button";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import api from "@/apis/app";
 
 export default function MeetForm() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+  const [category, setCategory] = useState(""); 
   const [date, setDate] = useState("");
-  const [method, setMethod] = useState("");
+  const [method, setMethod] = useState(""); 
   const [time, setTime] = useState("");
   const [location, setLocation] = useState("");
   const [maxPeople, setMaxPeople] = useState("");
   const [digitalLevel, setDigitalLevel] = useState("");
   const [deadline, setDeadline] = useState("");
-  const [meetCount, setMeetCount] = useState("");
-  const [endTime, setEndTime] = useState("");
+  const [meetCount, setMeetCount] = useState(""); 
+  const [endTime, setEndTime] = useState(""); 
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const router = useRouter();
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const formData = {
-      title,
-      description,
-      date,
-      time,
-      location,
-      maxPeople,
-      digitalLevel,
-      deadline,
-      meetCount,
-    };
+    try {
+      const response = await api.post(
+        "/api/meets",
+        {
+          title,
+          description,
+          area: Number(category),
+          digital_level: Number(digitalLevel),
+          interest: Number(method),
+          date,
+          time,
+          location,
+          max_people: Number(maxPeople),
+          application_deadline: deadline, 
+          image: imageUrl, 
+        },
+      );
+      console.log("모임 생성 성공:", response.data);
+      alert("모임이 성공적으로 생성되었습니다!");
 
-    console.log("폼 제출됨:", formData);
+      router.push("/meet");
+    }catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        console.error("모임 생성 실패:", error.response?.data || error.message);
+      } else {
+        console.error("알 수 없는 에러:", error);
+      }
+    
+      alert("모임 생성에 실패했습니다.");
+    }
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-8 max-w-2xl mx-auto p-6">
-      <MeetImageUploader />
+      <MeetImageUploader setImageUrl={setImageUrl} /> 
       <MeetFormFields
         title={title}
         setTitle={setTitle}
@@ -66,11 +89,6 @@ export default function MeetForm() {
         meetCount={meetCount}
         setMeetCount={setMeetCount}
       />
-      <div className="text-center pt-4">
-        <Button type="submit" color="primary" variant="fill" width="w-full">
-          모임 생성하기
-        </Button>
-      </div>
     </form>
   );
 }
