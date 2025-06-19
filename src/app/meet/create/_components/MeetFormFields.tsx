@@ -4,11 +4,6 @@ import Textarea from "@/components/common/Textarea";
 import SelectBox from "@/components/common/SelectBox";
 import ToggleButtonGroup from "@/components/common/ToggleButtonGroup";
 import AreaSelector from "@/components/common/AreaSelector";
-import Button from "@/components/common/Button";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import { BASE_URL, END_POINT } from "@/constants/route"; 
-
 
 interface MeetFormFieldsProps {
   title: string;
@@ -66,22 +61,6 @@ export default function MeetFormFields({
   const [isAreaOpen, setIsAreaOpen] = useState(false);
   const [selectedSido, setSelectedSido] = useState("");
   const [selectedDistrict, setSelectedDistrict] = useState("");
-  const [areaInfo, setAreaInfo] = useState({
-    selectedSido: "",
-    selectedDistrict: "",
-    area_id: 0,
-  });
-  
-  const fetchAreas = async () => {
-    const res = await axios.get(`${BASE_URL}${END_POINT.OPTIONS_AREAS}`);
-    return res.data;
-  };
-  
-  const { data: areaOptions = [] } = useQuery({
-    queryKey: ["areas"],
-    queryFn: fetchAreas,
-  });
-
 
   return (
     <div className="space-y-12">
@@ -204,19 +183,13 @@ export default function MeetFormFields({
         </button>
         {isAreaOpen && (
           <div className="absolute z-10 mt-2 w-full bg-white rounded shadow">
-           <AreaSelector
-               areaOptions={areaOptions}
-              areaInfo={areaInfo}
-            setAreaInfo={setAreaInfo}
-             onSelect={(sido, district) => {
-    setSelectedSido(sido);
-    setSelectedDistrict(district);
-    setIsAreaOpen(false);
-    setCategory(district); 
-  }}
-/>
-
-
+            <AreaSelector
+              onSelect={(sido, district) => {
+                setSelectedSido(sido);
+                setSelectedDistrict(district);
+                setIsAreaOpen(false);
+              }}
+            />
           </div>
         )}
       </div>

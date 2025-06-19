@@ -3,10 +3,7 @@
 import React, { useState } from "react";
 import MeetFormFields from "./MeetFormFields";
 import MeetImageUploader from "./MeetImageUploader";
-//import Button from "@/components/common/Button";
-import axios from "axios";
-import { useRouter } from "next/navigation";
-import api from "@/apis/app";
+import Button from "@/components/common/Button";
 
 export default function MeetForm() {
   const [title, setTitle] = useState("");
@@ -28,36 +25,19 @@ export default function MeetForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    try {
-      const response = await api.post(
-        "/api/meets",
-        {
-          title,
-          description,
-          area: Number(category),
-          digital_level: Number(digitalLevel),
-          interest: Number(method),
-          date,
-          time,
-          location,
-          max_people: Number(maxPeople),
-          application_deadline: deadline, 
-          image: imageUrl, 
-        },
-      );
-      console.log("모임 생성 성공:", response.data);
-      alert("모임이 성공적으로 생성되었습니다!");
+    const formData = {
+      title,
+      description,
+      date,
+      time,
+      location,
+      maxPeople,
+      digitalLevel,
+      deadline,
+      meetCount,
+    };
 
-      router.push("/meet");
-    }catch (error: unknown) {
-      if (axios.isAxiosError(error)) {
-        console.error("모임 생성 실패:", error.response?.data || error.message);
-      } else {
-        console.error("알 수 없는 에러:", error);
-      }
-    
-      alert("모임 생성에 실패했습니다.");
-    }
+    console.log("폼 제출됨:", formData);
   };
 
   return (

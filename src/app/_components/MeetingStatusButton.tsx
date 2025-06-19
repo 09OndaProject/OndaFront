@@ -20,13 +20,7 @@ export default function MeeringStatusButtons({
 }: MeeringStatusButtonsProps) {
   const { openModal, closeModal, modals, modalData } = useModalStore();
 
-  const handleReviewClick = () => {
-    if (!meet_id) {
-      console.error("meet_id 누락");
-      return;
-    }
-    openModal("reviewWrite", { meet_id });
-  };
+  
 
   const modalKey = mode === "past" ? "finishedMeetDetail" : "meetDetail";
   const openhandler = () => openModal(modalKey);
