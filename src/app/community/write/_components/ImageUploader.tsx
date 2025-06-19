@@ -5,7 +5,7 @@ import {
   UseFormSetValue,
   useWatch,
 } from "react-hook-form";
-import { PostFormData } from "@/types/post";
+import { PostFormData } from "./PostForm";
 
 interface ImageUploaderProps {
   setValue: UseFormSetValue<PostFormData>;

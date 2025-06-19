@@ -2,8 +2,7 @@
 
 import { useParams, useRouter } from "next/navigation";
 import { useFetchPost } from "@/hooks/usePost";
-import { PostFormData } from "@/types/post";
-import PostForm from "../../write/_components/PostForm";
+import PostForm, { PostFormData } from "../../write/_components/PostForm";
 
 export default function PostEditPage() {
   const router = useRouter();
@@ -13,8 +12,7 @@ export default function PostEditPage() {
   const handleUpdate = async (updatedData: PostFormData) => {
     try {
       console.log("수정 요청 데이터:", updatedData);
-      // TODO: 게시글 수정 API 호출
-      router.push(`/community/${postId}`);
+      router.push(`/community/${postId}`);
     } catch (err) {
       console.error("수정 실패", err);
     }

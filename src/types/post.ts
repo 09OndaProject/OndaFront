@@ -13,7 +13,7 @@ export type Post = {
   updated_at?: Date | null;
   nickname: string;
   is_mine: boolean;
-  //   likes: number;
+  like_count?: number;
   //   is_liked: boolean;
 };
 

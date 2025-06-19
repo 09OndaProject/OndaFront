@@ -1,4 +1,4 @@
-import { MapPin } from "lucide-react";
+import { HeartIcon, MapPin } from "lucide-react";
 import ActionMenu from "./ActionMenu";
 import { useRouter } from "next/navigation";
 import { useModalStore } from "@/stores/useModalStore";
@@ -46,10 +46,13 @@ export default function PostMetaData({ ids, is_mine }: PostMetadataProps) {
   return (
     <div className="flex justify-between relative text-gray-600 text-sm">
       <div className="flex gap-4">
-        <span className="font-medium">{typeof ids.category}</span>
-        {categoryName}
+        <span className="font-medium">{categoryName}</span>
+
         {ids.interest && (
-          <span className="ml-2 flex items-center gap-1">{interestName}</span>
+          <span className="ml-2 flex items-center gap-1">
+            <HeartIcon />
+            {interestName}
+          </span>
         )}
         {ids.area && (
           <span className="flex gap-2 items-center">

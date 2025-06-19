@@ -6,6 +6,7 @@ import {
   postCreate,
   PostCreatePayload,
   PostCreateResponse,
+  PostsResponse,
 } from "@/apis/post";
 
 export const useFetchPost = (id: number) => {
@@ -16,10 +17,10 @@ export const useFetchPost = (id: number) => {
   });
 };
 
-export const useFetchPostList = () => {
-  return useQuery<Post[]>({
-    queryKey: ["posts"],
-    queryFn: getPosts,
+export const useFetchPostList = (page: number) => {
+  return useQuery<PostsResponse>({
+    queryKey: ["posts", page],
+    queryFn: () => getPosts(page),
   });
 };
 
