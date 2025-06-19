@@ -1,6 +1,6 @@
 import Modal from "@/components/common/Modal";
 import { useModalStore } from "@/stores/useModalStore";
-import { AlertCircle, CheckCircle } from "lucide-react";
+import { AlertCircle, CheckCircle, LogInIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React from "react";
 
@@ -75,6 +75,49 @@ export function PostFailModal() {
         >
           확인
         </button>
+      </div>
+    </Modal>
+  );
+}
+
+export function LoginRequiredModal() {
+  const { modals, closeModal } = useModalStore();
+  const router = useRouter();
+
+  const isOpen = modals["LoginRequiredModal"];
+
+  if (!isOpen) return null;
+
+  return (
+    <Modal modalKey="LoginRequiredModal">
+      <div className="flex flex-col gap-10 justify-center items-center w-full py-10">
+        <LogInIcon color="#2D60FF" size={60} />
+        <div className="flex flex-col gap-4 justify-center items-center w-full mb-4">
+          <h2 className="text-md text-center whitespace-pre-line">
+            로그인이 필요한 서비스입니다.
+          </h2>
+          <p>로그인 후 다시 시도해주세요.</p>
+        </div>
+        <div className="flex gap-4">
+          <button
+            onClick={() => {
+              closeModal("LoginRequiredModal");
+              router.push(`/login`);
+            }}
+            className="text-sm underline text-gray-600 font-medium"
+          >
+            로그인 하러가기
+          </button>
+          <button
+            onClick={() => {
+              closeModal("LoginRequiredModal");
+              router.push("/community");
+            }}
+            className="text-sm underline text-gray-600 font-medium"
+          >
+            목록으로 가기
+          </button>
+        </div>
       </div>
     </Modal>
   );

@@ -5,6 +5,7 @@ import { useModalStore } from "@/stores/useModalStore";
 import DeleteModal from "./DeleteModal";
 import { PostIds } from "@/types/post";
 import useOptions from "@/hooks/useOptions";
+import { useAuthStore } from "@/stores/useAuth";
 
 interface PostMetadataProps {
   ids: PostIds;
@@ -13,6 +14,8 @@ interface PostMetadataProps {
 
 export default function PostMetaData({ ids, is_mine }: PostMetadataProps) {
   const router = useRouter();
+
+  const isAdmin = useAuthStore((state) => state.isAdmin);
 
   const { categoryOptions, interestOptions, areaOptions } = useOptions();
 
@@ -55,7 +58,7 @@ export default function PostMetaData({ ids, is_mine }: PostMetadataProps) {
           </span>
         )}
       </div>
-      {is_mine && (
+      {(is_mine || isAdmin) && (
         <ActionMenu
           targetId={ids.id}
           onEdit={handleEdit}
