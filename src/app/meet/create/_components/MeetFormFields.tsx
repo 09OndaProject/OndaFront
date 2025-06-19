@@ -207,6 +207,11 @@ export default function MeetFormFields({
         placeholder="모임을 소개해주세요"
         required
       />
+      <div className="text-center pt-4">
+        <Button type="submit" width="w-full" height="h-[44px]">
+          모임 생성하기
+        </Button>
+      </div>
     </div>
   );
 }

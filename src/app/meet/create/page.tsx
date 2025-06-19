@@ -4,12 +4,14 @@ import React, { useState } from "react";
 // import MeetForm from "./_components/MeetForm";
 import MeetImageUploader from "./_components/MeetImageUploader";
 import MeetFormFields from "./_components/MeetFormFields";
+import api from "@/apis/app";
+import { AxiosError } from "axios";
 
 export default function MeetCreatePage() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("");
-  const [method, setMethod] = useState("");
+  const [category, setCategory] = useState(""); 
+  const [method, setMethod] = useState(""); 
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [location, setLocation] = useState("");
@@ -18,8 +20,11 @@ export default function MeetCreatePage() {
   const [deadline, setDeadline] = useState("");
   const [endTime, setEndTime] = useState("");
   const [meetCount, setMeetCount] = useState("");
+  const [imageUrl, setImageUrl] = useState(""); 
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const router = useRouter();
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const payload = {
       title,
@@ -68,6 +73,7 @@ export default function MeetCreatePage() {
         meetCount={meetCount}
         setMeetCount={setMeetCount}
       />
+      
     </form>
   );
 }

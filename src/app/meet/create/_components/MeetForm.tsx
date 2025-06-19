@@ -8,18 +8,21 @@ import Button from "@/components/common/Button";
 export default function MeetForm() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+  const [category, setCategory] = useState(""); 
   const [date, setDate] = useState("");
-  const [method, setMethod] = useState("");
+  const [method, setMethod] = useState(""); 
   const [time, setTime] = useState("");
   const [location, setLocation] = useState("");
   const [maxPeople, setMaxPeople] = useState("");
   const [digitalLevel, setDigitalLevel] = useState("");
   const [deadline, setDeadline] = useState("");
-  const [meetCount, setMeetCount] = useState("");
-  const [endTime, setEndTime] = useState("");
+  const [meetCount, setMeetCount] = useState(""); 
+  const [endTime, setEndTime] = useState(""); 
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const router = useRouter();
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const formData = {
@@ -39,7 +42,7 @@ export default function MeetForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-8 max-w-2xl mx-auto p-6">
-      <MeetImageUploader />
+      <MeetImageUploader setImageUrl={setImageUrl} /> 
       <MeetFormFields
         title={title}
         setTitle={setTitle}
@@ -66,11 +69,6 @@ export default function MeetForm() {
         meetCount={meetCount}
         setMeetCount={setMeetCount}
       />
-      <div className="text-center pt-4">
-        <Button type="submit" color="primary" variant="fill" width="w-full">
-          모임 생성하기
-        </Button>
-      </div>
     </form>
   );
 }

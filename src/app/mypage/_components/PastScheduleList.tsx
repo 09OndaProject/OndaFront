@@ -4,9 +4,12 @@ import React, { useState, useEffect } from "react";
 import { MeetingCard } from "@/components/common/MeetingCard";
 import { dummyMeetings } from "@/datas/meetings";
 import MeetingCardHorizontal from "@/components/common/MeetingCardHorizontal";
+import { useModalStore } from "@/stores/useModalStore";
+import ReviewWriteModal from "@/app/meet/review/_components/ReviewWriteModal";
 
 export default function PastScheduleList() {
   const [isMobile, setIsMobile] = useState(false);
+  const {modals, modalData, closeModal} = useModalStore();
 
   useEffect(() => {
     const handleResize = () => {
@@ -31,6 +34,16 @@ export default function PastScheduleList() {
           )
         )}
       </div>
+      {modals["reviewWrite"] && modalData["reviewWrite"] && (
+        <ReviewWriteModal
+          modalKey="reviewWrite"
+          meetId={(modalData["reviewWrite"] as any).meet_id}
+          onClose={() => closeModal("reviewWrite")}
+          onSubmit={(rating, content) => {
+            console.log("후기 제출됨:", rating, content);
+          }}
+        />
+      )}
     </section>
   );
 }

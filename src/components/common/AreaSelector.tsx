@@ -27,11 +27,16 @@ export default function AreaSelector({
   areaInfo,
   setAreaInfo,
 }: AreaSelectorProps) {
-  const { selectedSido, selectedDistrict } = areaInfo;
+  const { selectedSido, selectedDistrict } = areaInfo ?? {
+    selectedSido: "",
+    selectedDistrict: "",
+  };
+  
   // 지역 공동 컴포넌트
-  const sidos = areaOptions.map((area) => area.area_name);
-  const districts =
-    areaOptions.find((area) => area.area_name === selectedSido)?.children || [];
+  const sidos = areaOptions?.map(area => area.area_name) || [];
+  const districts = Array.isArray(areaOptions)
+  ? areaOptions.find((area) => area.area_name === selectedSido)?.children || []
+  : [];
 
   return (
     <div className="w-full max-w-[600px] border rounded-lg p-4 bg-white h-[300px]">
