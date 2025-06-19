@@ -68,7 +68,7 @@ export default function PostMetaData({ ids, is_mine }: PostMetadataProps) {
           onDelete={() => openModal("DeleteModal")}
         />
       )}
-      <DeleteModal />
+      <DeleteModal targetId={ids.id}/>
     </div>
   );
 }

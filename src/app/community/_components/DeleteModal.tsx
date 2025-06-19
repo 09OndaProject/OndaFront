@@ -2,12 +2,21 @@ import { deletePost } from "@/apis/post";
 import Button from "@/components/common/Button";
 import Modal from "@/components/common/Modal";
 import { useModalStore } from "@/stores/useModalStore";
+import { useRouter } from "next/navigation";
 import React from "react";
 
-export default function DeleteModal() {
+interface DeleteModalProps {
+  targetId: number;
+}
+
+export default function DeleteModal({targetId} : DeleteModalProps) {
   const { closeModal } = useModalStore();
-  const handleDelete = (id: number) => {
-    deletePost(id);
+  const router = useRouter();
+
+  const handleDelete = () => {
+    deletePost(targetId);
+    router.push("/community")
+    closeModal("DeleteModal")
     console.log("게시글 삭제");
   };
 
@@ -18,7 +27,7 @@ export default function DeleteModal() {
         <Button color="gray" onClick={() => closeModal("DeleteModal")}>
           취소하기
         </Button>
-        <Button onClick={() => handleDelete}>삭제하기</Button>
+        <Button onClick={handleDelete}>삭제하기</Button>
       </div>
     </Modal>
   );
