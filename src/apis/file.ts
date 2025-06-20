@@ -36,3 +36,10 @@ export const deleteFiles = async (ids: number[]): Promise<void> => {
 
   return response.data;
 };
+
+export const getFileById = async (id: number): Promise<FileData> => {
+  const response = await api.get<FileData>(END_POINT.FILES_LIST);
+  console.log(`${id} 파일`, response.data);
+
+  return response.data;
+}
