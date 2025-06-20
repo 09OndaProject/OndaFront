@@ -1,9 +1,11 @@
-import React, { useState } from "react";
-import TextInput from "@/components/common/TextInput";
-import Textarea from "@/components/common/Textarea";
-import SelectBox from "@/components/common/SelectBox";
-import ToggleButtonGroup from "@/components/common/ToggleButtonGroup";
-import AreaSelector from "@/components/common/AreaSelector";
+import React, { useEffect, useState } from 'react';
+import TextInput from '@/components/common/TextInput';
+import Textarea from '@/components/common/Textarea';
+import SelectBox from '@/components/common/SelectBox';
+import ToggleButtonGroup from '@/components/common/ToggleButtonGroup';
+import AreaSelector from '@/components/common/AreaSelector';
+import { getAreaOptions } from '@/apis/options';
+import Button from '@/components/common/Button';
 
 interface MeetFormFieldsProps {
   title: string;
@@ -58,9 +60,24 @@ export default function MeetFormFields({
   meetCount,
   setMeetCount,
 }: MeetFormFieldsProps) {
+  interface AreaOption {
+    area_name: string;
+    children: { id: number; area_name: string }[];
+  }
   const [isAreaOpen, setIsAreaOpen] = useState(false);
-  const [selectedSido, setSelectedSido] = useState("");
-  const [selectedDistrict, setSelectedDistrict] = useState("");
+  const [areaOptions, setAreaOptions] = useState<AreaOption[]>([]);
+  const [areaInfo, setAreaInfo] = useState({
+    selectedSido: '',
+    selectedDistrict: '',
+    area_id: -1,
+  });
+  useEffect(() => {
+    const fetchAreas = async () => {
+      const data = await getAreaOptions();
+      setAreaOptions(data);
+    };
+    fetchAreas();
+  }, []);
 
   return (
     <div className="space-y-12">
@@ -79,20 +96,14 @@ export default function MeetFormFields({
           value={category}
           onChange={(e) => setCategory(e.target.value)}
           options={[
-            { label: "디지털 기초", value: "디지털 기초" },
-            { label: "디지털 심화", value: "디지털 심화" },
-            { label: "커뮤니케이션", value: "커뮤니케이션" },
+            { label: '디지털 기초', value: '디지털 기초' },
+            { label: '디지털 심화', value: '디지털 심화' },
+            { label: '커뮤니케이션', value: '커뮤니케이션' },
           ]}
         />
       </div>
       <div className="grid grid-cols-2 gap-4">
-        <TextInput
-          label="일정"
-          type="date"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-          required
-        />
+        <TextInput label="일정" type="date" value={date} onChange={(e) => setDate(e.target.value)} required />
         <TextInput
           label="모집 마감일"
           type="date"
@@ -102,13 +113,7 @@ export default function MeetFormFields({
         />
       </div>
       <div className="grid grid-cols-2 gap-4">
-        <TextInput
-          label="시작 시간"
-          type="time"
-          value={time}
-          onChange={(e) => setTime(e.target.value)}
-          required
-        />
+        <TextInput label="시작 시간" type="time" value={time} onChange={(e) => setTime(e.target.value)} required />
         <TextInput
           label="종료 시간"
           type="time"
@@ -139,9 +144,9 @@ export default function MeetFormFields({
         value={method}
         onChange={setMethod}
         options={[
-          { label: "온라인", value: "온라인" },
-          { label: "오프라인", value: "오프라인" },
-          { label: "온/오프라인", value: "온/오프라인" },
+          { label: '온라인', value: '온라인' },
+          { label: '오프라인', value: '오프라인' },
+          { label: '온/오프라인', value: '온/오프라인' },
         ]}
       />
       <SelectBox
@@ -149,23 +154,21 @@ export default function MeetFormFields({
         value={digitalLevel}
         onChange={(e) => setDigitalLevel(e.target.value)}
         options={[
-          { label: "상 (Zoom 사용)", value: "상" },
-          { label: "중 (앱 사용)", value: "중" },
-          { label: "하 (전화만 가능)", value: "하" },
+          { label: '상 (Zoom 사용)', value: '상' },
+          { label: '중 (앱 사용)', value: '중' },
+          { label: '하 (전화만 가능)', value: '하' },
         ]}
       />
       <div className="relative w-full text-sm">
-        <label className="text-sm font-medium text-gray-700 mb-1 block">
-          지역
-        </label>
+        <label className="text-sm font-medium text-gray-700 mb-1 block">지역</label>
         <button
           type="button"
           className="w-full border px-4 py-2 rounded flex justify-between items-center"
           onClick={() => setIsAreaOpen((prev) => !prev)}
         >
-          {selectedSido && selectedDistrict
-            ? `${selectedSido} ${selectedDistrict}`
-            : "지역 선택"}
+          {areaInfo.selectedSido && areaInfo.selectedDistrict
+            ? `${areaInfo.selectedSido} ${areaInfo.selectedDistrict}`
+            : '지역 선택'}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="w-4 h-4 ml-2"
@@ -173,21 +176,26 @@ export default function MeetFormFields({
             viewBox="0 0 24 24"
             stroke="currentColor"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M19 9l-7 7-7-7"
-            />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
           </svg>
         </button>
         {isAreaOpen && (
           <div className="absolute z-10 mt-2 w-full bg-white rounded shadow">
             <AreaSelector
+              areaOptions={areaOptions}
+              areaInfo={areaInfo}
+              setAreaInfo={setAreaInfo}
               onSelect={(sido, district) => {
-                setSelectedSido(sido);
-                setSelectedDistrict(district);
-                setIsAreaOpen(false);
+                const matched = areaOptions
+                  .find((a) => a.area_name === sido)
+                  ?.children.find((d) => d.area_name === district);
+                if (matched) {
+                  setAreaInfo({
+                    selectedSido: sido,
+                    selectedDistrict: district,
+                    area_id: matched.id,
+                  });
+                }
               }}
             />
           </div>

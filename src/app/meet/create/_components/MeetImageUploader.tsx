@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import React, { useRef, useState } from "react";
-import Image from "next/image";
+import React, { useRef, useState } from 'react';
+import Image from 'next/image';
 
 export default function MeetImageUploader({ setImageUrl }: { setImageUrl: (url: string) => void }) {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -29,13 +29,7 @@ export default function MeetImageUploader({ setImageUrl }: { setImageUrl: (url: 
           <span className="text-gray-500">이미지를 업로드하려면 클릭하세요</span>
         )}
       </div>
-      <input
-        type="file"
-        accept="image/*"
-        onChange={handleImageChange}
-        ref={fileInputRef}
-        className="hidden"
-      />
+      <input type="file" accept="image/*" onChange={handleImageChange} ref={fileInputRef} className="hidden" />
     </div>
   );
 }

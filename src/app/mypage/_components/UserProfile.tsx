@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
 // import { sampleUser } from "@/datas/sampleUser";
-import { ArrowLeftRight, Camera, SquarePen, UserRound } from "lucide-react";
-import Image from "next/image";
-import { useViewModeStore } from "@/stores/useViewModeStore";
-import { useAuthStore } from "@/stores/useAuth";
-import { useEffect, useState } from "react";
-import api from "@/apis/app";
-import { END_POINT } from "@/constants/route";
+import { ArrowLeftRight, Camera, SquarePen, UserRound } from 'lucide-react';
+import Image from 'next/image';
+import { useViewModeStore } from '@/stores/useViewModeStore';
+import { useAuthStore } from '@/stores/useAuth';
+import { useEffect, useState } from 'react';
+import api from '@/apis/app';
+import { END_POINT } from '@/constants/route';
 
 interface Profile {
   email: string;
@@ -29,11 +29,11 @@ const UserProfile = () => {
   const [profile, setProfile] = useState<Profile | null>(null);
   const accessToken = useAuthStore((state) => state.accessToken);
   const role = useAuthStore((s) => s.user?.role);
-  const isAdmin = role === "admin";
-  const isLeader = role === "leader";
+  const isAdmin = role === 'admin';
+  const isLeader = role === 'leader';
 
   console.log(accessToken);
-  console.log("profile: ", profile);
+  console.log('profile: ', profile);
   useEffect(() => {
     const fetchProfile = async () => {
       try {
@@ -42,7 +42,7 @@ const UserProfile = () => {
             Authorization: `Bearer ${accessToken}`,
           },
         });
-        console.log("res", res.data);
+        console.log('res', res.data);
         setProfile(res.data);
       } catch (err) {
         console.error(err);
@@ -66,14 +66,7 @@ const UserProfile = () => {
         <div className="relative w-52 h-52">
           <div className="w-52 h-52 rounded-full overflow-hidden border bg-gray-100 flex items-center justify-center">
             {profile?.file ? (
-              <Image
-                src={profile?.file}
-                alt="프로필 이미지"
-                fill
-                className="object-cover"
-                sizes="80px"
-                priority
-              />
+              <Image src={profile?.file} alt="프로필 이미지" fill className="object-cover" sizes="80px" priority />
             ) : (
               <UserRound className="text-gray-400 w-20 h-20" />
             )}
@@ -91,23 +84,21 @@ const UserProfile = () => {
           </p>
           <p>
             <span className="font-semibold mr-2">전화번호</span>
-            {profile?.phone_number ?? "-"}
+            {profile?.phone_number ?? '-'}
           </p>
           <p>
             <span className="font-semibold mr-2">생년월일</span>
-            {profile?.date_of_birth
-              ? new Date(profile.date_of_birth).toLocaleDateString("ko-KR")
-              : "-"}
+            {profile?.date_of_birth ? new Date(profile.date_of_birth).toLocaleDateString('ko-KR') : '-'}
           </p>
           {isAdmin || isLeader ? (
             <p>
               <span className="font-semibold mr-2">디지털난이도</span>
-              {profile?.digital_level?.display ?? "-"}
+              {profile?.digital_level?.display ?? '-'}
             </p>
           ) : (
             <p>
               <span className="font-semibold mr-2">관심 분야</span>
-              {profile?.interests?.map((i) => i.interest_name).join(", ")}
+              {profile?.interests?.map((i) => i.interest_name).join(', ')}
             </p>
           )}
         </div>
@@ -119,7 +110,7 @@ const UserProfile = () => {
             className="flex items-center ml-auto px-3 py-1 border rounded-full text-xs text-gray-600 hover:bg-gray-100"
           >
             <ArrowLeftRight size={16} className="mr-1" />
-            {viewMode === "leader" ? "일반 유저로 전환" : "리더 유저로 전환"}
+            {viewMode === 'leader' ? '일반 유저로 전환' : '리더 유저로 전환'}
           </button>
         )}
       </div>
