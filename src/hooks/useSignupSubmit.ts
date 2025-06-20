@@ -68,9 +68,10 @@ export function useSignupSubmit() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    console.log("현재 제출 직전 signupData:", signupData);
     const requiredFields = [
       { key: "name", value: name },
+      { key: "nickname", value: nickname },
       { key: "birthYear", value: birthYear },
       { key: "birthMonth", value: birthMonth },
       { key: "birthDay", value: birthDay },
@@ -91,6 +92,16 @@ export function useSignupSubmit() {
       return;
     }
 
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(email)) {
+      alert("유효한 이메일 주소를 입력해주세요.");
+      const emailInput = document.querySelector(
+        `input[name="email"]`
+      ) as HTMLElement;
+      emailInput?.focus();
+      return;
+    }
+
     if (password !== password_confirm) {
       alert("비밀번호가 일치하지 않습니다.");
       const passwordConfirmInput = document.querySelector(
@@ -107,6 +118,16 @@ export function useSignupSubmit() {
         `input[name="password"]`
       ) as HTMLElement;
       passwordInput?.focus();
+      return;
+    }
+
+    const dateOfBirth = `${birthYear}-${birthMonth}-${birthDay}`;
+    if (isNaN(Date.parse(dateOfBirth))) {
+      alert("유효한 생년월일을 입력해주세요.");
+      const birthYearInput = document.querySelector(
+        `input[name="birthYear"]`
+      ) as HTMLElement;
+      birthYearInput?.focus();
       return;
     }
 
