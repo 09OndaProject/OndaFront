@@ -4,11 +4,11 @@ import PostHeader from "./_components/PostHeader";
 import { useParams } from "next/navigation";
 import { useFetchPost } from "@/hooks/usePost";
 import PostContent from "./_components/PostContent";
-import CommentList from "./_components/CommentList";
-import CommentInput from "./_components/CommentInput";
 import { dummyComments } from "@/datas/dummyComments";
 import { Comment } from "@/types/post";
 import { useEffect, useState } from "react";
+import CommentList from "./_components/CommentList";
+import CommentInput from "./_components/CommentInput";
 import Pagination from "@/components/Pagination";
 
 export default function PostDetailPage() {

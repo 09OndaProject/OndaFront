@@ -6,7 +6,7 @@ import { useCreatePost } from "@/hooks/usePost";
 import { useModalStore } from "@/stores/useModalStore";
 import axios from "axios";
 import { PostFailModal, PostSuccessModal } from "./_components/PostModal";
-import { preparePostPayload } from "@/utils/parsing";
+import { preparePostPayload } from "@/utils/preparePostPayload";
 import { PostCreatePayload } from "@/apis/post";
 
 export default function Page() {

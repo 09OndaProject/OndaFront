@@ -3,7 +3,7 @@
 import { useParams, useRouter } from "next/navigation";
 import { useFetchPost, useUpdatePost } from "@/hooks/usePost";
 import PostForm, { PostFormData } from "../../write/_components/PostForm";
-import { preparePostPayload } from "@/utils/parsing";
+import { preparePostPayload } from "@/utils/preparePostPayload";
 import { useModalStore } from "@/stores/useModalStore";
 
 export default function PostEditPage() {
