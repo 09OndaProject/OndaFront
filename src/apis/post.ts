@@ -2,16 +2,16 @@ import { END_POINT } from "@/constants/route";
 import api from "./app";
 import { Post } from "@/types/post";
 
+
 // Post 업로드
 export interface PostCreatePayload {
   title: string;
   content: string;
-  category: number;
-  area?: number;
-  interest?: number;
-  file?: number;
+  area?: number | null;
+  category?: number;
+  interest?: number | null;
+  file?: number | null;
 }
-
 export interface PostCreateResponse {
   id: number;
   title: string;
@@ -44,7 +44,9 @@ export const postCreate = async (
 
 // Post 목록 조회
 export const getPosts = async (page: number): Promise<PostsResponse> => {
-  const response = await api.get<PostsResponse>(`${END_POINT.POSTS}?page=${page}`);
+  const response = await api.get<PostsResponse>(
+    `${END_POINT.POSTS}?page=${page}`
+  );
   console.log("게시글 목록", response.data);
 
   return response.data;
