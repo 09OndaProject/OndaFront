@@ -185,6 +185,8 @@ export function useSignupSubmit() {
         alert("이미 가입된 이메일입니다.");
       } else if (errors?.nickname?.[0]?.includes("already exists")) {
         alert("이미 사용 중인 닉네임입니다.");
+      } else if (errors?.error_message?.[0]) {
+        alert("자주 사용되는 비밀번호는 사용할 수 없습니다.");
       } else {
         alert("회원가입 중 오류가 발생했습니다.");
       }
