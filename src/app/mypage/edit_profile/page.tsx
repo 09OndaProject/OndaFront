@@ -222,6 +222,15 @@ export default function EditProfilePage() {
         >
           수정 완료
         </button>
+        <div className="flex gap-4 mt-4">
+          <button
+            type="button"
+            onClick={() => router.replace("/mypage")}
+            className="w-full bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-3 rounded"
+          >
+            수정 취소
+          </button>
+        </div>
       </form>
     </main>
   );
