@@ -1,23 +1,26 @@
-import { deletePost } from "@/apis/post";
 import Button from "@/components/common/Button";
 import Modal from "@/components/common/Modal";
 import { useModalStore } from "@/stores/useModalStore";
-import { useRouter } from "next/navigation";
 import React from "react";
 
-interface DeleteModalProps {
-  targetId: number;
+export interface DeleteModalData {
+  id?: number;
+  postId?: number;
+  type?: "post" | "comment";
 }
 
-export default function DeleteModal({targetId} : DeleteModalProps) {
-  const { closeModal } = useModalStore();
-  const router = useRouter();
+export interface DeleteModalProps {
+  onDelete?: (data: DeleteModalData) => void;
+}
+
+export default function DeleteModal({ onDelete }: DeleteModalProps) {
+  const { modalData, closeModal } = useModalStore();
+  const data = modalData["DeleteModal"] as DeleteModalData | undefined;
 
   const handleDelete = () => {
-    deletePost(targetId);
-    router.push("/community")
-    closeModal("DeleteModal")
-    console.log("게시글 삭제");
+    if (!data) return;
+    onDelete?.(data);
+    closeModal("DeleteModal");
   };
 
   return (

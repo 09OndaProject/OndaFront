@@ -1,5 +1,5 @@
-import { getComments, createComment } from "@/apis/comments";
-import { Comment, CommentCreatePayload, CommentsResponse } from "@/types/post";
+import { getComments, createComment, patchComment, deleteComment } from "@/apis/comments";
+import { Comment, CommentCreatePayload, CommentsResponse, CommentUpdatePayload } from "@/types/post";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 
@@ -25,6 +25,42 @@ export const useCreateComment = () => {
         },
         onError: (error) => {
             console.error("댓글 작성 실패: ", error.message);
+        },
+    });
+}
+
+// 댓글 수정
+export const useUpdateComment = () => {
+    const queryClient = useQueryClient();
+
+    return useMutation<Comment, Error, CommentUpdatePayload>({
+        mutationFn: ({ id, postId, content, parent }) =>  patchComment({ id, postId, content, parent }),
+        onSuccess: (data) => {
+            console.log("댓글 수정 성공", data);
+
+            queryClient.invalidateQueries({ queryKey: ["comments", data.post] });
+        },
+        onError: (error) => {
+            console.error("댓글 수정 실패: ", error.message);
+        },
+    });
+}
+
+// 댓글 삭제
+export const useDeleteComment = () => {
+    const queryClient = useQueryClient();
+
+    return useMutation<void, Error, { id: number; postId: number }>({
+        mutationFn: ({ id, postId }) => {
+            return deleteComment(id, postId);
+        },
+        onSuccess: (data, { postId }) => {
+            console.log("댓글 삭제 성공", data);
+
+            queryClient.invalidateQueries({ queryKey: ["comments", postId] });
+        },
+        onError: (error) => {
+            console.error("댓글 삭제 실패: ", error.message);
         },
     });
 }
