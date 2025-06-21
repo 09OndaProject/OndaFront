@@ -27,15 +27,41 @@ export type SUser = {
     digital_level: { id: number; level: number; description: string };      
 }
 
+export type SLeader =  {
+    id: string;
+    user_email: string;
+    user_name: string;
+    status: ApplicationStatus;
+    created_at: Date;
+}
+
+export type Leader =  {
+    id: string;
+    email: string;
+    name: string;
+    status: ApplicationStatus;
+    createdAt: Date;
+}
+
+export function transformSLeaderToLeader(s: SLeader): Leader {
+    return {
+      id: s.id,
+      email: s.user_email,
+      name: s.user_name,
+      status: s.status,
+      createdAt: s.created_at
+    };
+  }
+
 export type LeaderApplication = {
-    userId: string;
+    id?: string;
     bio: string;
     status: ApplicationStatus;
-    certificate: Certification[];
+    certificates: Certification[];
 }
 
 export type Certification = {
-    type: string;
+    certificate_type: string;
     file: string;
 }
 
