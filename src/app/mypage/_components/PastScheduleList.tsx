@@ -30,16 +30,17 @@ export default function PastScheduleList() {
           )
         )}
       </div>
-      {modals['reviewWrite'] && ['reviewWrite'] && (
-        <ReviewWriteModal
-          modalKey="reviewWrite"
-          meetId={(modalData['reviewWrite'] as any).meet_id}
-          onClose={() => closeModal('reviewWrite')}
-          onSubmit={(rating, content) => {
-            console.log('후기 제출됨:', rating, content);
-          }}
-        />
-      )}
+      
+      {modals["reviewWrite"] && modalData["reviewWrite"] && (
+  <ReviewWriteModal
+    modalKey="reviewWrite"
+    meetId={(modalData["reviewWrite"] as any).meet_id}
+    onClose={() => closeModal("reviewWrite")}
+    onSubmit={(rating, content) => {
+      console.log("후기 제출됨:", rating, content);
+    }}
+  />
+)}
     </section>
   );
 }

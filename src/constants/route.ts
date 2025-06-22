@@ -1,4 +1,4 @@
-export const BASE_URL = "https://api.ondamoim.com";
+export const BASE_URL = "https://api.ondamoim.com/api";
 
 /**
  * @example
@@ -31,7 +31,7 @@ export const END_POINT = {
   // options: 옵션 관련 api
   OPTIONS: "/api/options", // 전체 옵션 목록 조회
   OPTIONS_AGE: "/api/options/age-groups", // 연령대 목록 조회
-  OPTIONS_AREAS: "/api/options/areas", // 지역 목록 조회
+  OPTIONS_AREAS: "/options/areas", // 지역 목록 조회
   OPTIONS_CATEGORIES: "/api/options/categories", // 카테고리 목록 조회
   OPTIONS_DIGITAL: "/api/options/digital-levels", // 디지털 수준 목록 조회
   OPTIONS_INTEREST: "/api/options/interests", // 관심사 목록 조회
@@ -48,9 +48,9 @@ export const END_POINT = {
   USER_KAKAO_CALLBACK: "/api/users/kakao/callback", // 카카오 로그인 콜백 처리
   USER_KAKAO_LOGIN: "/api/users/kakao/login", // 카카오 로그인 리디렉션
 
-  USERS_PROFILE: "/api/users/profile", // 유저 프로필 조회/수정/탈퇴
+  USERS_PROFILE: "/users/profile", // 유저 프로필 조회/수정/탈퇴
   USERS_SIGNUP: "/api/users/signup", // 회원가입
-  USERS_LOGIN: "/api/users/token/login", // JWT 로그인
+  USERS_LOGIN: "/users/token/login", // JWT 로그인
   USERS_LOGOUT: "/api/users/token/logout", // JWT 로그아웃
   USER_REFRESH: "/apiusers/token/refresh", // 엑세스 토큰 재발급
 };

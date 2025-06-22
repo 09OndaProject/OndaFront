@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import MeetFormFields from "./MeetFormFields";
 import MeetImageUploader from "./MeetImageUploader";
-import Button from "@/components/common/Button";
+import { useRouter } from "next/navigation";
 
 export default function MeetForm() {
   const [title, setTitle] = useState("");
@@ -20,6 +20,24 @@ export default function MeetForm() {
   const [meetCount, setMeetCount] = useState(""); 
   const [endTime, setEndTime] = useState(""); 
 
+  const [areaInfo, setAreaInfo] = useState({
+    selectedSido: "",
+    selectedDistrict: "",
+    area_id: -1,
+  });
+
+  
+  const handleAreaInfoChange: React.Dispatch<
+    React.SetStateAction<typeof areaInfo>
+  > = (infoOrUpdater) => {
+    const newInfo =
+      typeof infoOrUpdater === "function"
+        ? infoOrUpdater(areaInfo)
+        : infoOrUpdater;
+
+    setAreaInfo(newInfo);
+  };
+
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -35,6 +53,7 @@ export default function MeetForm() {
       digitalLevel,
       deadline,
       meetCount,
+      area_id: areaInfo.area_id,
     };
 
     console.log("폼 제출됨:", formData);
@@ -68,6 +87,8 @@ export default function MeetForm() {
         setEndTime={setEndTime}
         meetCount={meetCount}
         setMeetCount={setMeetCount}
+        areaInfo={areaInfo}
+        setAreaInfo={handleAreaInfoChange} 
       />
     </form>
   );

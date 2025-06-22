@@ -32,8 +32,21 @@ interface MeetFormFieldsProps {
   setDeadline: (value: string) => void;
   meetCount: string;
   setMeetCount: (value: string) => void;
+  areaInfo: {
+    selectedSido: string;
+    selectedDistrict: string;
+    area_id: number;
+  };
+  setAreaInfo: React.Dispatch<React.SetStateAction<{
+    selectedSido: string;
+    selectedDistrict: string;
+    area_id: number;
+  }>>;
 }
-
+interface AreaOption {
+  area_name: string;
+  children: { id: number; area_name: string }[];
+}
 export default function MeetFormFields({
   title,
   setTitle,
@@ -59,6 +72,8 @@ export default function MeetFormFields({
   setDeadline,
   meetCount,
   setMeetCount,
+  areaInfo,
+  setAreaInfo,
 }: MeetFormFieldsProps) {
   interface AreaOption {
     area_name: string;
@@ -66,11 +81,11 @@ export default function MeetFormFields({
   }
   const [isAreaOpen, setIsAreaOpen] = useState(false);
   const [areaOptions, setAreaOptions] = useState<AreaOption[]>([]);
-  const [areaInfo, setAreaInfo] = useState({
-    selectedSido: '',
-    selectedDistrict: '',
-    area_id: -1,
-  });
+  // const [areaInfo, setAreaInfo] = useState({
+  //   selectedSido: '',
+  //   selectedDistrict: '',
+  //   area_id: -1,
+  // });
   useEffect(() => {
     const fetchAreas = async () => {
       const data = await getAreaOptions();
@@ -189,6 +204,7 @@ export default function MeetFormFields({
                 const matched = areaOptions
                   .find((a) => a.area_name === sido)
                   ?.children.find((d) => d.area_name === district);
+                  console.log("matched 확인",matched,areaOptions)
                 if (matched) {
                   setAreaInfo({
                     selectedSido: sido,
@@ -198,6 +214,7 @@ export default function MeetFormFields({
                 }
               }}
             />
+
           </div>
         )}
       </div>

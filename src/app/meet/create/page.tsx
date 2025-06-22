@@ -1,11 +1,12 @@
 'use client';
 
 import React, { useState } from 'react';
-// import MeetForm from "./_components/MeetForm";
-import MeetImageUploader from './_components/MeetImageUploader';
-import MeetFormFields from './_components/MeetFormFields';
-
-// import { useRouter } from 'next/navigation';
+//import MeetForm from "./_components/MeetForm";
+import MeetImageUploader from "./_components/MeetImageUploader";
+import MeetFormFields from "./_components/MeetFormFields";
+import api from "@/apis/app";
+// import { AxiosError } from "axios";
+import { useRouter } from "next/navigation";
 
 export default function MeetCreatePage() {
   const [title, setTitle] = useState('');
@@ -21,27 +22,61 @@ export default function MeetCreatePage() {
   const [endTime, setEndTime] = useState('');
   const [meetCount, setMeetCount] = useState('');
   const [imageUrl, setImageUrl] = useState('');
+  const [areaInfo, setAreaInfo] = useState({
+    selectedSido: '',
+    selectedDistrict: '',
+    area_id: -1,
+  });
 
   // const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log("제출 직전 areaInfo:", areaInfo);
+    console.log("contact(method):", method);
     const payload = {
       title,
       description,
-      category,
-      method,
+      area: areaInfo.area_id,
+      digital_level: Number(digitalLevel),
+      category: Number(category),
       date,
-      time,
+      start_time: time,
+      end_time: endTime,
       location,
-      maxPeople,
-      digitalLevel,
-      deadline,
+      contact: method,
+      session_count: Number(meetCount),
+      max_people: Number(maxPeople),
+      file: 0, 
+      application_deadline: new Date(deadline).toISOString(),
     };
-    console.log('폼 제출됨:', payload);
-    // 나중에 여기 api 따로 연동
+    
+    console.log("payload", payload);
+
+    try {
+      const token = localStorage.getItem("accessToken");
+      console.log("토큰 확인:", token);
+      if (!token) {
+        alert("로그인이 필요합니다.");
+        return;
+      }
+  
+      await api.post("/meets", payload, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "X-CSRFToken": localStorage.getItem("csrfToken") || "",
+        },
+      });
+  
+      alert("모임 생성 성공!");
+      router.push("/meet");
+    } catch (error) {
+      console.error("모임 생성 실패:", error);
+      alert("모임 생성에 실패했습니다.");
+    }
   };
 
+ 
   return (
     <form onSubmit={handleSubmit} className="space-y-8 max-w-2xl mx-auto p-6">
       <h1 className="text-xl font-bold text-main mb-4">모임 생성</h1>
@@ -72,6 +107,8 @@ export default function MeetCreatePage() {
         setEndTime={setEndTime}
         meetCount={meetCount}
         setMeetCount={setMeetCount}
+        areaInfo={areaInfo}
+        setAreaInfo={setAreaInfo}
       />
     </form>
   );

@@ -1,9 +1,10 @@
 'use client';
 
-import { useModalStore } from '@/stores/useModalStore';
-import FinishedMeetDetailModal from '../meet/detail/_components/FinishedMeetDetailModal';
-import ReviewWriteModal from '../meet/review/_components/ReviewWriteModal';
-import Link from 'next/link';
+import { useModalStore } from "@/stores/useModalStore";
+import FinishedMeetDetailModal from "../meet/detail/_components/FinishedMeetDetailModal";
+import ReviewWriteModal from "../meet/review/_components/ReviewWriteModal";
+import Link from "next/link";
+
 
 interface MeeringStatusButtonsProps {
   status: '모집중' | '모집 마감';
@@ -90,7 +91,7 @@ export default function MeeringStatusButtons({
           onSubmit={(rating, content) => {
             console.log('후기 제출', rating, content);
           }}
-          meetId={0}
+          meetId={2}
         />
       )}
     </>
