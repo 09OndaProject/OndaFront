@@ -1,4 +1,4 @@
-import { ApplicationStatus } from '@/types/user';
+import { ApplicationStatus } from '@/types/leader';
 import { BadgeCheck, Ban, Loader } from 'lucide-react';
 import { ReactNode } from 'react';
 
@@ -22,7 +22,7 @@ const metaByRole: Record<Role, Record<ApplicationStatus, StatusLabel>> = {
     },
     rejected: {
       label: '거절',
-      className: 'bg-accnet-red text-white',
+      className: 'bg-accent-red text-white',
     },
   },
   leader: {

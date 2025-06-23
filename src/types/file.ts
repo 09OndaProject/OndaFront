@@ -9,3 +9,5 @@ export type FileData = {
     thumbnail?: string;
     uploaded_at?: Date;
 }
+
+export type FileCategory = 'post' | 'profile' | 'meet' | 'certificate' | 'other';

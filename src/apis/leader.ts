@@ -1,33 +1,54 @@
-import { ApplicationStatus, Leader, LeaderApplication, SLeader, transformSLeaderToLeader } from "@/types/user";
+import { ApplicationStatus, Leader, LeaderApplicationDetail, LeaderApplicationRequest, SLeader, SLeaderApplicationDetail, transformSLeaderApplicationDetail, transformSLeaderToLeader } from "@/types/leader";
 import api from "./app";
+import { END_POINT } from "@/constants/route";
 
-export async function getLeaders(page: number = 1, size: number = 10): Promise<Leader[]> {
-  const { data } = await api.get<SLeader[]>(`/api/leaders-applies`, {
+export async function getLeaderApplicants(
+  page: number,
+  size: number
+): Promise<{ data: Leader[]; totalCount: number }> {
+  const res = await api.get<{
+    count: number;
+    next: string | null;
+    previous: string | null;
+    results: SLeader[];
+  }>(END_POINT.LEADERS_APPLY, {
     params: { page, size },
   });
-  return data.map(transformSLeaderToLeader);
+
+  return {
+    data: res.data.results.map(transformSLeaderToLeader),
+    totalCount: res.data.count,
+  };
 }
 
-export async function getLeaderById(id: string): Promise<LeaderApplication> {
-  const { data } = await api.get<LeaderApplication>(`/api/leaders-applies/${id}`);
+
+export async function getLeaderById(id: number): Promise<LeaderApplicationDetail> {
+  const { data } = await api.get<SLeaderApplicationDetail>(END_POINT.LEADERS_DETAIL(id));
+  console.log(data);
+  return transformSLeaderApplicationDetail(data);
+}
+
+export async function getMyLeaderApplication(): Promise<LeaderApplicationDetail> {
+  const { data } = await api.get<SLeaderApplicationDetail>(END_POINT.LEADERS_DETAIL_MINE);
+  console.log(data);
+  return transformSLeaderApplicationDetail(data);
+}
+
+export async function createLeader(payload: LeaderApplicationRequest): Promise<Leader> {
+  const { data } = await api.post<Leader>(END_POINT.LEADERS_APPLY, payload);
   return data;
 }
 
-export async function getMyLeader(): Promise<LeaderApplication> {
-  const { data } = await api.get<LeaderApplication>(`/api/leaders-applies/min`);
+export async function updateLeaderStatus(id: number, payload: ApplicationStatus): Promise<LeaderApplicationDetail> {
+  const { data } = await api.patch<LeaderApplicationDetail>(END_POINT.LEADERS_STATUS(id),
+    { status: payload });
   return data;
 }
 
-export async function createLeader(payload: LeaderApplication): Promise<Leader> {
-  const { data } = await api.post<Leader>('/api/leaders-applies', payload);
-  return data;
+export async function deleteLeader(id: number): Promise<void> {
+  await api.delete(END_POINT.LEADERS_DETAIL(id));
 }
 
-export async function updateLeader(id: string, payload: ApplicationStatus): Promise<Leader> {
-  const { data } = await api.patch<Leader>(`/api/leaders-applies/${id}/status`, payload);
-  return data;
-}
-
-export async function deleteLeader(id: string): Promise<void> {
-  await api.delete(`/api/leaders/${id}`);
+export async function getLeaderMeetingById(id: number): Promise<void> {
+  await api.get(END_POINT.LEADERS_METTINGS(id));
 }
