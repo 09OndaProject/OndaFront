@@ -1,5 +1,4 @@
 interface AreaSelectorProps {
-  onSelect: (sido: string, district: string, areaId?: number) => void;
   areaOptions: {
     area_name: string;
     children: {

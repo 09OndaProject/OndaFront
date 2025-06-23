@@ -7,85 +7,46 @@ import AreaSelector from '@/components/common/AreaSelector';
 import { getAreaOptions } from '@/apis/options';
 import Button from '@/components/common/Button';
 
-interface MeetFormFieldsProps {
+interface MeetFormData {
   title: string;
-  setTitle: (value: string) => void;
   description: string;
-  setDescription: (value: string) => void;
   category: string;
-  setCategory: (value: string) => void;
   method: string;
-  setMethod: (value: string) => void;
   date: string;
-  setDate: (value: string) => void;
   time: string;
-  setTime: (value: string) => void;
   endTime: string;
-  setEndTime: (value: string) => void;
   location: string;
-  setLocation: (value: string) => void;
   maxPeople: string;
-  setMaxPeople: (value: string) => void;
   digitalLevel: string;
-  setDigitalLevel: (value: string) => void;
   deadline: string;
-  setDeadline: (value: string) => void;
   meetCount: string;
-  setMeetCount: (value: string) => void;
+}
+
+interface MeetFormFieldsProps {
+  formData: MeetFormData;
+  setFormData: React.Dispatch<React.SetStateAction<MeetFormData>>;
   areaInfo: {
     selectedSido: string;
     selectedDistrict: string;
     area_id: number;
   };
-  setAreaInfo: React.Dispatch<React.SetStateAction<{
-    selectedSido: string;
-    selectedDistrict: string;
-    area_id: number;
-  }>>;
+  setAreaInfo: React.Dispatch<
+    React.SetStateAction<{
+      selectedSido: string;
+      selectedDistrict: string;
+      area_id: number;
+    }>
+  >;
 }
-interface AreaOption {
-  area_name: string;
-  children: { id: number; area_name: string }[];
-}
-export default function MeetFormFields({
-  title,
-  setTitle,
-  description,
-  setDescription,
-  category,
-  setCategory,
-  method,
-  setMethod,
-  date,
-  setDate,
-  time,
-  setTime,
-  endTime,
-  setEndTime,
-  location,
-  setLocation,
-  maxPeople,
-  setMaxPeople,
-  digitalLevel,
-  setDigitalLevel,
-  deadline,
-  setDeadline,
-  meetCount,
-  setMeetCount,
-  areaInfo,
-  setAreaInfo,
-}: MeetFormFieldsProps) {
+
+export default function MeetFormFields({ formData, setFormData, areaInfo, setAreaInfo }: MeetFormFieldsProps) {
   interface AreaOption {
     area_name: string;
     children: { id: number; area_name: string }[];
   }
   const [isAreaOpen, setIsAreaOpen] = useState(false);
   const [areaOptions, setAreaOptions] = useState<AreaOption[]>([]);
-  // const [areaInfo, setAreaInfo] = useState({
-  //   selectedSido: '',
-  //   selectedDistrict: '',
-  //   area_id: -1,
-  // });
+
   useEffect(() => {
     const fetchAreas = async () => {
       const data = await getAreaOptions();
@@ -94,13 +55,17 @@ export default function MeetFormFields({
     fetchAreas();
   }, []);
 
+  const handleFormChange = (field: keyof MeetFormData, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
+
   return (
     <div className="space-y-12">
       <div className="grid grid-cols-2 gap-4">
         <TextInput
           label="개설할 모임 이름"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          value={formData?.title}
+          onChange={(e) => handleFormChange('title', e.target.value)}
           placeholder="모임 제목을 입력해주세요"
           required
         />
@@ -108,8 +73,8 @@ export default function MeetFormFields({
         <SelectBox
           label="카테고리"
           placeholder="카테고리"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
+          value={formData?.category}
+          onChange={(e) => handleFormChange('category', e.target.value)}
           options={[
             { label: '디지털 기초', value: '디지털 기초' },
             { label: '디지털 심화', value: '디지털 심화' },
@@ -118,22 +83,34 @@ export default function MeetFormFields({
         />
       </div>
       <div className="grid grid-cols-2 gap-4">
-        <TextInput label="일정" type="date" value={date} onChange={(e) => setDate(e.target.value)} required />
+        <TextInput
+          label="일정"
+          type="date"
+          value={formData?.date}
+          onChange={(e) => handleFormChange('date', e.target.value)}
+          required
+        />
         <TextInput
           label="모집 마감일"
           type="date"
-          value={deadline}
-          onChange={(e) => setDeadline(e.target.value)}
+          value={formData?.deadline}
+          onChange={(e) => handleFormChange('deadline', e.target.value)}
           required
         />
       </div>
       <div className="grid grid-cols-2 gap-4">
-        <TextInput label="시작 시간" type="time" value={time} onChange={(e) => setTime(e.target.value)} required />
+        <TextInput
+          label="시작 시간"
+          type="time"
+          value={formData?.time}
+          onChange={(e) => handleFormChange('time', e.target.value)}
+          required
+        />
         <TextInput
           label="종료 시간"
           type="time"
-          value={endTime}
-          onChange={(e) => setEndTime(e.target.value)}
+          value={formData?.endTime}
+          onChange={(e) => handleFormChange('endTime', e.target.value)}
           required
         />
       </div>
@@ -141,23 +118,23 @@ export default function MeetFormFields({
         <TextInput
           label="모집 인원(최대)"
           type="number"
-          value={maxPeople}
-          onChange={(e) => setMaxPeople(e.target.value)}
+          value={formData?.maxPeople}
+          onChange={(e) => handleFormChange('maxPeople', e.target.value)}
           placeholder="숫자만 입력"
           required
         />
         <TextInput
           label="횟수(최대4회)"
           type="number"
-          value={meetCount}
-          onChange={(e) => setMeetCount(e.target.value)}
+          value={formData?.meetCount}
+          onChange={(e) => handleFormChange('meetCount', e.target.value)}
           required
         />
       </div>
       <ToggleButtonGroup
         label="방법"
-        value={method}
-        onChange={setMethod}
+        value={formData?.method}
+        onChange={(value) => handleFormChange('method', value)}
         options={[
           { label: '온라인', value: '온라인' },
           { label: '오프라인', value: '오프라인' },
@@ -166,8 +143,8 @@ export default function MeetFormFields({
       />
       <SelectBox
         placeholder="디지털 난이도"
-        value={digitalLevel}
-        onChange={(e) => setDigitalLevel(e.target.value)}
+        value={formData?.digitalLevel}
+        onChange={(e) => handleFormChange('digitalLevel', e.target.value)}
         options={[
           { label: '상 (Zoom 사용)', value: '상' },
           { label: '중 (앱 사용)', value: '중' },
@@ -196,39 +173,21 @@ export default function MeetFormFields({
         </button>
         {isAreaOpen && (
           <div className="absolute z-10 mt-2 w-full bg-white rounded shadow">
-            <AreaSelector
-              areaOptions={areaOptions}
-              areaInfo={areaInfo}
-              setAreaInfo={setAreaInfo}
-              onSelect={(sido, district) => {
-                const matched = areaOptions
-                  .find((a) => a.area_name === sido)
-                  ?.children.find((d) => d.area_name === district);
-                  console.log("matched 확인",matched,areaOptions)
-                if (matched) {
-                  setAreaInfo({
-                    selectedSido: sido,
-                    selectedDistrict: district,
-                    area_id: matched.id,
-                  });
-                }
-              }}
-            />
-
+            <AreaSelector areaOptions={areaOptions} areaInfo={areaInfo} setAreaInfo={setAreaInfo} />
           </div>
         )}
       </div>
       <TextInput
         label="상세 모임 위치(주소) 및 장소"
-        value={location}
-        onChange={(e) => setLocation(e.target.value)}
+        value={formData?.location}
+        onChange={(e) => handleFormChange('location', e.target.value)}
         placeholder="예: 서울 강남구"
         required
       />
       <Textarea
         label="모임 소개"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
+        value={formData?.description}
+        onChange={(e) => handleFormChange('description', e.target.value)}
         placeholder="모임을 소개해주세요"
         required
       />
