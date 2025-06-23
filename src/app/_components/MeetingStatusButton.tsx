@@ -30,7 +30,7 @@ export default function MeeringStatusButtons({
     leaderName: '리더 이름',
     leaderImage: null,
   };
-
+   console.log("버튼 안에서 meet_id 출력", meet_id);
   const modalKey = mode === 'past' ? 'finishedMeetDetail' : 'meetDetail';
 
   const openhandler = () => openModal(modalKey);
@@ -69,11 +69,14 @@ export default function MeeringStatusButtons({
               </button>
             )}
 
-            <Link href={`/meet/${meet_id}`}>
-              <button className="flex-1 border border-orange-500 text-orange-500 py-2 rounded-md hover:bg-orange-50 transition">
-                상세 보기
-              </button>
-            </Link>
+            {meet_id && (
+              <Link href={`/meet/${meet_id}`}>
+                <button className="flex-1 border border-orange-500 text-orange-500 py-2 rounded-md hover:bg-orange-50 transition">
+                  상세 보기
+                </button>
+              </Link>
+            )}
+
           </>
         )}
       </div>

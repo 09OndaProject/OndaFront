@@ -11,6 +11,7 @@ export const MeetingCard = ({
   isApplied = false,
   context,
 }: MeetingCardProps) => {
+  console.log(item,"item 출력")
   const {
     title,
     interest,
@@ -20,8 +21,9 @@ export const MeetingCard = ({
     image,
     contact,
     status: rawStatus,
+    meet_id,
   } = item;
-
+    console.log("meet_id 확인",meet_id)
   const { label: interestLabel, icon: interestIcon } = INTEREST_CATEGORY_MAP[
     interest
   ] ?? {
@@ -86,7 +88,7 @@ export const MeetingCard = ({
       <MeeringStatusButtons
         status={status}
         mode={context === "past" ? "past" : "default"}
-        meet_id={item.meet_id}
+        meet_id={meet_id}
       />
     </div>
   );
