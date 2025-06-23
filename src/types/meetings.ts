@@ -1,3 +1,5 @@
+import { FileData } from "./file";
+
 export interface MeetingCardProps {
   item: {
     meet_id: number;
@@ -14,12 +16,27 @@ export interface MeetingCardProps {
   context?: "applied" | "past";
 }
 
+export type Meeting = {
+  id: number;
+  title: string;
+  description: string;
+  area: string;
+  date: string;
+  file: FileData;
+  max_people: number;
+  current_people: number;
+  application_deadline: string;
+  status: string;
+  sesstion_count: number;
+}
+
 export type Review = {
   id: number;
-  user_id: number;
-  meet_id: number;
+  user_name: string;
   rating: number;
   content: string;
   created_at: Date;
-  updated_at: Date;
+  meet_title: string;
+  meet_date: Date;
+  meet_location: string;
 }

@@ -2,7 +2,7 @@
 
 import { getStatusLabel } from "@/constants/leaderStatusLabel";
 import { sampleUser } from "@/datas/sampleUser";
-import { ApplicationStatus } from "@/types/user";
+import { ApplicationStatus } from "@/types/leader";
 import { UserRound } from "lucide-react";
 import Image from "next/image";
 import StatusDropdown from "./StatusDropDown";

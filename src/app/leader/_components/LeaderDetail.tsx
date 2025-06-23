@@ -1,6 +1,6 @@
 import Button from "@/components/common/Button";
 import MultiCategoryFileUpload from "./MultiCategoryFileUpload";
-import { LeaderApplication } from "@/types/user";
+import { LeaderApplication } from "@/types/leader";
 import { sampleUser } from "@/datas/sampleUser";
 
 type LeaderDetailProps = {

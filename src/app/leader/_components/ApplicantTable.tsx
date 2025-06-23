@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Download } from 'lucide-react';
 import Link from 'next/link';
-import { ApplicationStatus } from '@/types/user';
+import { ApplicationStatus } from '@/types/leader';
 import { getStatusLabel } from '@/constants/leaderStatusLabel';
 import Pagination from '@/components/Pagination';
 

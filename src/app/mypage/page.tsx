@@ -5,13 +5,13 @@ import { useAuthStore } from "@/stores/useAuth";
 import { useRouter } from "next/navigation";
 import UserProfile from "./_components/UserProfile";
 import ReviewList from "./_components/ReviewList";
-import { sampleReviews } from "@/datas/sampleReivew";
 import MoreLinkButton from "@/components/common/Buttons/MoreLinkButton";
 import LeaderMeetingList from "./_components/LeaderMeetingCardList";
-import { sampleLeaderMeetings } from "@/datas/sampleMeeting";
 import ApplicantTable from "../leader/_components/ApplicantTable";
 import { sampleApplicants } from "@/datas/sampleApplicants";
 import { useViewModeStore } from "@/stores/useViewModeStore";
+import { useMyLeaderApplication, useMyLeaderMeeting, useReviewsByMeetingIds } from "@/hooks/useLeader";
+import { Meeting } from "@/types/meetings";
 
 export default function Mypage() {
   const { user } = useAuthStore();
@@ -20,6 +20,12 @@ export default function Mypage() {
   const router = useRouter();
 
   const displayNickname = user?.nickname;
+
+  const { data: myLeader} = useMyLeaderApplication();
+  const { data: meetingData } = useMyLeaderMeeting(myLeader?.id);
+  const meetingIds: number[] = (meetingData as Meeting[] | undefined)?.map((m) => m.id) ?? [];
+  const { data: allReviews } = useReviewsByMeetingIds(meetingIds);
+
 
   const handleBtn = () => {
     router.push("/meet/search");
@@ -33,11 +39,11 @@ export default function Mypage() {
       {viewMode === "leader" && (
         <>
           <div>
-            <LeaderMeetingList meetings={sampleLeaderMeetings} />
+            <LeaderMeetingList meetings={meetingData || []} />
             <MoreLinkButton href="/mypage/reviews">전체 보기</MoreLinkButton>
           </div>
           <div>
-            <ReviewList reviews={sampleReviews} />
+            <ReviewList reviews={allReviews ?? []} />
             <MoreLinkButton href="/mypage/reviews">전체 보기</MoreLinkButton>
           </div>
         </>
