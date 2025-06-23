@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { ApplicationStatus, Leader, LeaderApplicationDetail, LeaderApplicationRequest } from '@/types/leader';
-import { createLeader, deleteLeader, getLeaderApplicants, getLeaderById, getLeaderMeetingById, getMyLeaderApplication, getReviewsByMultipleMeetIds, updateLeaderStatus } from '@/apis/leader';
+import { createLeader, deleteLeader, getLeaderApplicants, getLeaderById, getLeaderMeetingById, getMyLeaderApplication, getReviewsByMeetingIds, updateLeaderStatus } from '@/apis/leader';
 
 type LeaderApplicantResponse = {
     data: Leader[];
@@ -69,18 +69,19 @@ export function useMyLeaderApplication() {
 }
 
 // 리더기준 나의 모임 조회
-export function useMyLeaderMeeting(id?: number) {
-    return useQuery({
-        queryKey: ['myLeaderMeeting', id],
-        queryFn: () => getLeaderMeetingById(id!),
-        enabled: !!id, // id가 있을 때만 실행
-    });
+export function useLeaderMeetingsById(id?: number, size: number = 10, page?: number) {
+  return useQuery({
+    queryKey: ['leaderMeetings', id, page, size],
+    queryFn: () => getLeaderMeetingById(id!, size, page),
+    enabled: typeof id === 'number',
+  });
 }
+
 
 export function useReviewsByMeetingIds(meetingIds: number[]) {
     return useQuery({
       queryKey: ['reviews', ...meetingIds],
-      queryFn: () => getReviewsByMultipleMeetIds(meetingIds),
+      queryFn: () => getReviewsByMeetingIds(meetingIds),
       enabled: meetingIds.length > 0,
     });
   }

@@ -1,13 +1,9 @@
 import { ApplicationStatus, Leader, LeaderApplicationDetail, LeaderApplicationRequest, SLeader, SLeaderApplicationDetail, transformSLeaderApplicationDetail, transformSLeaderToLeader } from "@/types/leader";
 import api from "./app";
 import { END_POINT } from "@/constants/route";
-import { Review } from "@/types/meetings";
-import { getReviewsByMeetId } from "./review";
+import { Meeting, Review, ReviewResponse } from "@/types/meetings";
 
-export async function getLeaderApplicants(
-  page: number,
-  size: number
-): Promise<{ data: Leader[]; totalCount: number }> {
+export async function getLeaderApplicants( page: number, size: number ): Promise<{ data: Leader[]; totalCount: number }> {
   const res = await api.get<{
     count: number;
     next: string | null;
@@ -22,7 +18,6 @@ export async function getLeaderApplicants(
     totalCount: res.data.count,
   };
 }
-
 
 export async function getLeaderById(id: number): Promise<LeaderApplicationDetail> {
   const { data } = await api.get<SLeaderApplicationDetail>(END_POINT.LEADERS_DETAIL(id));
@@ -51,14 +46,46 @@ export async function deleteLeader(id: number): Promise<void> {
   await api.delete(END_POINT.LEADERS_DELETE(id));
 }
 
-export async function getLeaderMeetingById(id: number): Promise<void> {
-  await api.get(END_POINT.LEADERS_METTINGS(id));
+export async function getLeaderMeetingById( id: number, size: number, page?: number ): Promise<{ data: Meeting[]; totalCount: number }> {
+  const res = await api.get<{
+    count: number;
+    next: string | null;
+    previous: string | null;
+    results: Meeting[];
+  }>(END_POINT.LEADERS_MEETINGS(id), {
+    params: {
+      ...(page !== undefined ? { page } : {}),
+      size,
+    },
+  });
+
+  return {
+    data: res.data.results,
+    totalCount: res.data.count,
+  };
 }
 
-export async function getReviewsByMultipleMeetIds(meetingIds: number[]): Promise<Review[]> {
-  const reviewLists = await Promise.all(
-    meetingIds.map((id) => getReviewsByMeetId(id))
+
+export async function getReviewsByMeetingIds(meetingIds: number[]): Promise<Review[]> {
+  const reviewPromises = meetingIds.map((id) =>
+    api
+      .get<{
+        count: number;
+        next: string | null;
+        previous: string | null;
+        results: ReviewResponse;
+      }>(END_POINT.REVIEWS(id))
+      .then((res) => res.data.results.reviews)
+      .catch((err) => {
+        console.warn(`리뷰 조회 실패 (meetId: ${id}):`, err);
+        return []; // 실패 시 빈 배열 반환
+      })
   );
-  return reviewLists.flat(); // 2차원 배열을 평탄화
+
+  const allReviewsArray = await Promise.all(reviewPromises);
+  return allReviewsArray.flat(); // 하나의 배열로 평탄화
 }
+
+
+
 

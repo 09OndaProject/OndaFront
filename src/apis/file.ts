@@ -13,7 +13,6 @@ export const getFiles = async (): Promise<FileData[]> => {
 
   return response.data;
 };
-port type FileUploadResponse = { ids: number[]; message: string };
 
 export const uploadFiles = async (
   payload: File,

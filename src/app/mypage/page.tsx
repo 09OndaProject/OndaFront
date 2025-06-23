@@ -6,11 +6,10 @@ import { useRouter } from "next/navigation";
 import UserProfile from "./_components/UserProfile";
 import ReviewList from "./_components/ReviewList";
 import MoreLinkButton from "@/components/common/Buttons/MoreLinkButton";
-import LeaderMeetingList from "./_components/LeaderMeetingCardList";
 import ApplicantTable from "../leader/_components/ApplicantTable";
 import { useViewModeStore } from "@/stores/useViewModeStore";
-import { useMyLeaderApplication, useMyLeaderMeeting, useReviewsByMeetingIds } from "@/hooks/useLeader";
-import { Meeting } from "@/types/meetings";
+import { useLeaderMeetingsById, useReviewsByMeetingIds } from "@/hooks/useLeader";
+import LeaderMeetingCardList from "./_components/LeaderMeetingCardList";
 
 export default function Mypage() {
   const { user } = useAuthStore();
@@ -20,11 +19,9 @@ export default function Mypage() {
 
   const displayNickname = user?.nickname;
 
-  const { data: myLeader} = useMyLeaderApplication();
-  const { data: meetingData } = useMyLeaderMeeting(myLeader?.id);
-  const meetingIds: number[] = (meetingData as Meeting[] | undefined)?.map((m) => m.id) ?? [];
+  const { data: meetingData } = useLeaderMeetingsById(110);
+  const meetingIds: number[] = meetingData?.data?.map((m) => m.id) ?? [];
   const { data: allReviews } = useReviewsByMeetingIds(meetingIds);
-
 
   const handleBtn = () => {
     router.push("/meet/search");
@@ -42,11 +39,11 @@ export default function Mypage() {
           {viewMode === "leader" && (
             <>
               <div>
-              <LeaderMeetingList meetings={meetingData || []} />
-                <MoreLinkButton href="/mypage/reviews">전체 보기</MoreLinkButton>
+                <LeaderMeetingCardList meetings={meetingData?.data || []} />
+                <MoreLinkButton href="/mypage/mymeet">전체 보기</MoreLinkButton>
               </div>
               <div>
-              <ReviewList reviews={allReviews ?? []} />
+                <ReviewList reviews={allReviews ?? []} />
                 <MoreLinkButton href="/mypage/reviews">전체 보기</MoreLinkButton>
               </div>
             </>

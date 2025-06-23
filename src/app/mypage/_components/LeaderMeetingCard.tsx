@@ -2,32 +2,23 @@
 
 import MoreLinkButton from '@/components/common/Buttons/MoreLinkButton';
 import StarRating from '@/components/StarRating';
-import { Heart, User } from 'lucide-react';
+import { Meeting } from '@/types/meetings';
+import { User } from 'lucide-react';
 
 export type MeetingStatus = '모집중' | '완료';
 
-export type LeaderMeetingCardProps = {
-  status: MeetingStatus;
-  deadline: string;
-  title: string;
-  date: string;
-  location: string;
-  count: number;
-  likes: number;
-  applicants: number;
-  averageRating?: number; // 완료 시 표시
-};
+export type LeaderMeetingCardProps = Meeting;
 
 const LeaderMeetingCard = ({
-  status,
-  deadline,
+  id,
   title,
+  area,
   date,
-  location,
-  count,
-  likes,
-  applicants,
-  averageRating,
+  current_people,
+  application_deadline,
+  status,
+  sesstion_count,
+  rating,
 }: LeaderMeetingCardProps) => {
   const isDone = status === '완료';
 
@@ -41,7 +32,7 @@ const LeaderMeetingCard = ({
               <span className={`font-semibold ${isDone ? 'text-gray-500' : 'text-accent-main'}`}>
                 {status}
               </span>
-              <span className="text-base text-gray-600"><span className='font-medium'>마감</span> {deadline}</span>
+              <span className="text-base text-gray-600"><span className='font-medium'>마감</span> {application_deadline}</span>
             </div>
           </div>
 
@@ -51,11 +42,11 @@ const LeaderMeetingCard = ({
           {/* 일정/장소/횟수 */}
           <div className="flex flex-wrap gap-x-4 gap-y-1 text-gray-600 text-base">
             <div><span className='font-medium text-gray-700'>활동 일시</span> {date}</div>
-            <div><span className='font-medium text-gray-700'>장소</span> {location}</div>
-            <div><span className='font-medium text-gray-700'>모임 횟수</span> {count}회</div>
+            <div><span className='font-medium text-gray-700'>장소</span> {area}</div>
+            <div><span className='font-medium text-gray-700'>모임 횟수</span> {sesstion_count}회</div>
           </div>
         </div>
-        <MoreLinkButton onClick={() => console.log('상세보기')}>상세 보기</MoreLinkButton>
+        <MoreLinkButton href={`/meet/${id}`}>상세 보기</MoreLinkButton>
       </div>
 
       {/* 하단 영역: 상태에 따라 다름 */}
@@ -65,20 +56,20 @@ const LeaderMeetingCard = ({
           <div className="flex items-center text-accent-main gap-2">
             <span className="text-xs font-medium">평균 별점</span>
             <div className="flex items-center text-accent-main gap-1">
-              <StarRating rating={averageRating ?? 0} size={20} />
-              <span className="ml-1 text-gray-700 font-medium">{averageRating?.toFixed(1) ?? '-'}</span>
+              <StarRating rating={rating ?? 0} size={20} />
+              <span className="ml-1 text-gray-700 font-medium">{rating?.toFixed(1) ?? '-'}</span>
             </div>
           </div>
         ) : (
           // 모집중: 찜 + 신청 인원
           <div className="flex gap-4 items-center text-accent-main font-medium text-xs">
-            <div className="flex items-center gap-1">
+            {/* <div className="flex items-center gap-1">
               <Heart size={20} fill="currentColor" />
               <span className='text-black text-xs'>{likes}명</span>
-            </div>
+            </div> */}
             <div className="flex items-center gap-1">
               <User size={20} fill="currentColor" />
-              <span className='text-black text-xs'>신청 인원 {applicants}명</span>
+              <span className='text-black text-xs'>신청 인원 {current_people}명</span>
             </div>
           </div>
         )}
