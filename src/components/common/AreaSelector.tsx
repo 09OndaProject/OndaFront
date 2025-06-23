@@ -75,6 +75,7 @@ export default function AreaSelector({ areaOptions, areaInfo, setAreaInfo }: Are
                     setAreaInfo((prev) => ({
                       ...prev,
                       selectedDistrict: district.area_name,
+                      area_id: district.id,
                     }));
                   }}
                   className="accent-orange-600 w-4 h-4"
