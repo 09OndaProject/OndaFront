@@ -46,7 +46,7 @@ export async function updateLeaderStatus(id: number, payload: ApplicationStatus)
 }
 
 export async function deleteLeader(id: number): Promise<void> {
-  await api.delete(END_POINT.LEADERS_DETAIL(id));
+  await api.delete(END_POINT.LEADERS_DELETE(id));
 }
 
 export async function getLeaderMeetingById(id: number): Promise<void> {
