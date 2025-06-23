@@ -5,7 +5,7 @@ import { createLeader, deleteLeader, getLeaderApplicants, getLeaderById, getLead
 type LeaderApplicantResponse = {
     data: Leader[];
     totalCount: number;
-  };
+};
 
 export function useLeaderApplicants(page: number, size: number) {
   return useQuery<LeaderApplicantResponse>({
@@ -13,7 +13,6 @@ export function useLeaderApplicants(page: number, size: number) {
     queryFn: () => getLeaderApplicants(page, size),
   });
 }
-
 
 // 리더 신청 상세 조회
 export function useLeaderDetail(id: number) {
