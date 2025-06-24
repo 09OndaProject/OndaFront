@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { MeetingCard } from '@/components/common/MeetingCard';
-import MeetingCardHorizontal from '@/components/common/MeetingCardHorizontal';
 import { useRouter } from 'next/navigation';
 import api from '@/apis/app';
 import { FileData } from '@/types/file';
@@ -28,7 +27,6 @@ interface Meeting {
 }
 
 export default function AppliedScheduleList() {
-  const [isMobile] = useState(false);
   const [applySchedule, setApplySchedule] = useState<Meeting[]>([]);
   console.log(applySchedule);
   const router = useRouter();
