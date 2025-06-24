@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import React, { useState, useEffect } from "react";
-import { MeetingCard } from "@/components/common/MeetingCard";
-import MeetingCardHorizontal from "@/components/common/MeetingCardHorizontal";
-import { useRouter } from "next/navigation";
-import api from "@/apis/app";
+import React, { useState, useEffect } from 'react';
+import { MeetingCard } from '@/components/common/MeetingCard';
+import MeetingCardHorizontal from '@/components/common/MeetingCardHorizontal';
+import { useRouter } from 'next/navigation';
+import api from '@/apis/app';
 
 interface Meeting {
   meet_id: number;
@@ -28,7 +28,7 @@ interface Meeting {
 }
 
 export default function AppliedScheduleList() {
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile] = useState(false);
   const [applySchedule, setApplySchedule] = useState<Meeting[]>([]);
   console.log(applySchedule);
   const router = useRouter();
@@ -36,17 +36,17 @@ export default function AppliedScheduleList() {
   useEffect(() => {
     const fetchAppliedMeetings = async () => {
       try {
-        const token = localStorage.getItem("accessToken");
+        const token = localStorage.getItem('accessToken');
         if (!token) {
-          router.push("/login");
+          router.push('/login');
           return;
         }
         const response = await api.get(`/meets/users`);
         setApplySchedule(response.data.results);
         router.refresh();
       } catch (error) {
-        console.error("신청한 모임 조회 실패:", error);
-        alert("신청한 모임 조회에 실패했습니다. 다시 시도해주세요.");
+        console.error('신청한 모임 조회 실패:', error);
+        alert('신청한 모임 조회에 실패했습니다. 다시 시도해주세요.');
       }
     };
     fetchAppliedMeetings();
@@ -63,9 +63,7 @@ export default function AppliedScheduleList() {
     return (
       <section className="px-4 py-6">
         <h2 className="text-lg font-bold mb-4">신청한 모임</h2>
-        <p className="text-gray-500 text-center py-8">
-          신청한 모임이 없습니다.
-        </p>
+        <p className="text-gray-500 text-center py-8">신청한 모임이 없습니다.</p>
       </section>
     );
   }
@@ -76,13 +74,9 @@ export default function AppliedScheduleList() {
       <div className="md:grid-cols-3 md:grid flex flex-col gap-7">
         {applySchedule.map((meeting) =>
           isMobile ? (
-            <MeetingCardHorizontal
-              key={meeting.meet_id}
-              item={meeting}
-              isApplied
-            />
+            <MeetingCardHorizontal key={`${meeting.meet_id}-horizontal`} item={meeting} isApplied />
           ) : (
-            <MeetingCard key={meeting.meet_id} item={meeting} isApplied />
+            <MeetingCard key={`${meeting.meet_id}-vertical`} item={meeting} isApplied />
           )
         )}
       </div>
