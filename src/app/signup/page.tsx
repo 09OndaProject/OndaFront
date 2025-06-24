@@ -81,12 +81,11 @@ export default function SignupPage() {
         nickname: authUser.nickname ?? '',
       }));
     }
-  }, [searchParams, authUser]);
+  }, [searchParams, authUser, setSignupData]);
 
   return (
     <main className="w-full max-w-[1280px] px-16 py-12 mx-auto">
       <h1 className="text-xl font-bold mb-10">회원가입</h1>
-
       <div className="w-full flex justify-center mt-20">
         <form id="signupForm" onSubmit={handleSubmit} className="space-y-6 w-full max-w-md">
           <LabeledInput
@@ -120,7 +119,12 @@ export default function SignupPage() {
             birthYear={birthYear}
             birthMonth={birthMonth}
             birthDay={birthDay}
-            setSignupData={setSignupData}
+            setSignupData={(updated) => {
+              setSignupData((prev) => ({
+                ...prev,
+                ...updated,
+              }));
+            }}
           />
 
           {!signupData.isKakaoUser && (

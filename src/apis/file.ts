@@ -1,4 +1,4 @@
-import { FileData } from '@/types/file';
+import { FileCategory, FileData } from '@/types/file';
 import api from './app';
 import { END_POINT } from '@/constants/route';
 
@@ -8,19 +8,20 @@ export const getFiles = async (): Promise<FileData[]> => {
 
   return response.data;
 };
+export type FileUploadResponse = { ids: number[]; message: string };
 
-export const uploadFiles = async (payload: File, category: 'post' | 'profile' | 'meet' | 'certificate' | 'other') => {
+export const uploadFiles = async (payload: File, category: FileCategory): Promise<FileUploadResponse> => {
   const formData = new FormData();
-  formData.append('file', payload);
   formData.append('category', category);
+  formData.append('file', payload);
 
-  const response = await api.post(END_POINT.FILES_UPLOAD, formData, {
+  const response = await api.post<FileUploadResponse>(END_POINT.FILES_UPLOAD, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
   });
-  console.log('파일 업로드', response.data);
 
+  console.log('파일 업로드', response.data);
   return response.data;
 };
 
@@ -29,6 +30,13 @@ export const deleteFiles = async (ids: number[]): Promise<void> => {
     data: { ids },
   });
   console.log('파일 삭제', response.data);
+
+  return response.data;
+};
+
+export const getFileById = async (id: number): Promise<FileData> => {
+  const response = await api.get<FileData>(END_POINT.FILES_LIST);
+  console.log(`${id} 파일`, response.data);
 
   return response.data;
 };
