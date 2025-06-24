@@ -10,3 +10,8 @@ export async function getDigitalLevelOptions() {
   const response = await api.get('/options/digital-levels');
   return response.data;
 }
+
+export async function getMeetDetail(meet_id: number) {
+  const response = await api.get(`/meets/${meet_id}`);
+  return response.data;
+}
