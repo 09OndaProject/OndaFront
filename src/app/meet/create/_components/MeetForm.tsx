@@ -41,6 +41,7 @@ export default function MeetForm() {
   const [areaOptions, setAreaOptions] = useState<AreaOption[]>([]);
   const [categoryOptions, setCategoryOptions] = useState<categoryOption[]>([]);
   const [digitalLevelOptions, setDigitalLevelOptions] = useState<digitalLevelOption[]>([]);
+  const [imageId, setImageId] = useState<number | null>(null);
   useEffect(() => {
     const fetchOptions = async () => {
       const data = await getAreaOptions();
@@ -58,6 +59,7 @@ export default function MeetForm() {
     const submitData = {
       ...formData,
       area: areaInfo.area_id,
+      file: imageId,
     };
     console.log('formdata출력', submitData);
 
@@ -66,7 +68,7 @@ export default function MeetForm() {
   };
   return (
     <form onSubmit={handleSubmit} className="space-y-8 max-w-2xl mx-auto p-6">
-      <MeetImageUploader setImageUrl={() => {}} />
+      <MeetImageUploader setImageId={setImageId} />
       <div className="space-y-12">
         <div className="grid grid-cols-2 gap-4">
           <TextInput
