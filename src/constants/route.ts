@@ -27,6 +27,7 @@ export const END_POINT = {
   MEETINGS_DETAIL: (meet_id: number) => `/meets/${meet_id}`, // 모임 상세 조회/수정/삭제
   MEETINGS_APPLY: (meet_id: number) => `/meets/apply/${meet_id}`, // 모임 신청
   MEETINGS_USER: (user_id: number) => `/meets/apply/${user_id}`, // 유저별 모임 목록
+  LEADER_MEETINGS: (user_id: number) => `/meets/leaders/${user_id}`, // 리더별 모임 목록
 
   // options: 옵션 관련 api
   OPTIONS: '/options', // 전체 옵션 목록 조회
@@ -37,12 +38,12 @@ export const END_POINT = {
   OPTIONS_INTEREST: '/options/interests', // 관심사 목록 조회
 
   // posts: 게시글 관련 api
-  POSTS: '/api/posts', // 게시글 목록 조회/생성
+  POSTS: '/posts', // 게시글 목록 조회/생성
   POSTS_DETAIL: (id: number) => `/posts/${id}`, // 게시글 상세 조회/수정/삭제
 
   // comments: 댓글 관련 api
-  COMMENTS: (postId: number) => `/api/posts/${postId}/comments`, // 댓글 목록 조회/생성
-  COMMENTS_DETAIL: (postId: number, commentId: number) => `/api/posts/${postId}/comments/${commentId}`, // 댓글 상세 조회/수정/삭제
+  COMMENTS: (postId: number) => `/posts/${postId}/comments`, // 댓글 목록 조회/생성
+  COMMENTS_DETAIL: (postId: number, commentId: number) => `/posts/${postId}/comments/${commentId}`, // 댓글 상세 조회/수정/삭제
 
   // users: 유저/인증 관련 api
   USERS_PASSWORD: '/users/check/password', // 비밀번호 확인
