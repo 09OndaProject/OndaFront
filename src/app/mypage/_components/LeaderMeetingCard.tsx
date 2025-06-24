@@ -18,9 +18,9 @@ const LeaderMeetingCard = ({
   application_deadline,
   status,
   sesstion_count,
-  rating,
+  meet_rating,
 }: LeaderMeetingCardProps) => {
-  const isDone = status === '완료';
+  const isDone = status === '마감';
 
   return (
     <div className="rounded-xl border bg-white space-y-3 p-5 shadow-sm text-xs w-full">
@@ -56,8 +56,8 @@ const LeaderMeetingCard = ({
           <div className="flex items-center text-accent-main gap-2">
             <span className="text-xs font-medium">평균 별점</span>
             <div className="flex items-center text-accent-main gap-1">
-              <StarRating rating={rating ?? 0} size={20} />
-              <span className="ml-1 text-gray-700 font-medium">{rating?.toFixed(1) ?? '-'}</span>
+              <StarRating rating={meet_rating ?? 0} size={20} />
+              <span className="ml-1 text-gray-700 font-medium">{meet_rating?.toFixed(1) ?? '-'}</span>
             </div>
           </div>
         ) : (
@@ -75,7 +75,7 @@ const LeaderMeetingCard = ({
         )}
 
         {/* 우측 버튼 */}
-        <MoreLinkButton href={isDone ? '/review' : '/applicants'}>
+        <MoreLinkButton href={isDone ? `/mypage/mymeet/${id}/reviews` : '/applicants'}>
           {isDone ? '참여자 후기 보기' : '신청자 정보 보기'}
         </MoreLinkButton>
       </div>

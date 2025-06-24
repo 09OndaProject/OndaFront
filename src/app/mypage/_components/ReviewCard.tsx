@@ -2,12 +2,13 @@
 
 import MoreLinkButton from '@/components/common/Buttons/MoreLinkButton';
 import StarRating from '@/components/StarRating';
+import { useModalStore } from '@/stores/useModalStore';
 import { Review } from '@/types/meetings';
 
 type ReviewCardProps = Review;
 
 const ReviewCard = ({
-  user_name,
+  nickname,
   rating,
   content,
   meet_title,
@@ -15,15 +16,17 @@ const ReviewCard = ({
   meet_location
 }: ReviewCardProps) => {
 
+  const openModal = useModalStore((s) => s.openModal);
+
   return (
     <div className="rounded-xl border bg-white p-5 shadow-sm space-y-3 text-sm w-full">
       {/* 상단: 참가자 + 별점 + 상세보기 */}
       <div className="flex justify-between items-start">
         <div className="flex items-center gap-2 font-semibold">
-          <span className='text-sm mr-2'>{user_name}님</span>
+          <span className='text-sm mr-2'>{nickname}님</span>
           <StarRating rating={rating} size={20}/>
         </div>
-        <MoreLinkButton onClick={() => console.log('상세보기')}>
+        <MoreLinkButton onClick={() => openModal('reviewDetail', {nickname, rating, content, meet_title, meet_date, meet_location})}>
             상세 보기
         </MoreLinkButton>
       </div>

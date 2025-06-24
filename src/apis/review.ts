@@ -1,12 +1,29 @@
-import { Review } from '@/types/meetings';
+import { Review, ReviewResponse } from '@/types/meetings';
 import api from './app';
 import { END_POINT } from '@/constants/route';
 
 // 리뷰 목록 조회
-export async function getReviewsByMeetId(meetId: number): Promise<Review[]> {
-  const { data } = await api.get<Review[]>(END_POINT.REVIEWS(meetId));
-  return data;
+export async function getReviewsByMeetId( meetId: number, size: number, page?: number): Promise<{ data: Review[]; totalCount: number }> {
+  const res = await api.get<{
+    count: number;
+    next: string | null;
+    previous: string | null;
+    results: ReviewResponse;
+  }>(END_POINT.REVIEWS(meetId), {
+    params: {
+      ...(page !== undefined ? { page } : {}),
+      size,
+    },
+  });
+
+  console.log(res.data);
+
+  return {
+    data: res.data.results.reviews,
+    totalCount: res.data.count,
+  };
 }
+
 
 // 리뷰 작성
 export async function createReview(meetId: number, payload: { content: string; rating: number }): Promise<Review> {

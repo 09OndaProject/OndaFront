@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { ApplicationStatus, Leader, LeaderApplicationDetail, LeaderApplicationRequest } from '@/types/leader';
-import { createLeader, deleteLeader, getLeaderApplicants, getLeaderById, getLeaderMeetingById, getMyLeaderApplication, getReviewsByMeetingIds, updateLeaderStatus } from '@/apis/leader';
+import { createLeader, deleteLeader, getLeaderApplicants, getLeaderById, getLeaderMeetingById, getMyLeaderApplication, getReviewsLeaderMeeting, updateLeaderStatus } from '@/apis/leader';
+import { getReviewsByMeetId } from '@/apis/review';
 
 type LeaderApplicantResponse = {
     data: Leader[];
@@ -69,7 +70,7 @@ export function useMyLeaderApplication() {
 }
 
 // 리더기준 나의 모임 조회
-export function useLeaderMeetingsById(id?: number, size: number = 10, page?: number) {
+export function useLeaderMeetingsById({ id, size = 10, page = 1, }: { id?: number; size?: number; page?: number;}) {
   return useQuery({
     queryKey: ['leaderMeetings', id, page, size],
     queryFn: () => getLeaderMeetingById(id!, size, page),
@@ -77,11 +78,19 @@ export function useLeaderMeetingsById(id?: number, size: number = 10, page?: num
   });
 }
 
+// 리더기준 나의 모임 리뷰 조회
+export function useLeaderMeetingsReviews({ page = 1, size = 10,}: { page?: number; size?: number;}) {
+  return useQuery({
+    queryKey: ['leaderReviews', page, size],
+    queryFn: () => getReviewsLeaderMeeting(page, size),
+    enabled: !!page && !!size, 
+  });
+}
 
-export function useReviewsByMeetingIds(meetingIds: number[]) {
-    return useQuery({
-      queryKey: ['reviews', ...meetingIds],
-      queryFn: () => getReviewsByMeetingIds(meetingIds),
-      enabled: meetingIds.length > 0,
-    });
-  }
+export function useReviewsByMeetingId({ meetId, size = 10, page = 1, }: { meetId?: number; size?: number; page?: number;}) {
+  return useQuery({
+    queryKey: ['reviews', meetId, page, size],
+    queryFn: () => getReviewsByMeetId(meetId!, size, page),
+    enabled: typeof meetId === 'number',
+  });
+}

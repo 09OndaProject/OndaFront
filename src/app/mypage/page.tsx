@@ -8,20 +8,21 @@ import ReviewList from "./_components/ReviewList";
 import MoreLinkButton from "@/components/common/Buttons/MoreLinkButton";
 import ApplicantTable from "../leader/_components/ApplicantTable";
 import { useViewModeStore } from "@/stores/useViewModeStore";
-import { useLeaderMeetingsById, useReviewsByMeetingIds } from "@/hooks/useLeader";
+import { useLeaderMeetingsById, useLeaderMeetingsReviews } from "@/hooks/useLeader";
 import LeaderMeetingCardList from "./_components/LeaderMeetingCardList";
 
 export default function Mypage() {
-  const { user } = useAuthStore();
+  const { user, profile } = useAuthStore();
   const { viewMode } = useViewModeStore();
 
   const router = useRouter();
 
   const displayNickname = user?.nickname;
 
-  const { data: meetingData } = useLeaderMeetingsById(110);
-  const meetingIds: number[] = meetingData?.data?.map((m) => m.id) ?? [];
-  const { data: allReviews } = useReviewsByMeetingIds(meetingIds);
+  const { data: meetingData } = useLeaderMeetingsById({id: profile?.id, page: 1, size: 3});
+  //const meetingIds: number[] = meetingData?.data?.map((m) => m.id) ?? [];
+  //const { data: allReviews } = useReviewsByMeetingIds(meetingIds);
+  const { data: reviewData } = useLeaderMeetingsReviews({ page: 1, size: 3 });
 
   const handleBtn = () => {
     router.push("/meet/search");
@@ -43,8 +44,8 @@ export default function Mypage() {
                 <MoreLinkButton href="/mypage/mymeet">전체 보기</MoreLinkButton>
               </div>
               <div>
-                <ReviewList reviews={allReviews ?? []} />
-                <MoreLinkButton href="/mypage/reviews">전체 보기</MoreLinkButton>
+                <ReviewList reviews={reviewData?.data ?? []} />
+                <MoreLinkButton href="/mypage/mymeet/reviews">전체 보기</MoreLinkButton>
               </div>
             </>
           )}

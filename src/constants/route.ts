@@ -21,6 +21,7 @@ export const END_POINT = {
   LEADERS_DETAIL_MINE: `/api/leader-applies/mine`, // 리더 신청 상세(본인기준)
   LEADERS_STATUS: (id: number) => `/api/leader-applies/${id}/status`, // 리더 신청 승인/거절 처리
   LEADERS_MEETINGS: (leader_id: number) => `/api/meets/leaders/${leader_id}`, //리더 모임 목록 조회
+  LEADERS_MEETINGS_REVIEWS: `/api/reviews/my-meet`, // 리더 모임 리뷰 목록 조회
   LEADERS_DELETE: (id: number) => `/api/leader-applies/${id}/delete`, // 리더 신청 삭제
 
   // meetings : 모임 관련 api

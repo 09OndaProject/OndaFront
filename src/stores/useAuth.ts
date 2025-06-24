@@ -4,6 +4,7 @@ import api from "@/apis/app";
 import { END_POINT } from "@/constants/route";
 import { jwtDecode } from "jwt-decode";
 import type { StateCreator } from "zustand";
+import { Profile } from "@/app/mypage/_components/UserProfile";
 
 interface DecodedToken {
   email: string;
@@ -28,6 +29,8 @@ interface User {
 
 interface AuthState {
   user: User | null;
+  profile: Profile | null;
+  setProfile: (profile: Profile) => void;
   login: boolean;
   accessToken: string | null;
   csrfToken: string | null;
@@ -54,6 +57,8 @@ type AuthStore = AuthState & AuthActions;
 const authStoreCreator: StateCreator<AuthStore> = (set) => ({
   user: null,
   login: false,
+  profile: null,
+  setProfile: (profile) => set({ profile }),
   accessToken: null,
   csrfToken: null,
   isAdmin: false,

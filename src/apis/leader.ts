@@ -1,7 +1,7 @@
 import { ApplicationStatus, Leader, LeaderApplicationDetail, LeaderApplicationRequest, SLeader, SLeaderApplicationDetail, transformSLeaderApplicationDetail, transformSLeaderToLeader } from "@/types/leader";
 import api from "./app";
 import { END_POINT } from "@/constants/route";
-import { Meeting, Review, ReviewResponse } from "@/types/meetings";
+import { Meeting, Review } from "@/types/meetings";
 
 export async function getLeaderApplicants( page: number, size: number ): Promise<{ data: Leader[]; totalCount: number }> {
   const res = await api.get<{
@@ -65,25 +65,20 @@ export async function getLeaderMeetingById( id: number, size: number, page?: num
   };
 }
 
+export async function getReviewsLeaderMeeting( page: number, size: number ): Promise<{ data: Review[]; totalCount: number }> {
+  const res = await api.get<{
+    count: number;
+    next: string | null;
+    previous: string | null;
+    results: Review[];
+  }>(END_POINT.LEADERS_MEETINGS_REVIEWS, {
+    params: { page, size },
+  });
 
-export async function getReviewsByMeetingIds(meetingIds: number[]): Promise<Review[]> {
-  const reviewPromises = meetingIds.map((id) =>
-    api
-      .get<{
-        count: number;
-        next: string | null;
-        previous: string | null;
-        results: ReviewResponse;
-      }>(END_POINT.REVIEWS(id))
-      .then((res) => res.data.results.reviews)
-      .catch((err) => {
-        console.warn(`리뷰 조회 실패 (meetId: ${id}):`, err);
-        return []; // 실패 시 빈 배열 반환
-      })
-  );
-
-  const allReviewsArray = await Promise.all(reviewPromises);
-  return allReviewsArray.flat(); // 하나의 배열로 평탄화
+  return {
+    data: res.data.results,
+    totalCount: res.data.count,
+  };
 }
 
 

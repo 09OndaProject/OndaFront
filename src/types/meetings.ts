@@ -28,12 +28,12 @@ export type Meeting = {
   application_deadline: string;
   status: string;
   sesstion_count: number;
-  rating: number;
+  meet_rating: number;
 }
 
 export type Review = {
   id: number;
-  user_name: string;
+  nickname: string;
   rating: number;
   content: string;
   created_at: string;
