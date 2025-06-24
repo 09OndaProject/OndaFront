@@ -53,3 +53,14 @@ export async function updateReview(reviewId: number, payload: { content?: string
 export async function deleteReview(reviewId: number): Promise<void> {
   await api.delete(END_POINT.REVIEW_DETAIL(reviewId));
 }
+
+export const postReview = async (
+  meetId: number,
+  data: { rating: number; content: string }
+) => {
+  const response = await axiosInstance.post(
+    `/meetings/${meetId}/reviews`, 
+    data
+  );
+  return response.data;
+};
