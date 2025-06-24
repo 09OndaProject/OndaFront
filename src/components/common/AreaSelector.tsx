@@ -1,5 +1,4 @@
 interface AreaSelectorProps {
-  onSelect: (sido: string, district: string, areaId?: number) => void;
   areaOptions: {
     area_name: string;
     children: {
@@ -76,6 +75,7 @@ export default function AreaSelector({ areaOptions, areaInfo, setAreaInfo }: Are
                     setAreaInfo((prev) => ({
                       ...prev,
                       selectedDistrict: district.area_name,
+                      area_id: district.id,
                     }));
                   }}
                   className="accent-orange-600 w-4 h-4"
