@@ -1,4 +1,3 @@
-
 export type FileData = {
     id: number;
     user_id?: number;
@@ -12,3 +11,4 @@ export type FileData = {
 }
 
 export type PostFile = Omit<FileData, "category">;
+
