@@ -62,7 +62,6 @@ export default function PostMetaData({
     <div className="flex justify-between relative text-gray-600 text-sm">
       <div className="flex gap-4">
         <span className="font-medium">{options?.category.name}</span>
-
         {options?.interest && (
           <span className="ml-2 flex items-center gap-1">
             <HeartIcon />

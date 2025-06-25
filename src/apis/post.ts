@@ -2,7 +2,6 @@ import { END_POINT } from "@/constants/route";
 import api from "./app";
 import { Post } from "@/types/post";
 
-
 // Post 업로드
 export interface PostCreatePayload {
   title: string;
