@@ -24,15 +24,19 @@ const LeaderMeetingCard = ({
 
   return (
     <div className="rounded-xl border bg-white space-y-3 p-5 shadow-sm text-xs w-full">
-      <div className='flex justify-between items-center'>
+      <div className="flex justify-between items-center">
         <div className="space-y-3">
           {/* 상태 + 마감일 + 상세보기 */}
           <div className="flex justify-between items-center">
             <div className="space-x-2">
-              <span className={`font-semibold ${isDone ? 'text-gray-500' : 'text-accent-main'}`}>
-                {status}
+              <span className={`font-semibold ${meeting.status === '완료' ? 'text-gray-500' : 'text-accent-main'}`}>
+                {meeting.status}
+              </span>
+              <span className="text-base text-gray-600">
+                <span className="font-medium">마감</span> {new Date(application_deadline).toISOString().split('T')[0]}
               </span>
               <span className="text-base text-gray-600"><span className='font-medium'>마감</span> {application_deadline}</span>
+
             </div>
           </div>
 
@@ -47,11 +51,12 @@ const LeaderMeetingCard = ({
           </div>
         </div>
         <MoreLinkButton href={`/meet/${id}`}>상세 보기</MoreLinkButton>
+
       </div>
 
       {/* 하단 영역: 상태에 따라 다름 */}
       <div className="flex justify-between items-center rounded-md p-3 text-xs bg-orange-50">
-        {isDone ? (
+        {meeting.status === '완료' ? (
           // 완료 시: 평균 별점
           <div className="flex items-center text-accent-main gap-2">
             <span className="text-xs font-medium">평균 별점</span>
@@ -70,6 +75,7 @@ const LeaderMeetingCard = ({
             <div className="flex items-center gap-1">
               <User size={20} fill="currentColor" />
               <span className='text-black text-xs'>신청 인원 {current_people}명</span>
+
             </div>
           </div>
         )}
@@ -77,6 +83,7 @@ const LeaderMeetingCard = ({
         {/* 우측 버튼 */}
         <MoreLinkButton href={isDone ? `/mypage/mymeet/${id}/reviews` : '/applicants'}>
           {isDone ? '참여자 후기 보기' : '신청자 정보 보기'}
+
         </MoreLinkButton>
       </div>
     </div>

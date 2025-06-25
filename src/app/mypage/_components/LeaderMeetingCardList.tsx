@@ -55,11 +55,12 @@ const LeaderMeetingCardList = ({
             onClick={() => setFilteredStatus(status)}
             className="w-16 h-10 text-xs p-0 rounded-md bg-primary text-white"
           >
+
             조회
           </button>
         </div>
         <Button
-          onClick={() => router.push("/meet/create")}
+          onClick={() => router.push('/meet/create')}
           className="text-white flex text-xs gap-1 font-semibold"
           color="accent"
           width="w-auto"
@@ -87,6 +88,7 @@ const LeaderMeetingCardList = ({
           onPageChange={onPageChange}
         />
       )}
+
     </div>
   );
 };

@@ -11,11 +11,23 @@ import { useViewModeStore } from "@/stores/useViewModeStore";
 import { useLeaderMeetingsById, useLeaderMeetingsReviews } from "@/hooks/useLeader";
 import LeaderMeetingCardList from "./_components/LeaderMeetingCardList";
 
+
 export default function Mypage() {
   const { user, profile } = useAuthStore();
   const { viewMode } = useViewModeStore();
-
+  const [leaderMeetings, setLeaderMeetings] = useState<LeaderMeeting[]>([]);
   const router = useRouter();
+  useEffect(() => {
+    async function fetchLeaderMeetings() {
+      console.log('user?.user_id', user?.user_id);
+      if (user?.user_id) {
+        const response = await api.get(END_POINT.LEADER_MEETINGS(user?.user_id));
+        console.log('리더모임', response.data);
+        setLeaderMeetings(response.data.results);
+      }
+    }
+    fetchLeaderMeetings();
+  }, [user?.user_id]);
 
   const displayNickname = user?.nickname;
 
@@ -25,23 +37,24 @@ export default function Mypage() {
   const { data: reviewData } = useLeaderMeetingsReviews({ page: 1, size: 3 });
 
   const handleBtn = () => {
-    router.push("/meet/search");
+    router.push('/meet/search');
   };
   return (
     <main className="px-10 py-12 max-w-5xl mx-auto space-y-10">
       <UserProfile />
       {/* 관리자 */}
-      
+
       {user?.isAdmin && <ApplicantTable />}
       {/* 관리자 외 유저/리더 */}
       {!user?.isAdmin && (
         <>
           {/* 리더 */}
-          {viewMode === "leader" && (
+          {viewMode === 'leader' && (
             <>
               <div>
                 <LeaderMeetingCardList meetings={meetingData?.data || []} />
                 <MoreLinkButton href="/mypage/mymeet">전체 보기</MoreLinkButton>
+
               </div>
               <div>
                 <ReviewList reviews={reviewData?.data ?? []} />
@@ -51,13 +64,11 @@ export default function Mypage() {
           )}
 
           {/* 일반 유저 */}
-          {viewMode === "user" && (
+          {viewMode === 'user' && (
             <>
               {displayNickname && (
                 <div className="w-full flex justify-center mb-6">
-                  <p className="font-bold text-lg text-center">
-                    {displayNickname}님의 신청 모임, 일정들을 확인하세요.
-                  </p>
+                  <p className="font-bold text-lg text-center">{displayNickname}님의 신청 모임, 일정들을 확인하세요.</p>
                 </div>
               )}
               <AppliedScheduleList />

@@ -1,19 +1,13 @@
 "use client";
 import { useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useAuthStore } from "@/stores/useAuth";
+import { DecodedToken, useAuthStore } from "@/stores/useAuth";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { useSignupSubmit } from "@/hooks/useSignupSubmit";
 import { END_POINT } from "@/constants/route";
 import api from "@/apis/app";
 
-interface DecodedToken {
-  email: string;
-  nickname: string;
-  name: string;
-  role: "user" | "admin" | "leader";
-}
 export default function KakaoCallbackPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -45,6 +39,7 @@ export default function KakaoCallbackPage() {
           name: decoded.name,
           nickname: decoded.nickname,
           role: decoded.role,
+          user_id: decoded.user_id,
           isAdmin: true,
         });
 
@@ -56,7 +51,6 @@ export default function KakaoCallbackPage() {
         console.log("👀 profile data:", profile.data);
         const { area, interests, digital_level } = profile.data;
         const isNewUser = !area || !interests?.length || !digital_level;
-
         // redirect
         if (isNewUser) {
           // 회원가입 폼에 미리 email, nickname 채워놓기
