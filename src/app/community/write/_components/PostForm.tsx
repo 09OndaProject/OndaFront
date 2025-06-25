@@ -75,8 +75,10 @@ export default function PostForm({
       const areaValue =
         parent && childId != null
           ? {
-              parentId: {id: parent.id, name: parent.area_name},
-              childId: parent.children?.find((child) => child.id === childId) ?? {id: 0, name: ""},
+              parentId: { id: parent.id, name: parent.area_name },
+              childId: parent.children?.find(
+                (child) => child.id === childId
+              ) ?? { id: 0, name: "" },
             }
           : undefined;
 
@@ -153,11 +155,7 @@ export default function PostForm({
         <ImageUploader
           setValue={setValue}
           control={control}
-          initialFile={
-            typeof initialValue?.file === "string"
-              ? initialValue.file
-              : undefined
-          }
+          initialFile={initialValue?.file ?? undefined}
         />
 
         <div className="flex gap-4 justify-center w-full">

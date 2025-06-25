@@ -2,7 +2,7 @@
 
 import { Area } from "@/types/options";
 import { useEffect, useRef, useState } from "react";
-import useClickOutside from "./useClickOutside";
+import useClickOutside from "../../../hooks/useClickOutside";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { Option } from "@/types/post";
 

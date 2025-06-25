@@ -7,11 +7,12 @@ import {
   useWatch,
 } from "react-hook-form";
 import { PostFormData } from "./PostForm";
+import { PostFile } from "@/types/file";
 
 interface ImageUploaderProps {
   setValue: UseFormSetValue<PostFormData>;
   control: Control<PostFormData>;
-  initialFile?: string; // 초기 이미지 URL
+  initialFile?: PostFile; // 초기 이미지 파일
 }
 
 export default function ImageUploader({
@@ -24,7 +25,6 @@ export default function ImageUploader({
   const imageFile = useWatch({ name: "file", control });
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
 
-  // 새 파일 업로드 시 미리보기 생성
   useEffect(() => {
     let preview: string | null = null;
 
@@ -40,16 +40,46 @@ export default function ImageUploader({
     };
   }, [imageFile]);
 
-    // 초기 이미지
   useEffect(() => {
     if (!imageFile && initialFile) {
-      setPreviewUrls([initialFile]);
+      setPreviewUrls([initialFile.file]);
     }
   }, [initialFile, imageFile]);
 
+  const renderFileInfo = () => {
+    if (imageFile instanceof File) {
+      return (
+        <>
+          <span className="text-sm font-medium text-gray-700">
+            {imageFile.name}
+          </span>
+          <span className="text-xs text-gray-500">
+            {(imageFile.size / 1024 / 1024).toFixed(2)} MB
+          </span>
+        </>
+      );
+    }
+
+    if (initialFile) {
+      return (
+        <>
+          <span className="text-sm font-medium text-gray-700">
+            {initialFile.file_name}
+          </span>
+          <span className="text-xs text-gray-500">
+            {initialFile.file_size &&
+              (initialFile.file_size / 1024 / 1024).toFixed(2)}
+            MB
+          </span>
+        </>
+      );
+    }
+
+    return null;
+  };
+
   return (
     <div>
-      {/* 이미지 업로드 영역 */}
       <div className="flex flex-col gap-2">
         <label
           htmlFor="images"
@@ -72,7 +102,8 @@ export default function ImageUploader({
             setValue("file", file);
           }}
         />
-        {previewUrls.length > 0 && imageFile && (
+
+        {previewUrls.length > 0 && (
           <div className="flex flex-col gap-2 border-2 border-dashed p-4 rounded-lg hover:border-primary-deep transition">
             <div className="flex items-center justify-between">
               <div className="flex gap-4 items-center">
@@ -84,16 +115,7 @@ export default function ImageUploader({
                   style={{ width: 100, height: 100 }}
                   className="rounded-lg object-cover mt-2"
                 />
-                {imageFile instanceof File && (
-                  <div className="flex flex-col gap-2">
-                    <span className="text-sm font-medium text-gray-700">
-                      {imageFile.name}
-                    </span>
-                    <span className="text-xs text-gray-500">
-                      {(imageFile.size / 1024 / 1024).toFixed(2)} MB
-                    </span>
-                  </div>
-                )}
+                <div className="flex flex-col gap-2">{renderFileInfo()}</div>
               </div>
               <button
                 type="button"

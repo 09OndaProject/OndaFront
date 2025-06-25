@@ -11,6 +11,7 @@ interface PostProps {
 
 export default function PostCard({ post }: PostProps) {
   const [hasError, setHasError] = useState(false);
+
   return (
     <Link href={`/community/${post.id}`} className="block">
       <div className="p-8 border border-gray-400 rounded-md flex flex-col gap-4 relative">
@@ -36,7 +37,7 @@ export default function PostCard({ post }: PostProps) {
               <div className="flex gap-4">
                 {post.updated_at ? (
                   <>
-                    <span>{formatDate(post.updated_at)}</span>{" "}
+                    <span>{formatDate(post.updated_at)}</span>
                     <span>수정됨</span>
                   </>
                 ) : (
