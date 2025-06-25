@@ -259,3 +259,17 @@ export default function SignupPage() {
     </main>
   );
 }
+
+export default function SignupPage() {
+  return (
+    <Suspense fallback={
+      <div className="w-full max-w-[1280px] px-16 py-12 mx-auto">
+        <div className="w-full flex justify-center items-center h-screen">
+          <p className="text-lg">로딩 중...</p>
+        </div>
+      </div>
+    }>
+      <SignupContent />
+    </Suspense>
+  );
+}
