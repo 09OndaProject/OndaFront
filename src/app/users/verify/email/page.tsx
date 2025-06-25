@@ -17,7 +17,7 @@ export default function EmailVerifyPage() {
         router.push("/login");
       }, 3000);
     }
-  }, [verified]);
+  }, [verified, router]);
 
   return (
     <div className="flex flex-col items-center justify-center h-[60vh] text-center">

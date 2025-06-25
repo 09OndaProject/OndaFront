@@ -71,7 +71,7 @@ export default function KakaoCallbackPage() {
         router.push("/login"); // 실패할 경우 로그인 페이지로
       }
     })();
-  }, [code, state]);
+  }, [code, state, router, auth, setSignupData]);
 
   return (
     <div className="flex justify-center items-center h-screen">
