@@ -15,7 +15,7 @@ export default function PostCard({ post, file }: PostProps) {
     <Link href={`/community/${post.id}`} className="block">
       <div className="p-8 border border-gray-400 rounded-md flex flex-col gap-4 relative">
         <PostMetaData
-          ids={{
+          options={{
             id: post.id,
             category: post.category,
             interest: post.interest,

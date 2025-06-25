@@ -3,17 +3,16 @@ import ActionMenu from "./ActionMenu";
 import { useRouter } from "next/navigation";
 import { useModalStore } from "@/stores/useModalStore";
 import DeleteModal, { DeleteModalData } from "./DeleteModal";
-import { PostIds } from "@/types/post";
-import useOptions from "@/hooks/useOptions";
 import { useAuthStore } from "@/stores/useAuth";
 import { useDeletePost } from "@/hooks/usePost";
+import { PostOptions } from "@/types/post";
 
 interface PostMetadataProps {
-  ids: PostIds;
+  options: PostOptions;
   is_mine: boolean;
 }
 
-export default function PostMetaData({ ids, is_mine }: PostMetadataProps) {
+export default function PostMetaData({ options, is_mine }: PostMetadataProps) {
   const router = useRouter();
 
   const { openModal } = useModalStore();
@@ -22,30 +21,11 @@ export default function PostMetaData({ ids, is_mine }: PostMetadataProps) {
 
   const { mutate: deletePost } = useDeletePost();
 
-  const { categoryOptions, interestOptions, areaOptions } = useOptions();
-  const categoryName = categoryOptions.find(
-    (c) => c.value === ids.category
-  )?.label;
-  const interestName = interestOptions.find(
-    (i) => i.value === ids.interest
-  )?.label;
-
-  const areaName = (() => {
-    if (!ids.area) return null;
-
-    for (const parent of areaOptions) {
-      const child = parent.children?.find((c) => c.id === ids.area);
-      if (child) return `${parent.area_name} ${child.area_name}`;
-    }
-    return null;
-  })();
-
   const handleEdit = (id: number) => {
     router.push(`/community/${id}/edit`);
   };
 
   const handleDelete = (data: DeleteModalData) => {
-    console.log("외부 handleDelete 호출됨", data); // ✅ 로그 찍히는지
     if (data.type === "post" && typeof data.id === "number") {
       deletePost(
         { postId: data.id },
@@ -68,27 +48,27 @@ export default function PostMetaData({ ids, is_mine }: PostMetadataProps) {
   return (
     <div className="flex justify-between relative text-gray-600 text-sm">
       <div className="flex gap-4">
-        <span className="font-medium">{categoryName}</span>
+        <span className="font-medium">{options?.category.name}</span>
 
-        {ids.interest && (
+        {options?.interest && (
           <span className="ml-2 flex items-center gap-1">
             <HeartIcon />
-            {interestName}
+            {options.interest.name}
           </span>
         )}
-        {ids.area && (
+        {options?.area && (
           <span className="flex gap-2 items-center">
             <MapPin />
-            <span>{areaName}</span>
+            <span>{options.area.name}</span>
           </span>
         )}
       </div>
       {(is_mine || isAdmin) && (
         <ActionMenu
-          targetId={ids.id}
+          targetId={options?.id}
           onEdit={handleEdit}
           onDelete={() =>
-            openModal("DeleteModal", { id: ids.id, type: "post" })
+            openModal("DeleteModal", { id: options.id, type: "post" })
           }
         />
       )}

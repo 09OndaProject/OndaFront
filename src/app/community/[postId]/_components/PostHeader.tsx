@@ -1,17 +1,17 @@
-import { PostAuthor, PostIds } from "@/types/post";
+import { PostAuthor, PostOptions } from "@/types/post";
 import PostMetaData from "../../_components/PostMetaData";
 import { formatDate } from "@/utils/utils";
 
 interface PostHeaderProps {
-  ids: PostIds;
+  options: PostOptions;
   author: PostAuthor;
   title: string;
 }
 
-export default function PostHeader({ ids, author, title }: PostHeaderProps) {
+export default function PostHeader({ options, author, title }: PostHeaderProps) {
   return (
     <div className="space-y-2 w-full py-10 border-b-2 border-gray-400">
-      <PostMetaData ids={ids} is_mine={author.is_mine} />
+      <PostMetaData options={options} is_mine={author.is_mine} />
       <h1 className="font-semibold py-4 text-xl">{title}</h1>
       <div className="flex gap-4 text-sm text-gray-600">
         <span>{author.nickname}</span>

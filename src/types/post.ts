@@ -1,14 +1,19 @@
 "use client";
-import { FileData } from "./file";
+import { FileData, PostFile } from "./file";
+
+export type Option = {
+  id: number;
+  name: number;
+}
 
 export type Post = {
   id: number;
   title: string;
   content: string;
-  category: number;
-  area?: number | null;
-  interest?: number | null;
-  file?: number | null;
+  category: Option;
+  area?: Option | null;
+  interest?: Option | null;
+  file?: PostFile | null;
   created_at: Date;
   updated_at?: Date | null;
   nickname: string;
@@ -21,11 +26,11 @@ export type PostWithFile = Post & {
   fileData?: FileData | null;
 }
 
-export type PostIds = {
+export type PostOptions = {
   id: number;
-  category: number;
-  area?: number | null;
-  interest?: number | null;
+  category: Option;
+  area?: Option | null;
+  interest?: Option | null;
 };
 
 export type PostAuthor = {

@@ -60,7 +60,7 @@ export default function PostDetailPage() {
       <h1 className="text-xl font-bold text-left w-full">게시판</h1>
       {postLoading && <p>로딩중입니다...</p>}
       <PostHeader
-        ids={{
+        options={{
           id: post.id,
           category: post.category,
           interest: post.interest,

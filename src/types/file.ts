@@ -10,3 +10,5 @@ export type FileData = {
     thumbnail?: string;
     uploaded_at?: Date;
 }
+
+export type PostFile = Omit<FileData, "category">;
