@@ -3,23 +3,24 @@ import ActionMenu from "./ActionMenu";
 import { useRouter } from "next/navigation";
 import { useModalStore } from "@/stores/useModalStore";
 import DeleteModal, { DeleteModalData } from "./DeleteModal";
-import { useAuthStore } from "@/stores/useAuth";
 import { useDeletePost } from "@/hooks/usePost";
 import { PostOptions } from "@/types/post";
+import { useDeleteFile } from "@/hooks/useFile";
+import { PostFile } from "@/types/file";
 
 interface PostMetadataProps {
   options: PostOptions;
   is_mine: boolean;
+  file?: PostFile;
 }
 
-export default function PostMetaData({ options, is_mine }: PostMetadataProps) {
+export default function PostMetaData({ options, is_mine, file }: PostMetadataProps) {
   const router = useRouter();
 
   const { openModal } = useModalStore();
 
-  const isAdmin = useAuthStore((state) => state.user?.role === "admin");
-
   const { mutate: deletePost } = useDeletePost();
+  const { mutate: deleteFile } = useDeleteFile();
 
   const handleEdit = (id: number) => {
     router.push(`/community/${id}/edit`);
@@ -31,6 +32,9 @@ export default function PostMetaData({ options, is_mine }: PostMetadataProps) {
         { postId: data.id },
         {
           onSuccess: () => {
+            if (file) {
+              deleteFile([file.id]);
+            }
             console.log("게시글 삭제 성공");
             router.push("/community");
           },
@@ -63,7 +67,7 @@ export default function PostMetaData({ options, is_mine }: PostMetadataProps) {
           </span>
         )}
       </div>
-      {(is_mine || isAdmin) && (
+      {(is_mine) && (
         <ActionMenu
           targetId={options?.id}
           onEdit={handleEdit}

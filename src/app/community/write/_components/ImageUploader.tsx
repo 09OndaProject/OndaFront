@@ -8,6 +8,8 @@ import {
 } from "react-hook-form";
 import { PostFormData } from "./PostForm";
 import { PostFile } from "@/types/file";
+import { deleteFiles } from "@/apis/file";
+import DefaultImage from "../../_components/DefaultImage";
 
 interface ImageUploaderProps {
   setValue: UseFormSetValue<PostFormData>;
@@ -24,6 +26,7 @@ export default function ImageUploader({
 
   const imageFile = useWatch({ name: "file", control });
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
+  const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
     let preview: string | null = null;
@@ -78,6 +81,25 @@ export default function ImageUploader({
     return null;
   };
 
+  // 초기 이미지 삭제 함수
+  const handleDeleteImage = async () => {
+    // 초기 이미지 있는 경우
+    if (!imageFile && initialFile) {
+      try {
+        await deleteFiles([initialFile.id]);
+        setValue("file", undefined);
+        setPreviewUrls([]);
+      } catch (error) {
+        console.error("이미지 삭제 실패:", error);
+      }
+      return;
+    }
+
+    // 현재 이미지가 파일인 경우
+    setValue("file", undefined);
+    setPreviewUrls([]);
+  };
+
   return (
     <div>
       <div className="flex flex-col gap-2">
@@ -107,22 +129,24 @@ export default function ImageUploader({
           <div className="flex flex-col gap-2 border-2 border-dashed p-4 rounded-lg hover:border-primary-deep transition">
             <div className="flex items-center justify-between">
               <div className="flex gap-4 items-center">
-                <Image
-                  src={previewUrls[0]}
-                  alt="업로드된 이미지"
-                  width={100}
-                  height={100}
-                  style={{ width: 100, height: 100 }}
-                  className="rounded-lg object-cover mt-2"
-                />
+                {previewUrls.length > 0 && hasError ? (
+                  <Image
+                    src={previewUrls[0]}
+                    alt="업로드된 이미지"
+                    width={150}
+                    height={150}
+                    style={{ width: 100, height: 100 }}
+                    className="rounded-lg object-cover mt-2"
+                    onError={() => setHasError(true)}
+                  />
+                ) : (
+                  <DefaultImage />
+                )}
                 <div className="flex flex-col gap-2">{renderFileInfo()}</div>
               </div>
               <button
                 type="button"
-                onClick={() => {
-                  setValue("file", undefined);
-                  setPreviewUrls([]);
-                }}
+                onClick={handleDeleteImage}
                 className="text-accent-red text-sm p-2 rounded-lg hover:bg-red-100 active:bg-red-200"
               >
                 삭제

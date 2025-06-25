@@ -24,6 +24,7 @@ export default function PostCard({ post }: PostProps) {
             area: post.area,
           }}
           is_mine={post.is_mine}
+          file={post.file ?? undefined}
         />
 
         {/* 하단 텍스트 + 이미지 */}

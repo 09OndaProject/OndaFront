@@ -73,6 +73,7 @@ export default function PostDetailPage() {
           is_mine: post.is_mine,
         }}
         title={post.title}
+        file={post.file}
       />
       <PostContent content={post.content} file={post.file} />
       <CommentInput onSubmit={handleSubmitComment} />
