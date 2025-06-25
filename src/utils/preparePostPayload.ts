@@ -34,9 +34,9 @@ export const preparePostPayload = async (
   return {
     title: formData.title,
     content: formData.content,
-    category: formData.category ?? 0,
-    interest: formData.interest ?? null,
-    area: formData.area?.childId ?? null,
+    category: formData.category?.id ?? 0,
+    interest: formData.interest?.id ?? null,
+    area: formData.area?.childId.id ?? null,
     file: fileId ?? null,
   };
 };

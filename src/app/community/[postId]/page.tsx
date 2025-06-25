@@ -74,7 +74,7 @@ export default function PostDetailPage() {
         }}
         title={post.title}
       />
-      <PostContent content={post.content} />
+      <PostContent content={post.content} file={post.file} />
       <CommentInput onSubmit={handleSubmitComment} />
       {commentLoading ? (
         <p>댓글을 불러오는 중입니다...</p>

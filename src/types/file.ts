@@ -2,7 +2,7 @@
 export type FileData = {
     id: number;
     user_id?: number;
-    file_url: string;
+    file: string;
     file_type: "image" | "video" | "file";
     category: "post" | "profile" | "meet" | "certificate" | "other";
     file_name?: string | null;
