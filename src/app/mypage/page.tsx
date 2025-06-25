@@ -18,11 +18,16 @@ export default function Mypage() {
   const router = useRouter();
 
   const displayNickname = user?.nickname;
+  const isLeader = user?.role === "leader";
 
-  const { data: meetingData } = useLeaderMeetingsById({id: profile?.id, page: 1, size: 3});
-  //const meetingIds: number[] = meetingData?.data?.map((m) => m.id) ?? [];
-  //const { data: allReviews } = useReviewsByMeetingIds(meetingIds);
-  const { data: reviewData } = useLeaderMeetingsReviews({ page: 1, size: 3 });
+  const { data: meetingData } = useLeaderMeetingsById(
+    { id: profile?.id, page: 1, size: 3 },
+    isLeader
+  );
+  const { data: reviewData } = useLeaderMeetingsReviews(
+    { page: 1, size: 3 },
+    isLeader
+  );
 
   const handleBtn = () => {
     router.push("/meet/search");
