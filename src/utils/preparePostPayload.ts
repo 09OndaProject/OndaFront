@@ -31,12 +31,13 @@ export const preparePostPayload = async (
     // 이미 업로드된 파일인 경우
     fileId = rawFile.id;
   }
+  
   return {
     title: formData.title,
     content: formData.content,
-    category: formData.category?.id ?? 0,
-    interest: formData.interest?.id ?? null,
-    area: formData.area?.childId.id ?? null,
+    category_id: formData.category?.id ?? 0,
+    interest_id: formData.interest?.id ?? null,
+    area_id: formData.area?.childId.id ?? null,
     file: fileId ?? null,
   };
 };

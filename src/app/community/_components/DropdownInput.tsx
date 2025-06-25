@@ -50,13 +50,11 @@ export default function DropdownInput({
           <ul className="text-sm absolute z-10 w-full bg-white border mt-1 rounded-md shadow-md max-h-60 overflow-auto">
             {options.map((opt) => (
               <li
-                className={`px-2 py-4 m-1 hover:bg-gray-200 cursor-pointer rounded-md ${value === opt ? "bg-gray-100 font-medium" : ""}`}
-                key={opt.name}
+                className={`px-2 py-4 m-1 hover:bg-gray-200 cursor-pointer rounded-md ${value?.id === opt?.id ? "bg-gray-100 font-medium" : ""}`}
+                key={opt.id}
                 onClick={() => {
-                  if (typeof opt.name === "number") {
-                    onChange(opt.name);
-                    setOpen(false);
-                  }
+                  onChange(opt);
+                  setOpen(false);
                 }}
               >
                 {opt.name}

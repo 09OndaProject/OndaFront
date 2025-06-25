@@ -129,7 +129,7 @@ export default function ImageUploader({
           <div className="flex flex-col gap-2 border-2 border-dashed p-4 rounded-lg hover:border-primary-deep transition">
             <div className="flex items-center justify-between">
               <div className="flex gap-4 items-center">
-                {previewUrls.length > 0 && hasError ? (
+                {!hasError ? (
                   <Image
                     src={previewUrls[0]}
                     alt="업로드된 이미지"

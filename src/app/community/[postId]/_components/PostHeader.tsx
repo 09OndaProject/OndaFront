@@ -18,7 +18,11 @@ export default function PostHeader({
 }: PostHeaderProps) {
   return (
     <div className="space-y-2 w-full py-10 border-b-2 border-gray-400">
-      <PostMetaData options={options} is_mine={author.is_mine} file={file} />
+      <PostMetaData
+        options={options}
+        is_mine={author.is_mine}
+        file={file}
+      />
       <h1 className="font-semibold py-4 text-xl">{title}</h1>
       <div className="flex gap-4 text-sm text-gray-600">
         <span>{author.nickname}</span>

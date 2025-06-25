@@ -14,7 +14,11 @@ interface PostMetadataProps {
   file?: PostFile;
 }
 
-export default function PostMetaData({ options, is_mine, file }: PostMetadataProps) {
+export default function PostMetaData({
+  options,
+  is_mine,
+  file,
+}: PostMetadataProps) {
   const router = useRouter();
 
   const { openModal } = useModalStore();
@@ -28,24 +32,29 @@ export default function PostMetaData({ options, is_mine, file }: PostMetadataPro
 
   const handleDelete = (data: DeleteModalData) => {
     if (data.type === "post" && typeof data.id === "number") {
-      deletePost(
-        { postId: data.id },
-        {
-          onSuccess: () => {
-            if (file) {
-              deleteFile([file.id]);
-            }
-            console.log("게시글 삭제 성공");
-            router.push("/community");
-          },
-          onError: (error) => {
-            console.error("게시글 삭제 실패:", error.message);
-            openModal("PostFailModal", {
-              message: "게시글 삭제에 실패했습니다.",
-            });
-          },
+      try {
+        if (file) {
+          deleteFile([file.id]);
+          console.log("사진 삭제 성공");
         }
-      );
+        deletePost(
+          { postId: data.id },
+          {
+            onSuccess: () => {
+              console.log("게시글 삭제 성공");
+              router.push("/community");
+            },
+            onError: (error) => {
+              console.error("게시글 삭제 실패:", error.message);
+              openModal("PostFailModal", {
+                message: "게시글 삭제에 실패했습니다.",
+              });
+            },
+          }
+        );
+      } catch (e) {
+        console.error("파일 삭제 중 오류 발생:", e);
+      }
     }
   };
 
@@ -67,7 +76,7 @@ export default function PostMetaData({ options, is_mine, file }: PostMetadataPro
           </span>
         )}
       </div>
-      {(is_mine) && (
+      {is_mine && (
         <ActionMenu
           targetId={options?.id}
           onEdit={handleEdit}

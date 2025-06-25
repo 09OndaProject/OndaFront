@@ -1,6 +1,5 @@
 "use client";
 
-import PostHeader from "./_components/PostHeader";
 import { useParams } from "next/navigation";
 import { useFetchPost } from "@/hooks/usePost";
 import PostContent from "./_components/PostContent";
@@ -10,21 +9,20 @@ import CommentInput from "./_components/CommentInput";
 import Pagination from "@/components/Pagination";
 import { useCreateComment, useFetchComments } from "@/hooks/useComments";
 import { CommentCreatePayload } from "@/types/post";
+import PostMetaData from "../_components/PostMetaData";
+import { formatDate } from "@/utils/utils";
 
 export default function PostDetailPage() {
   const params = useParams();
   const postId = Number(params?.postId);
   const { data: post, isLoading: postLoading } = useFetchPost(postId);
-  
+
   // 댓글 데이터 및 페이지네이션
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const { data, isLoading: commentLoading } = useFetchComments(
-    postId,
-    page
-  );
+  const { data, isLoading: commentLoading } = useFetchComments(postId, page);
 
-  const {mutate: createComment} = useCreateComment();
+  const { mutate: createComment } = useCreateComment();
   const comments = data?.results || []; // 댓글 데이터가 없을 경우 빈 배열로 초기화
 
   const totalCount = data?.results.length ?? 0; // 댓글의 총 개수
@@ -37,8 +35,6 @@ export default function PostDetailPage() {
     };
 
     createComment(payload);
-
-    console.log("댓글 등록:", payload);
   };
 
   useEffect(() => {
@@ -59,22 +55,31 @@ export default function PostDetailPage() {
     <div className="flex flex-col items-center w-full my-20 max-w-[1440px] px-4 md:px-[160px] mx-auto">
       <h1 className="text-xl font-bold text-left w-full">게시판</h1>
       {postLoading && <p>로딩중입니다...</p>}
-      <PostHeader
-        options={{
-          id: post.id,
-          category: post.category,
-          interest: post.interest,
-          area: post.area,
-        }}
-        author={{
-          nickname: post.nickname,
-          created_at: post.created_at,
-          updated_at: post.updated_at,
-          is_mine: post.is_mine,
-        }}
-        title={post.title}
-        file={post.file}
-      />
+      <div className="space-y-2 w-full py-10 border-b-2 border-gray-400">
+        <PostMetaData
+          options={{
+            id: post.id,
+            category: post.category,
+            interest: post.interest,
+            area: post.area,
+          }}
+          is_mine={post.is_mine}
+          file={post.file ?? undefined}
+        />
+        <h1 className="font-semibold py-4 text-xl">{post.title}</h1>
+        <div className="flex gap-4 text-sm text-gray-600">
+          <span>{post.nickname}</span>
+          <div className="flex gap-4">
+            {post.updated_at ? (
+              <>
+                <span>{formatDate(post.updated_at)}</span> <span>수정됨</span>
+              </>
+            ) : (
+              <span> {formatDate(post.created_at)}</span>
+            )}
+          </div>
+        </div>
+      </div>
       <PostContent content={post.content} file={post.file} />
       <CommentInput onSubmit={handleSubmitComment} />
       {commentLoading ? (

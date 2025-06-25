@@ -7,9 +7,9 @@ import { Post } from "@/types/post";
 export interface PostCreatePayload {
   title: string;
   content: string;
-  area?: number | null;
-  category?: number;
-  interest?: number | null;
+  area_id?: number | null;
+  category_id?: number;
+  interest_id?: number | null;
   file?: number | null;
 }
 export interface PostCreateResponse {
