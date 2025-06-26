@@ -24,7 +24,7 @@ export interface MeetingCardProps {
     contact?: string;
   };
   isApplied?: boolean; // 신청한 모임인지 여부
-  context?: 'applied' | 'past';
+  context?: "applied" | "past";
 }
 
 export type Review = {
@@ -49,8 +49,8 @@ export interface MeetFormData {
   digital_level: string | number;
   category: string | number;
   date: string;
-  start_time: string;
-  end_time: string;
+  start_time?: string;
+  end_time?: string;
   location: string;
   contact: string;
   session_count: number | null;
