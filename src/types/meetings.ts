@@ -163,6 +163,7 @@ export type MeetDetail = {
 };
 
 export interface Meeting {
+  id: number | string | undefined;
   meet_id: number;
   user_id: number;
   title: string;

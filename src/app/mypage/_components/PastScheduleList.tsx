@@ -44,23 +44,19 @@ export default function PastScheduleList() {
           }),
         ]);
 
-        const appliedMeetings: Meeting[] = appliedRes.data.results;
-        const pastMeetings: Meeting[] = pastRes.data.results;
-        const reviews: Review[] = reviewRes.data.results;
+        const appliedMeetings: Meeting[] = appliedRes?.data?.results;
+        const pastMeetings: Meeting[] = pastRes?.data?.results;
+        const reviews: Review[] = reviewRes?.data?.results;
 
-        const appliedIds = new Set(appliedMeetings.map((m) => m.meet_id));
+        const appliedIds = new Set(appliedMeetings.map((m) => m?.id));
         const reviewsSet = new Set(
-          reviews.map((r) => `${r.meet_title}_${r.meet_date}`)
+          reviews?.map((r) => `${r?.meet_title}_${r?.meet_date}`)
         );
 
-        const filtered = pastMeetings.filter(
+        const filtered = pastMeetings?.filter(
           (m) =>
-            appliedIds.has(m.meet_id) && !reviewsSet.has(`${m.title}_${m.date}`)
+            appliedIds.has(m?.id) && !reviewsSet.has(`${m?.title}_${m?.date}`)
         );
-
-        console.log("✅ 신청한 모임 ID:", [...appliedIds]);
-        console.log("✅ 지난 모임 응답:", pastMeetings);
-        console.log("✅ 필터링 결과:", filtered);
 
         setPastScheduleList(filtered);
       } catch (error) {
@@ -71,30 +67,19 @@ export default function PastScheduleList() {
 
     fetchAppliedMeetings();
   }, [router, accessToken]);
-
   return (
     <section className="px-4 py-6">
       <div className="md:grid-cols-3 md:grid flex flex-col gap-4">
-        {pastScheduleList.map(
-          (meeting) => (
-            // isMobile ? (
-            //   <MeetingCardHorizontal
-            //     key={meeting.meet_id}
-            //     item={meeting}
-            //     isApplied={false}
-            //   />
-            // ) : (
-            <MeetingCard key={meeting.meet_id} item={meeting} context="past" />
-          )
-          // )
-        )}
+        {pastScheduleList.map((meeting) => (
+          <MeetingCard key={meeting.id} item={meeting} context="past" />
+        ))}
         {modals["reviewWrite"] && (
           <ReviewWriteModal
             modalKey="reviewWrite"
             onClose={() => closeModal("reviewWrite")}
-            onSubmit={(rating, content) => {
-              console.log("후기 제출", rating, content);
-            }}
+            // onSubmit={(rating, content) => {
+            //   console.log("후기 제출", rating, content);
+            // }}
             meetId={2}
           />
         )}
