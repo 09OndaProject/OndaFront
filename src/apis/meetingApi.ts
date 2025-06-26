@@ -10,6 +10,7 @@ export const getMeetingInfo = async (params: {
   interest?: number;
   area?: number;
   digital_level?: number;
+  status?: boolean;
 }) => {
   const { data } = await api.get('/meets', { params });
   return data;

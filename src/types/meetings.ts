@@ -6,6 +6,7 @@ export interface MeetingFilter {
   interest: Option | undefined;
   area: SelectedArea | undefined;
   digitalLevel: Option | undefined;
+  status: boolean | undefined;
 }
 
 export interface MeetingCardProps {

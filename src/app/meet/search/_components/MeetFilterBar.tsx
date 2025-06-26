@@ -29,6 +29,17 @@ export default function MeetFilterBar({
     onChange({ ...filters, [key]: value });
   };
 
+  const defaultFilters: MeetingFilter = {
+    interest: { id: 0, name: "전체" },
+    digitalLevel: { id: 0, name: "전체" },
+    area: { parentId: { id: 0, name: "전체" }, childId: undefined },
+    status: undefined
+  };
+
+  const resetFilter = () => {
+    onChange(defaultFilters);
+  };
+
   useEffect(() => {
     const fetchOptions = async () => {
       const areaRes = await getAreaOptions();
@@ -56,34 +67,47 @@ export default function MeetFilterBar({
   }, []);
 
   return (
-    <div className="flex flex-wrap w-full md:flex-nowrap items-center gap-3 mb-6">
-      <DropdownInput
-        value={filters.interest}
-        onChange={(val) => handleChange("interest", val)}
-        options={interestOptions}
-        placeholder="관심사"
-        className="min-w-[160px] w-[250px]"
-      />
-      <AreaDropdown
-        value={filters.area}
-        onChange={(val) => onChange({ ...filters, area: val })}
-        options={areaOptions}
-        placeholder="지역"
-        className="flex-grow"
-      />
-      <DropdownInput
-        value={filters.digitalLevel}
-        onChange={(val) => handleChange("digitalLevel", val)}
-        options={digitalLevelOptions}
-        placeholder="디지털 난이도"
-        className="min-w-[160px] w-[250px]"
-      />
-      <button
-        type="submit"
-        className="bg-primary text-white text-sm rounded-md px-4 h-[44px] min-w-[72px] hover:bg-primary-light active:bg-primary-deep"
-      >
-        조회
-      </button>
+    <div className="flex flex-col flex-wrap w-full md:flex-nowrap items-center gap-3 mb-6 p-2 bg-gray-100 my-2 rounded-lg border border-gray-300">
+      <div className="flex gap-4 items-center justify-start w-full">
+        <span className="text-gray-700 text-sm">상세 검색</span>
+        <div className="flex gap-4">
+          <button
+            onClick={resetFilter}
+            className="flex gap-2 py-1 rounded-full bg-white px-4 hover:bg-gray-300 text-accent-main font-medium"
+          >
+            필터 초기화
+          </button>
+        </div>
+      </div>
+      <div className="flex flex-wrap w-full md:flex-nowrap items-center gap-3 pb-2">
+        <DropdownInput
+          value={filters.interest}
+          onChange={(val) => handleChange("interest", val)}
+          options={interestOptions}
+          placeholder="관심사"
+          className="min-w-[160px] w-[250px]"
+        />
+        <DropdownInput
+          value={filters.digitalLevel}
+          onChange={(val) => handleChange("digitalLevel", val)}
+          options={digitalLevelOptions}
+          placeholder="디지털 난이도"
+          className="min-w-[160px] w-[250px]"
+        />
+        <AreaDropdown
+          value={filters.area}
+          onChange={(val) => onChange({ ...filters, area: val })}
+          options={areaOptions}
+          placeholder="지역"
+          className="flex-grow"
+        />
+        <button
+          type="submit"
+          className="bg-primary text-white text-sm rounded-md px-4 h-[44px] min-w-[72px] hover:bg-primary-light active:bg-primary-deep"
+        >
+          조회
+        </button>
+      </div>
     </div>
   );
 }

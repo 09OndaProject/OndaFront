@@ -8,21 +8,30 @@ import TextInput from "@/components/common/TextInput";
 import { Search } from "lucide-react";
 import { MeetingFilter } from "@/types/meetings";
 
+// 모임 상태
+type StatusOption = {
+  id: number;
+  name: string;
+  value: boolean | undefined;
+};
+
+export const STATUS_OPTION: StatusOption[] = [
+  { id: 0, name: "전체", value: undefined },
+  { id: 1, name: "모집중", value: true },
+  { id: 2, name: "마감", value: false },
+];
+
 export default function MeetSearchPage() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedStatus, setSelectedStatus] = useState<StatusOption>(
+    STATUS_OPTION[0]
+  );
   const [filters, setFilters] = useState<MeetingFilter>({
     interest: undefined,
     area: undefined,
     digitalLevel: undefined,
+    status: undefined,
   });
-
-  const TAG_OPTION = [
-    { id: 1, name: "모집중" },
-    { id: 2, name: "마감" },
-    { id: 3, name: "완료" },
-  ];
-
-  const [selectedTag, setSelectedTag] = useState({ id: 0, name: "모집 상태" });
 
   return (
     <main className="flex flex-col items-center w-full my-20 max-w-[1440px] px-4 md:px-[160px] mx-auto">
@@ -33,10 +42,13 @@ export default function MeetSearchPage() {
       <div className="w-full flex flex-col gap-4 mt-10 items-end">
         <div className="w-full flex gap-4 flex-wrap">
           <DropdownInput
-            value={selectedTag}
-            onChange={(e) => setSelectedTag(e)}
-            options={TAG_OPTION}
-            placeholder="카테고리"
+            value={selectedStatus}
+            onChange={(opt) => {
+              setSelectedStatus(opt);
+              setFilters((prev) => ({ ...prev, status: opt.value }));
+            }}
+            options={STATUS_OPTION}
+            placeholder="모집 상태"
             className="min-w-[150px] w-auto"
           />
           <div className="flex-grow">
