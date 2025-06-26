@@ -99,7 +99,7 @@ export default function ChatRoom({
             sendMessage(input);
           }
         }}
-        className="flex-1"
+        className="flex-1 resize-none"
         placeholder="메시지를 입력하세요"
       />
         <button
