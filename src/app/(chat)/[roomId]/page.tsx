@@ -18,9 +18,10 @@ export default function ChatRoom({
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState('');
   const socketRef = useRef<WebSocket | null>(null);
-  const initialized = useRef(false); // ✅ 중복 방지
+  const initialized = useRef(false);
   const messageEndRef = useRef<HTMLDivElement | null>(null);
   const { user } = useAuthStore();
+  const isComposingRef = useRef(false);
 
   useEffect(() => {
     if (!token || initialized.current) return;
@@ -38,7 +39,13 @@ export default function ChatRoom({
         setMessages(formatted);
 
         socketRef.current = createWebSocket(roomId, token, (newMessage) => {
-          setMessages((prev) => [...prev, newMessage]);
+          setMessages((prev) => {
+            const last = prev[prev.length - 1];
+            if (last && last.message === newMessage.message && last.nickname === newMessage.nickname) {
+              return prev; // 중복이면 추가하지 않음
+            }
+            return [...prev, newMessage];
+          });
         });
       } catch (err) {
         console.error('❌ 채팅방 입장 또는 메시지 불러오기 실패:', err);
@@ -57,9 +64,9 @@ export default function ChatRoom({
     messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  const sendMessage = () => {
-    if (!input.trim()) return;
-    socketRef.current?.send(JSON.stringify({ message: input }));
+  const sendMessage = (message: string) => {
+    if (!message.trim()) return;
+    socketRef.current?.send(JSON.stringify({ message }));
     setInput('');
   };
 
@@ -80,19 +87,24 @@ export default function ChatRoom({
 
       {/* 입력창 */}
       <div className="p-4 border-t flex gap-2">
-        <input
-          className="flex-1 border rounded px-3 py-2"
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="메시지를 입력하세요"
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') sendMessage();
-          }}
-        />
+      <textarea
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        onCompositionStart={() => { isComposingRef.current = true }}
+        onCompositionEnd={() => { isComposingRef.current = false }}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            if (isComposingRef.current) return;
+            e.preventDefault();
+            sendMessage(input);
+          }
+        }}
+        className="flex-1"
+        placeholder="메시지를 입력하세요"
+      />
         <button
           className="bg-primary-deep text-white px-4 py-2 rounded"
-          onClick={sendMessage}
+          onClick={() => sendMessage(input)}
         >
           <Send size={16} />
         </button>

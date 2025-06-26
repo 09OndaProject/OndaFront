@@ -97,14 +97,14 @@ export const MeetingCard = ({
         {area}
         {area}
       </div>
-      {isApplied &&  status === "마감" ? (
+      {isApplied ? (
           <div className="flex gap-2 items-center mb-1 break-all">
             <button
-              className="flex-1 flex justify-center items-center gap-2 text-white p-2 rounded-md bg-accent-blue"
+              className="flex-1 flex justify-center items-center gap-2 text-white p-2 rounded-md bg-accent-purple"
               onClick={handleOpenChat}
             >
               <MessageSquareIcon size={16} fill="white" />
-              오픈채팅
+              모임 그룹 채팅
             </button>
             <Link href={`/meet/${id}`}>
               <button className="flex-1 border border-orange-500 text-orange-500 p-2 rounded-md hover:bg-orange-50 transition">
