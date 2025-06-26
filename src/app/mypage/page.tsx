@@ -45,12 +45,16 @@ export default function Mypage() {
             <>
               <div>
                 <LeaderMeetingList meetings={meetingData?.data || []} />
-                <MoreLinkButton href="/mypage/mymeet">전체 보기</MoreLinkButton>
+                {meetingData?.totalCount !== 0 && (
+                  <MoreLinkButton href="/mypage/mymeet">전체 보기</MoreLinkButton>
+                )}
               </div>
               <div>
                 <ReviewList reviews={reviewData?.data ?? []} />
-                <MoreLinkButton href="/mypage/mymeet/reviews">전체 보기</MoreLinkButton>
-              </div>
+                {reviewData?.totalCount !== 0 && (
+                  <MoreLinkButton href="/mypage/mymeet/reviews">전체 보기</MoreLinkButton>
+                )}
+                </div>
             </>
           )}
 
