@@ -7,7 +7,7 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import { Option } from "@/types/post";
 
 export interface SelectedArea {
-  parentId: Option;
+  parentId?: Option;
   childId?: Option;
 }
 
@@ -34,7 +34,7 @@ export default function AreaDropdown({
   useClickOutside(dropdownRef, () => setOpen(false));
 
   useEffect(() => {
-    if (value) {
+    if (value?.parentId) {
       setSelectedParentId(value.parentId.id);
       if (value.childId) {
         setSelectedChildId(value.childId?.id);

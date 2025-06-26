@@ -30,10 +30,10 @@ export default function MeetFilterBar({
   };
 
   const defaultFilters: MeetingFilter = {
-    interest: { id: 0, name: "전체" },
-    digitalLevel: { id: 0, name: "전체" },
-    area: { parentId: { id: 0, name: "전체" }, childId: undefined },
-    status: undefined
+    interest: undefined,
+    digitalLevel: undefined,
+    area: { parentId: undefined, childId: undefined },
+    status: undefined,
   };
 
   const resetFilter = () => {
@@ -81,6 +81,7 @@ export default function MeetFilterBar({
       </div>
       <div className="flex flex-wrap w-full md:flex-nowrap items-center gap-3 pb-2">
         <DropdownInput
+          key={filters.interest?.id ?? "interest-default"}
           value={filters.interest}
           onChange={(val) => handleChange("interest", val)}
           options={interestOptions}
@@ -88,6 +89,7 @@ export default function MeetFilterBar({
           className="min-w-[160px] w-[250px]"
         />
         <DropdownInput
+          key={filters.digitalLevel?.id ?? "digital-default"}
           value={filters.digitalLevel}
           onChange={(val) => handleChange("digitalLevel", val)}
           options={digitalLevelOptions}
@@ -95,6 +97,7 @@ export default function MeetFilterBar({
           className="min-w-[160px] w-[250px]"
         />
         <AreaDropdown
+          key={`${filters.area?.parentId?.id ?? "parent"}-${filters.area?.childId?.id ?? "child"}`}
           value={filters.area}
           onChange={(val) => onChange({ ...filters, area: val })}
           options={areaOptions}
