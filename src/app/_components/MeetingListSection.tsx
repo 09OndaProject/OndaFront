@@ -7,6 +7,7 @@ import "swiper/css/autoplay";
 import { MeetingCard } from "../../components/common/MeetingCard";
 import { useFetchMeetings } from "@/hooks/useMeeting";
 import { DEFAULT_MEETING_FILTER } from "@/constants/meeting";
+import MeetingCardSkeleton from "../meet/_components/MeetingCardSkeleton";
 
 export default function MeetingListSection() {
   const {
@@ -18,10 +19,6 @@ export default function MeetingListSection() {
     filters: DEFAULT_MEETING_FILTER,
   });
 
-  if (isLoading) {
-    return <div className="text-center py-10">로딩 중...</div>;
-  }
-
   if (isError) {
     return (
       <div className="text-center py-10 text-red-500">
@@ -30,7 +27,7 @@ export default function MeetingListSection() {
     );
   }
 
-  if (!meetings || meetings.results.length === 0) {
+  if (!isLoading && (!meetings || meetings.results.length === 0)) {
     return (
       <div className="text-center py-10 text-gray-500">
         최근 개설된 모임이 없어요.
@@ -53,25 +50,22 @@ export default function MeetingListSection() {
             disableOnInteraction: false,
           }}
           breakpoints={{
-            768: {
-              slidesPerView: 2.5,
-              spaceBetween: 24,
-            },
-            1024: {
-              slidesPerView: 3.5,
-              spaceBetween: 32,
-            },
-            1440: {
-              slidesPerView: 5.5,
-              spaceBetween: 32,
-            },
+            768: { slidesPerView: 2.5, spaceBetween: 24 },
+            1024: { slidesPerView: 3.5, spaceBetween: 32 },
+            1440: { slidesPerView: 5.5, spaceBetween: 32 },
           }}
         >
-          {meetings.results.map((item) => (
-            <SwiperSlide key={item.meet_id}>
-              <MeetingCard item={item} />
-            </SwiperSlide>
-          ))}
+          {(isLoading || !meetings)
+            ? Array.from({ length: 5 }).map((_, idx) => (
+                <SwiperSlide key={`skeleton-${idx}`}>
+                  <MeetingCardSkeleton />
+                </SwiperSlide>
+              ))
+            : meetings.results.map((item) => (
+                <SwiperSlide key={item.meet_id}>
+                  <MeetingCard item={item} />
+                </SwiperSlide>
+              ))}
         </Swiper>
       </div>
     </section>
