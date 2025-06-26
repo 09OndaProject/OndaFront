@@ -1,4 +1,4 @@
-import { FileData } from './file';
+import { FileData } from "./file";
 
 export interface MeetingCardProps {
   item: {
@@ -15,26 +15,33 @@ export interface MeetingCardProps {
     contact?: string;
   };
   isApplied?: boolean; // 신청한 모임인지 여부
-  context?: 'applied' | 'past';
+  context?: "applied" | "past";
 }
 
 export type Review = {
   id: number;
-  user_id: number;
-  meet_id: number;
+  nickname: string;
   rating: number;
   content: string;
-  created_at: Date;
-  updated_at: Date;
+  created_at: string;
+  meet_title: string;
+  meet_date: string;
+  meet_location: string;
+}
+
+export type ReviewResponse = {
+  average_rating: number;
+  reviews: Review[];
 };
+
 export interface MeetFormData {
   title: string;
   description: string;
   digital_level: string | number;
   category: string | number;
   date: string;
-  start_time: string;
-  end_time: string;
+  start_time?: string;
+  end_time?: string;
   location: string;
   contact: string;
   session_count: number | null;

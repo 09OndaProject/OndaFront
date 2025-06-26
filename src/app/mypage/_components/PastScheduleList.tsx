@@ -30,7 +30,7 @@ export default function PastScheduleList() {
     };
   
     fetchAppliedMeetings();
-  }, []);
+  }, [router]);
 
   // useEffect(() => {
   //   const handleResize = () => {
