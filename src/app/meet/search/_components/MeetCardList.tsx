@@ -9,9 +9,9 @@ import { Meeting } from '@/types/meetings';
 interface MeetCardListProps {
   searchQuery: string;
   filters: {
-    category: string;
-    area: string;
-    digitalLevel: string;
+    interest: number;
+    area: number;
+    digitalLevel: number;
   };
 }
 
@@ -32,7 +32,7 @@ export default function MeetCardList({ searchQuery, filters }: MeetCardListProps
     queryFn: () =>
       getMeetingInfo({
         title: searchQuery,
-        category: filters.category,
+        interest: filters.interest,
         area: filters.area,
         digital_level: filters.digitalLevel,
       }),

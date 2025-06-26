@@ -7,9 +7,9 @@ export async function getMeetDetail(id: number) {
 
 export const getMeetingInfo = async (params: {
   title?: string;
-  category?: string;
-  area?: string;
-  digital_level?: string;
+  interest?: number;
+  area?: number;
+  digital_level?: number;
 }) => {
   const { data } = await api.get('/meets', { params });
   return data;
