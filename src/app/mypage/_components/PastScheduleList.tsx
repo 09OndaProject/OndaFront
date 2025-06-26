@@ -23,15 +23,14 @@ export default function PastScheduleList() {
         }
         const response = await api.get(`/meets?status=false`);
         setPastScheduleList(response.data.results);
-        console.log(pastScheduleList);
-        router.refresh();
       } catch (error) {
         console.error('지난 모임 조회 실패:', error);
         alert('지난 모임 조회에 실패했습니다. 다시 시도해주세요.');
       }
     };
+  
     fetchAppliedMeetings();
-  }, [pastScheduleList, router]);
+  }, []);
 
   // useEffect(() => {
   //   const handleResize = () => {
@@ -44,19 +43,25 @@ export default function PastScheduleList() {
   return (
     <section className="px-4 py-6">
       <div className="md:grid-cols-3 md:grid flex flex-col gap-4">
-        {pastScheduleList.map(
-          (meeting) => (
-            // isMobile ? (
+      {pastScheduleList.map((meeting, idx) => {
+  if (!meeting.meet_id) {
+     // isMobile ? (
             //   <MeetingCardHorizontal
             //     key={meeting.meet_id}
             //     item={meeting}
             //     isApplied={false}
             //   />
             // ) : (
-            <MeetingCard key={meeting.meet_id} item={meeting} context="past" />
-          )
-          // )
-        )}
+    console.warn("❗ meet_id 없음!", meeting);
+  }
+  return (
+    <MeetingCard
+      key={meeting.meet_id ?? `fallback-${idx}`}
+      item={meeting}
+      context="past"
+    />
+  );
+})}
         {modals['reviewWrite'] && (
           <ReviewWriteModal
             modalKey="reviewWrite"

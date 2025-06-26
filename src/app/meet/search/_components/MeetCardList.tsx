@@ -37,11 +37,10 @@ export default function MeetCardList({ searchQuery, filters }: MeetCardListProps
         digital_level: filters.digitalLevel,
       }),
   });
-  console.log('meets', meets);
+  
   if (isLoading) return <p className="text-center col-span-full">불러오는 중...</p>;
   if (isError) return <p className="text-center col-span-full text-red-500">에러가 발생했습니다.</p>;
   if (!meets) return <p className="text-center col-span-full text-gray-500">데이터를 불러올 수 없습니다.</p>;
-
   return (
     <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {meets.results.length === 0 ? (

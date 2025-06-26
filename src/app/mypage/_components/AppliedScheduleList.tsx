@@ -49,7 +49,7 @@ export default function AppliedScheduleList() {
       }
     };
     fetchAppliedMeetings();
-  }, [applySchedule, router]);
+  }, []);
 
   if (applySchedule.length === 0) {
     return (
@@ -73,7 +73,7 @@ export default function AppliedScheduleList() {
             //     isApplied
             //   />
             // ) : (
-            <MeetingCard key={meeting.user_id} item={meeting} isApplied />
+            <MeetingCard key={meeting.id} item={meeting} isApplied />
           )
           // )
         )}
