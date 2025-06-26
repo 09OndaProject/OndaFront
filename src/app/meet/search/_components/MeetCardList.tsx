@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { MeetingCard } from "@/components/common/MeetingCard";
 import { getMeetingInfo } from "@/apis/meetingApi";
 import { Meeting, MeetingFilter } from "@/types/meetings";
-import {  } from "../page";
+import {} from "../page";
 
 interface MeetCardListProps {
   searchQuery: string;
@@ -28,19 +28,16 @@ export default function MeetCardList({
     isLoading,
     isError,
   } = useQuery<MeetingResponse>({
-    queryKey: [
-      "meetList",
-      searchQuery,
-      filters
-    ],
+    queryKey: ["meetList", searchQuery, filters],
     queryFn: () =>
       getMeetingInfo({
         title: searchQuery || undefined,
         interest: filters.interest?.id !== 0 ? filters.interest?.id : undefined,
-        area: filters.area?.childId?.id || undefined,
+        area:
+          filters.area?.childId?.id ?? filters.area?.parentId?.id ?? undefined,
         digital_level:
           filters.digitalLevel?.id !== 0 ? filters.digitalLevel?.id : undefined,
-        status: filters.status
+        status: filters.status,
       }),
   });
   console.log("meets", meets);

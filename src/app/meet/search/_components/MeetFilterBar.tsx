@@ -101,12 +101,6 @@ export default function MeetFilterBar({
           placeholder="지역"
           className="flex-grow"
         />
-        <button
-          type="submit"
-          className="bg-primary text-white text-sm rounded-md px-4 h-[44px] min-w-[72px] hover:bg-primary-light active:bg-primary-deep"
-        >
-          조회
-        </button>
       </div>
     </div>
   );
