@@ -32,7 +32,7 @@ export default function Mypage() {
     router.push('/meet/search');
   };
   return (
-    <main className="px-10 py-12 max-w-5xl mx-auto space-y-10">
+    <main className="py-12 max-w-5xl mx-auto space-y-16">
       <UserProfile />
       {/* 관리자 */}
 
