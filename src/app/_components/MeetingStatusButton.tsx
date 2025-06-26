@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import type { FinishedMeetDetailModalProps } from '../meet/detail/_components/FinishedMeetDetailModal';
 
 interface MeetingStatusButtonProps {
   status: string;
@@ -17,11 +18,23 @@ export default function MeetingStatusButton({
   onClickApply,
   mode = 'default',
   id,
-  onClickDetail,
-  onClickReview,
-}: MeetingStatusButtonProps) {
+}: MeeringStatusButtonsProps) {
+  const { openModal, closeModal, modals, modalData  } = useModalStore();
   const pathname = usePathname();
   const isMyPage = pathname?.startsWith('/mypage');
+
+  const modalKey = mode === 'past' ? 'finishedMeetDetail' : 'meetDetail';
+
+  const openhandler = () => {
+    if (!id) {
+      console.warn('meet_id 누락');
+      return;
+    }
+
+    openModal(modalKey, { meet_id: id });
+  };
+
+  const closehandler = () => closeModal(modalKey);
 
   return (
     <>
@@ -69,6 +82,26 @@ export default function MeetingStatusButton({
           </>
         )}
       </div>
+
+      {/* 과거 모임용 상세 모달 */}
+      {mode === 'past' && modals['finishedMeetDetail'] && (
+      <FinishedMeetDetailModal
+  data={modalData.finishedMeetDetail as FinishedMeetDetailModalProps['data']}
+  onClose={closehandler}
+/>
+      )}
+
+      {/* 후기 작성 모달 */}
+      {modals['reviewWrite'] && (
+        <ReviewWriteModal
+          modalKey="reviewWrite"
+          onClose={() => closeModal('reviewWrite')}
+          onSubmit={(rating, content) => {
+            console.log('후기 제출', rating, content);
+          }}
+          meetId={Number(id)}
+        />
+      )}
     </>
   );
 }

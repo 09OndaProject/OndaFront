@@ -8,11 +8,18 @@ import ReviewList from '@/app/meet/review/_components/ReviewList';
 import { getMeetDetail } from '@/apis/meetingApi';
 import { MeetDetail } from '@/types/meetings';
 
-interface FinishedMeetDetailModalProps {
-  onClose?: () => void;
-  modalKey: string;
-  meetId: number | string;
-  onSubmit?: (rating: number, content: string) => void;
+export interface FinishedMeetDetailModalProps {
+  data?: {
+    meet_id: number;
+    title: string;
+    date: string;
+    location: string;
+    descrlption: string;
+    image?: string | null;
+    leaderName?: string;
+    leaderImage?: string | null;
+  };
+  onClose: () => void;
 }
 
 const FinishedMeetDetailModal = ({ modalKey, meetId }: FinishedMeetDetailModalProps) => {
