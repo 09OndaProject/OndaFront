@@ -1,4 +1,12 @@
+import { SelectedArea } from '@/app/community/_components/AreaDropdown';
 import { FileData } from './file';
+import { Option } from './post';
+
+export interface MeetingFilter {
+  interest: Option | undefined;
+  area: SelectedArea | undefined;
+  digitalLevel: Option | undefined;
+}
 
 export interface MeetingCardProps {
   item: {

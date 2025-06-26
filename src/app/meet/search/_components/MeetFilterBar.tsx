@@ -1,80 +1,83 @@
-'use client';
+"use client";
 
-import React, { useEffect, useState } from 'react';
-import SelectBox from '@/components/common/SelectBox';
-import { MeetingSelectBox } from '../../create/_components/MeetingSelectBox';
-import { getAreaOptions, getCategoryOptions, getDigitalOptions } from '@/apis/options';
-
-interface Filters {
-  category: string;
-  area: string;
-  digitalLevel: string;
-}
+import React, { useEffect, useState } from "react";
+import DropdownInput from "@/app/community/_components/DropdownInput";
+import {
+  getAreaOptions,
+  getDigitalOptions,
+  getInterestOptions,
+} from "@/apis/options";
+import { Option } from "@/types/post";
+import { MeetingFilter } from "@/types/meetings";
+import AreaDropdown from "@/app/community/_components/AreaDropdown";
+import { Area } from "@/types/options";
 
 interface MeetFilterBarProps {
-  filters: Filters;
-  onChange: (filters: Filters) => void;
+  filters: MeetingFilter;
+  onChange: (filters: MeetingFilter) => void;
 }
 
-export default function MeetFilterBar({ filters, onChange }: MeetFilterBarProps) {
-  const handleChange = (key: keyof Filters, value: string) => {
+export default function MeetFilterBar({
+  filters,
+  onChange,
+}: MeetFilterBarProps) {
+  const [areaOptions, setAreaOptions] = useState<Area[]>([]);
+  const [interestOptions, setInterestOptions] = useState<Option[]>([]);
+  const [digitalLevelOptions, setDigitalLevelOptions] = useState<Option[]>([]);
+
+  const handleChange = (key: keyof MeetingFilter, value: Option) => {
     onChange({ ...filters, [key]: value });
   };
 
-  const [areaOptions, setAreaOptions] = useState<{ id: number; area_name: string }[]>([]);
-  const [categoryOptions, setCategoryOptions] = useState<{ id: number; category_name: string }[]>([]);
-  const [digitalLevelOptions, setDigitalLevelOptions] = useState<{ id: number; display: string }[]>([]);
-
   useEffect(() => {
     const fetchOptions = async () => {
-      const area = await getAreaOptions();
-      setAreaOptions(area.results);
+      const areaRes = await getAreaOptions();
+      const interestRes = await getInterestOptions();
+      const digitalRes = await getDigitalOptions();
 
-      const category = await getCategoryOptions();
-      setCategoryOptions(category.results);
+      setAreaOptions(areaRes);
 
-      const digital = await getDigitalOptions();
-      setDigitalLevelOptions(digital.results);
+      setInterestOptions(
+        interestRes.results.map((i: { id: number; interest_name: string }) => ({
+          id: i.id,
+          name: i.interest_name,
+        }))
+      );
+
+      setDigitalLevelOptions(
+        digitalRes.results.map((d: { id: number; description: string }) => ({
+          id: d.id,
+          name: d.description,
+        }))
+      );
     };
+
     fetchOptions();
   }, []);
 
   return (
-    <div className="flex flex-wrap md:flex-nowrap items-center gap-3 mb-6">
-      <MeetingSelectBox
-        placeholder="카테고리"
-        value={filters.category}
-        onChange={(e) => handleChange('category', e.target.value)}
-      >
-        {categoryOptions.map((option) => (
-          <option key={option.id} value={String(option.id)}>
-            {option.category_name}
-          </option>
-        ))}
-      </MeetingSelectBox>
-
-      <SelectBox
-        value={filters.area}
-        onChange={(e) => handleChange('area', e.target.value)}
-        placeholder="지역"
-        options={areaOptions?.map((area) => ({
-          label: area.area_name,
-          value: String(area.id),
-        }))}
-        className="min-w-[160px]"
+    <div className="flex flex-wrap w-full md:flex-nowrap items-center gap-3 mb-6">
+      <DropdownInput
+        value={filters.interest}
+        onChange={(val) => handleChange("interest", val)}
+        options={interestOptions}
+        placeholder="관심사"
+        className="min-w-[160px] w-[250px]"
       />
-
-      <MeetingSelectBox
-        placeholder="디지털 난이도"
+      <AreaDropdown
+        value={filters.area}
+        onChange={(val) => onChange({ ...filters, area: val })}
+        options={areaOptions}
+        placeholder="지역"
+        className="flex-grow"
+      />
+      <DropdownInput
         value={filters.digitalLevel}
-        onChange={(e) => handleChange('digitalLevel', e.target.value)}
-      >
-        {digitalLevelOptions?.map((option) => (
-          <option key={option.id} value={String(option.id)}>
-            {option.display}
-          </option>
-        ))}
-      </MeetingSelectBox>
+        onChange={(val) => handleChange("digitalLevel", val)}
+        options={digitalLevelOptions}
+        placeholder="디지털 난이도"
+        className="min-w-[160px] w-[250px]"
+      />
       <button
         type="submit"
         className="bg-primary text-white text-sm rounded-md px-4 h-[44px] min-w-[72px] hover:bg-primary-light active:bg-primary-deep"

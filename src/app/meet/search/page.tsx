@@ -6,14 +6,14 @@ import MeetCardList from "@/app/meet/search/_components/MeetCardList";
 import DropdownInput from "@/app/community/_components/DropdownInput";
 import TextInput from "@/components/common/TextInput";
 import { Search } from "lucide-react";
-import MeetFilter from "./_components/MeetFilter";
+import { MeetingFilter } from "@/types/meetings";
 
 export default function MeetSearchPage() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [filters, setFilters] = useState({
-    category: 0,
-    area: 0,
-    digitalLevel: 0,
+  const [filters, setFilters] = useState<MeetingFilter>({
+    interest: undefined,
+    area: undefined,
+    digitalLevel: undefined,
   });
 
   const TAG_OPTION = [
@@ -22,7 +22,7 @@ export default function MeetSearchPage() {
     { id: 3, name: "완료" },
   ];
 
-  const [selectedTag, setSelectedTag] = useState({id: 0, name: "모집 상태"});
+  const [selectedTag, setSelectedTag] = useState({ id: 0, name: "모집 상태" });
 
   return (
     <main className="flex flex-col items-center w-full my-20 max-w-[1440px] px-4 md:px-[160px] mx-auto">
@@ -34,9 +34,7 @@ export default function MeetSearchPage() {
         <div className="w-full flex gap-4 flex-wrap">
           <DropdownInput
             value={selectedTag}
-            onChange={(e) =>
-              setSelectedTag(e)
-            }
+            onChange={(e) => setSelectedTag(e)}
             options={TAG_OPTION}
             placeholder="카테고리"
             className="min-w-[150px] w-auto"
@@ -51,7 +49,6 @@ export default function MeetSearchPage() {
           </div>
         </div>
       </div>
-      <MeetFilter />
 
       <MeetFilterBar filters={filters} onChange={setFilters} />
 

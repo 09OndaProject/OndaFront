@@ -32,6 +32,12 @@ export default function DropdownInput({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // 옵션 잘 들어오는지 확인
+  useEffect(() => {
+    console.log("DropdownInput options:", options);
+  }, [options]);
+
+
   return (
     <div className={`${className}`}>
       <div className="relative w-full" ref={selectRef}>
