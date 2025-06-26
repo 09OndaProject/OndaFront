@@ -22,7 +22,7 @@ export default function MeetDetailPage({ params }: { params: Promise<{ meet_id: 
     if (meetId) {
       async function fetchMeetDetail() {
         const response = await getMeetDetail(Number(meetId));
-        console.log(response)
+        console.log(response);
         setMeetDetail(response);
       }
       fetchMeetDetail();
