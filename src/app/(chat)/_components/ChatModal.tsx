@@ -1,6 +1,6 @@
 "use client";
 import { useModalStore } from "@/stores/useModalStore";
-import ChatRoomPage from "../[roomId]/page";
+import ChatRoomPage from "../[roomId]/ChatRoom";
 import { X } from "lucide-react";
 
 export default function ChatModal() {
