@@ -132,7 +132,7 @@ export default function PostForm({
           <AreaDropdown
             options={areaOptions}
             value={watch("area")}
-            onChange={(value) => setValue("area", value)}
+            onChange={(value) => setValue("area", value as { parentId: Option; childId: Option })}
             className="flex-grow"
           />
         </div>

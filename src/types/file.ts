@@ -12,3 +12,5 @@ export type FileData = {
 
 export type PostFile = Omit<FileData, "category">;
 
+export type FileCategory = "post" | "profile" | "meet" | "certificate" | "other";
+
