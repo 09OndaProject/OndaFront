@@ -6,7 +6,7 @@ import { createWebSocket } from '@/utils/soket';
 import { getGroupChatMessages } from '@/apis/chat';
 import { useAuthStore } from '@/stores/useAuth';
 import { Send } from 'lucide-react';
-import ChatBubble from '../_components/ChatBubble';
+import ChatBubble from './ChatBubble';
 
 export default function ChatRoom({
   roomId,
@@ -42,7 +42,7 @@ export default function ChatRoom({
           setMessages((prev) => {
             const last = prev[prev.length - 1];
             if (last && last.message === newMessage.message && last.nickname === newMessage.nickname) {
-              return prev; // 중복이면 추가하지 않음
+              return prev;
             }
             return [...prev, newMessage];
           });
@@ -59,7 +59,6 @@ export default function ChatRoom({
     };
   }, [roomId, token]);
 
-  // 스크롤 아래로 이동
   useEffect(() => {
     messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
@@ -72,7 +71,6 @@ export default function ChatRoom({
 
   return (
     <div className="flex flex-col h-[470px]">
-      {/* 메시지 영역 */}
       <div className="flex-1 overflow-y-auto p-4">
         {messages.map((msg, idx) => (
           <ChatBubble
@@ -85,23 +83,22 @@ export default function ChatRoom({
         <div ref={messageEndRef} />
       </div>
 
-      {/* 입력창 */}
       <div className="p-4 border-t flex gap-2">
-      <textarea
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        onCompositionStart={() => { isComposingRef.current = true }}
-        onCompositionEnd={() => { isComposingRef.current = false }}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') {
-            if (isComposingRef.current) return;
-            e.preventDefault();
-            sendMessage(input);
-          }
-        }}
-        className="flex-1 resize-none"
-        placeholder="메시지를 입력하세요"
-      />
+        <textarea
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onCompositionStart={() => { isComposingRef.current = true }}
+          onCompositionEnd={() => { isComposingRef.current = false }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              if (isComposingRef.current) return;
+              e.preventDefault();
+              sendMessage(input);
+            }
+          }}
+          className="flex-1 resize-none"
+          placeholder="메시지를 입력하세요"
+        />
         <button
           className="bg-primary-deep text-white px-4 py-2 rounded"
           onClick={() => sendMessage(input)}
